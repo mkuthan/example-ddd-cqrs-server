@@ -14,6 +14,11 @@ dependencies {
     testCompile 'org.testng:testng:6.8.7'            
 }
 
+test {
+    useTestNG {
+    }
+}
+
 task wrapper(type: Wrapper) {
     gradleVersion = '1.8'
 }
