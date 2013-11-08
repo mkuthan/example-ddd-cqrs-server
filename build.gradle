@@ -1,0 +1,16 @@
+apply plugin: 'java'
+apply plugin: 'eclipse'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    testCompile 'org.easytesting:fest-assert:1.4'
+    testCompile 'org.mockito:mockito-core:1.9.5'
+    testCompile 'org.testng:testng:6.8.7'            
+}
+
+task wrapper(type: Wrapper) {
+    gradleVersion = '1.8'
+}
