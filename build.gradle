@@ -1,16 +1,32 @@
+buildscript {
+	repositories {
+		maven { url 'http://repo.springsource.org/plugins-release' }
+	}
+	dependencies {
+		classpath 'org.springframework.build.gradle:propdeps-plugin:0.0.5'
+	}
+}
+
 apply plugin: 'java'
+
 apply plugin: 'eclipse'
+apply plugin: 'idea'
+
+apply plugin: 'propdeps'
+apply plugin: 'propdeps-maven'
+apply plugin: 'propdeps-idea'
+apply plugin: 'propdeps-eclipse'
 
 sourceCompatibility = 1.7
 targetCompatibility = 1.7
 
 repositories {
-    mavenCentral()
+	mavenCentral()
 }
-
+	
 dependencies {
 	compile 'com.google.guava:guava:15.0'
-	
+	provided 'org.projectlombok:lombok:1.12.2'
     testCompile 'org.easytesting:fest-assert:1.4'
     testCompile 'org.mockito:mockito-core:1.9.5'
     testCompile 'org.testng:testng:6.8.7'   
