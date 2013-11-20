@@ -1,22 +1,15 @@
 package example.ddd.scrumboard.domain.backlog.task;
 
-import static java.util.Objects.requireNonNull;
+import lombok.NonNull;
 import example.ddd.scrumboard.domain.shared.AggregateRoot;
-import example.ddd.scrumboard.domain.shared.EventPublisher;
 
 public class Task extends AggregateRoot<TaskId> {
 
-	private TaskId id;
-
 	private TaskStatus status;
 
-	Task(TaskId id, TaskStatus status, EventPublisher eventPublisher) {
-		super(id, eventPublisher);
-		this.status = requireNonNull(status);
-	}
-
-	public TaskId getId() {
-		return id;
+	Task(@NonNull TaskId id, @NonNull TaskStatus status) {
+		super(id);
+		this.status = status;
 	}
 
 	public void start() {
@@ -33,10 +26,6 @@ public class Task extends AggregateRoot<TaskId> {
 
 	void doFinish() {
 		status = TaskStatus.DONE;
-	}
-
-	TaskStatus getStatus() {
-		return status;
 	}
 
 }

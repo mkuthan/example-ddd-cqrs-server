@@ -1,47 +1,32 @@
 package example.ddd.scrumboard.domain.shared;
 
-import static java.util.Objects.requireNonNull;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.NonNull;
+import lombok.ToString;
 
-import java.util.Objects;
+@EqualsAndHashCode(of = "id")
+@ToString(exclude = "eventPublisher")
+public abstract class AggregateRoot<ID> {
 
-public abstract class AggregateRoot<ID extends UniqueIdentifier<?>> {
-
+	@Getter
 	private ID id;
+
+	@Getter
+	private Integer version;
 
 	private EventPublisher eventPublisher;
 
-	public ID getId() {
-		return id;
+	protected AggregateRoot(@NonNull ID id) {
+		this.id = id;
+		this.version = 0;
 	}
 
-	public EventPublisher getEventPublisher() {
-		return eventPublisher;
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (obj == null) {
-			return false;
+	protected void publish(@NonNull DomainEvent domainEvent) {
+		if (eventPublisher == null) {
+			throw new IllegalStateException("Could not publish event, event publisher is not initialized");
 		}
-
-		if (getClass() != obj.getClass()) {
-			return false;
-		}
-
-		@SuppressWarnings("unchecked")
-		AggregateRoot<ID> that = (AggregateRoot<ID>) obj;
-
-		return Objects.equals(this.getId(), that.getId());
-	}
-
-	@Override
-	public int hashCode() {
-		return Objects.hash(this.getId());
-	}
-
-	protected AggregateRoot(ID id, EventPublisher eventPublisher) {
-		this.id = requireNonNull(id);
-		this.eventPublisher = requireNonNull(eventPublisher);
+		eventPublisher.publish(domainEvent);
 	}
 
 }

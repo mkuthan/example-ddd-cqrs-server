@@ -1,11 +1,12 @@
 package example.ddd.scrumboard.domain.backlog.item;
 
-import example.ddd.scrumboard.domain.shared.UniqueIdentifier;
+import lombok.NonNull;
+import lombok.Value;
 
-public class BacklogItemId extends UniqueIdentifier<String> {
+@Value
+public class BacklogItemId {
 
-	public BacklogItemId(String id) {
-		super(id);
-	}
+	@NonNull
+	String id;
 
 }

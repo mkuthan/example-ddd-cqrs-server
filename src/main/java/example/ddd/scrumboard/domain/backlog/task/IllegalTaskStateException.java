@@ -1,6 +1,5 @@
 package example.ddd.scrumboard.domain.backlog.task;
 
-
 public class IllegalTaskStateException extends RuntimeException {
 
 	private static final long serialVersionUID = 1L;
@@ -16,7 +15,7 @@ public class IllegalTaskStateException extends RuntimeException {
 
 	@Override
 	public String getMessage() {
-		return "Cannot " + operation + ", todo status is: " + task.getStatus() + ".";
+		return "Cannot " + operation + " on " + task + ".";
 	}
 
 }

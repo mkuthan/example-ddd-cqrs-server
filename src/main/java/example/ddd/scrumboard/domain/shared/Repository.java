@@ -1,13 +1,13 @@
 package example.ddd.scrumboard.domain.shared;
 
-public interface Repository<T extends AggregateRoot, ID extends UniqueIdentifier<?>> {
+public interface Repository<T extends AggregateRoot<ID>, ID> {
 
 	ID generateId();
 
 	T load(ID id);
 
-	void save(T aggregateEntity);
+	void save(T aggregateRoot);
 
-	void delete(T aggregateEntity);
+	void delete(T aggregateRoot);
 
 }

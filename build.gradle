@@ -1,3 +1,5 @@
+import java.lang.invoke.LambdaForm.Compiled;
+
 buildscript {
 	repositories {
 		maven { url 'http://repo.springsource.org/plugins-release' }
@@ -25,9 +27,14 @@ repositories {
 }
 	
 dependencies {
+	compile 'org.slf4j:slf4j-api:1.7.5'
+	runtime 'org.slf4j:slf4j-jdk14:1.7.5'
+	
 	compile 'com.google.guava:guava:15.0'
+	
 	provided 'org.projectlombok:lombok:1.12.2'
-    testCompile 'org.easytesting:fest-assert:1.4'
+    
+	testCompile 'org.easytesting:fest-assert:1.4'
     testCompile 'org.mockito:mockito-core:1.9.5'
     testCompile 'org.testng:testng:6.8.7'   
 }

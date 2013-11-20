@@ -1,11 +1,12 @@
 package example.ddd.scrumboard.domain.product;
 
-import example.ddd.scrumboard.domain.shared.UniqueIdentifier;
+import lombok.NonNull;
+import lombok.Value;
 
-public class ProductId extends UniqueIdentifier<String> {
+@Value
+public class ProductId {
 
-	public ProductId(String id) {
-		super(id);
-	}
+	@NonNull
+	String id;
 
 }
