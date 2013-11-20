@@ -1,16 +1,18 @@
 package example.ddd.scrumboard.domain.backlog.task;
 
-import example.ddd.scrumboard.domain.shared.AggregateEntity;
+import static java.util.Objects.requireNonNull;
+import example.ddd.scrumboard.domain.shared.AggregateRoot;
+import example.ddd.scrumboard.domain.shared.EventPublisher;
 
-public class Task extends AggregateEntity {
+public class Task extends AggregateRoot<TaskId> {
 
 	private TaskId id;
 
 	private TaskStatus status;
 
-	Task(TaskId id, TaskStatus status) {
-		this.id = id;
-		this.status = status;
+	Task(TaskId id, TaskStatus status, EventPublisher eventPublisher) {
+		super(id, eventPublisher);
+		this.status = requireNonNull(status);
 	}
 
 	public TaskId getId() {

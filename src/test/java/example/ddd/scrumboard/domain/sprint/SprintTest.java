@@ -1,18 +1,24 @@
 package example.ddd.scrumboard.domain.sprint;
 
+import org.mockito.Mockito;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
+
+import example.ddd.scrumboard.domain.shared.EventPublisher;
 
 @Test
 public class SprintTest {
 
 	private Sprint sprint;
 
-	private Sprint.Builder builder;
+	private SprintBuilder builder;
+
+	private EventPublisher eventPublisher;
 
 	@BeforeTest
 	protected void initializeBuilder() {
-		builder = new Sprint.Builder().withId(new SprintId("any id"));
+		eventPublisher = Mockito.mock(EventPublisher.class);
+		builder = new SprintBuilder().sprint(eventPublisher).withId(new SprintId("any id"));
 	}
 
 	public void shouldCreate() {
@@ -22,10 +28,11 @@ public class SprintTest {
 
 		whenSprint();
 
-		thenSprint().hasId(id);
+		// TODO
+		// thenSprint().todo();
 	}
 
-	private Sprint.Builder givenSprint() {
+	private SprintBuilder givenSprint() {
 		return builder;
 	}
 

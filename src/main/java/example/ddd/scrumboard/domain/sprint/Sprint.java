@@ -1,35 +1,17 @@
 package example.ddd.scrumboard.domain.sprint;
 
-import example.ddd.scrumboard.domain.backlog.item.ProductBacklogItem;
-import example.ddd.scrumboard.domain.shared.AggregateEntity;
+import example.ddd.scrumboard.domain.backlog.item.BacklogItem;
+import example.ddd.scrumboard.domain.shared.AggregateRoot;
+import example.ddd.scrumboard.domain.shared.EventPublisher;
 
-public class Sprint extends AggregateEntity {
+public class Sprint extends AggregateRoot<SprintId> {
 
-	private SprintId id;
-
-	Sprint(SprintId id) {
-		this.id = id;
+	public void commit(BacklogItem backlogItem) {
+		// TODO Auto-generated method stub
 	}
 
-	public SprintId getId() {
-		return id;
-	}
-
-	public void commitProductBacklogItem(ProductBacklogItem productBacklogItem) {
-	}
-
-	static class Builder {
-
-		private SprintId id;
-
-		public Builder withId(SprintId id) {
-			this.id = id;
-			return this;
-		}
-
-		public Sprint build() {
-			return new Sprint(id);
-		}
+	Sprint(SprintId id, EventPublisher eventPublisher) {
+		super(id, eventPublisher);
 	}
 
 }
