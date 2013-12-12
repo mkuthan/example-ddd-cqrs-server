@@ -1,5 +1,3 @@
-import java.lang.invoke.LambdaForm.Compiled;
-
 buildscript {
 	repositories {
 		maven { url 'http://repo.springsource.org/plugins-release' }
