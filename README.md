@@ -1,1 +1,1 @@
-[![Build Status](https://travis-ci.org/mkuthan/example-ddd.png)](https://travis-ci.org/mkuthan/example-ddd)
+[![Build Status](https://travis-ci.org/mkuthan/example-ddd-server.png)](https://travis-ci.org/mkuthan/example-ddd-server)
