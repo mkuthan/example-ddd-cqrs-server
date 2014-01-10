@@ -11,12 +11,9 @@ import example.scrumboard.domain.product.Product;
 import example.scrumboard.domain.product.ProductFactory;
 import example.scrumboard.domain.product.ProductId;
 import example.scrumboard.domain.product.ProductRepository;
-import example.scrumboard.domain.sprint.Sprint;
-import example.scrumboard.domain.sprint.SprintId;
-import example.scrumboard.domain.sprint.SprintRepository;
 
 @ApplicationService
-public class ScrumBoardService {
+public class ProductService {
 
 	@Autowired
 	private ProductRepository productRepository;
@@ -29,8 +26,6 @@ public class ScrumBoardService {
 
 	@Autowired
 	private BacklogItemRepository backlogItemRepository;
-
-	private SprintRepository sprintRepository;
 
 	public ProductId createProduct(String name) {
 		Product product = productFactory.create(name);
@@ -49,24 +44,12 @@ public class ScrumBoardService {
 
 		return backlogItem.getId();
 	}
-	
+
 	public void reorderProductBacklogItem(ProductId productId, BacklogItemId backlogItemId, int newPosition) {
 		Product product = productRepository.load(productId);
 		product.reorder(backlogItemId, newPosition);
 
 		productRepository.save(product);
-	}
-
-	public void commitBacklogItem(BacklogItemId backlogItemId, SprintId sprintId) {
-		Sprint sprint = sprintRepository.load(sprintId);
-
-		BacklogItem backlogItem = backlogItemRepository.load(backlogItemId);
-		backlogItem.commitTo(sprint);
-
-		sprint.commit(backlogItem);
-
-		sprintRepository.save(sprint);
-		backlogItemRepository.save(backlogItem);
 	}
 
 }
