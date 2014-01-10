@@ -84,10 +84,6 @@ tomcatRun {
     contextPath = '/'
 }
 
-rebel {
-	alwaysGenerate = true
-}
-
 task wrapper(type: Wrapper) {
     gradleVersion = '1.8'
 }

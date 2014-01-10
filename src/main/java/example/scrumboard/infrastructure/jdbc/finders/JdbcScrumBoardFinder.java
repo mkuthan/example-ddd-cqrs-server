@@ -1,7 +1,9 @@
 package example.scrumboard.infrastructure.jdbc.finders;
 
+import static java.util.Objects.requireNonNull;
+import static org.springframework.jdbc.core.simple.ParameterizedBeanPropertyRowMapper.newInstance;
+
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 
 import example.scrumboard.application.ScrumBoardFinder;
@@ -20,9 +22,18 @@ public class JdbcScrumBoardFinder implements ScrumBoardFinder {
 
 	@Override
 	public ProductDto findProductByName(String name) {
-		String query = "select p.c_id as id, p.c_name as name, count(i.id) as backlogItemsCount "
-				+ "from t_product p left outer join t_product_backlog_item i on p.id = i.product_id "
-				+ "where p.c_name = ? group by id, name";
-		return jdbcTemplate.queryForObject(query, new BeanPropertyRowMapper<ProductDto>(ProductDto.class), name);
+		requireNonNull(name);
+
+		// @formatter:off
+		String query = "SELECT p.c_id id, p.c_name name, COUNT(i.c_id) backlogItemsCount "
+				+ "FROM t_product p "
+				+ "LEFT OUTER JOIN t_product_backlog_item i "
+				+ "ON p.c_id = i.c_product_id "
+				+ "WHERE p.c_name = ? "
+				+ "GROUP BY p.c_id, p.c_name "
+				+ "ORDER BY p.c_name";
+		// @formatter:on
+
+		return jdbcTemplate.queryForObject(query, newInstance(ProductDto.class), name);
 	}
 }

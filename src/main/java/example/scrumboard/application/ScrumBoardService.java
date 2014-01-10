@@ -49,7 +49,7 @@ public class ScrumBoardService {
 
 		return backlogItem.getId();
 	}
-
+	
 	public void reorderProductBacklogItem(ProductId productId, BacklogItemId backlogItemId, int newPosition) {
 		Product product = productRepository.load(productId);
 		product.reorder(backlogItemId, newPosition);
