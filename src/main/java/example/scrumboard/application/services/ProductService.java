@@ -1,4 +1,4 @@
-package example.scrumboard.application;
+package example.scrumboard.application.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
 

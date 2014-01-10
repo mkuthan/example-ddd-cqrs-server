@@ -27,7 +27,7 @@ public class ApplicationBootstrap implements ApplicationListener<ContextRefreshe
 
 			Stopwatch stopwatch = publishEvent(applicationContext);
 
-			LOGGER.info("Finish application bootstrap in " + stopwatch.elapsed(TimeUnit.MILLISECONDS) + " ms");
+			LOGGER.info("Finish application bootstrap in {} ms", stopwatch.elapsed(TimeUnit.MILLISECONDS));
 		}
 	}
 

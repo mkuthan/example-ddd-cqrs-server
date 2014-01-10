@@ -10,7 +10,7 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 @Component
-@Transactional(propagation = Propagation.MANDATORY)
+@Transactional(readOnly = false, propagation = Propagation.MANDATORY)
 @Target({ ElementType.TYPE, ElementType.METHOD })
 @Retention(RetentionPolicy.RUNTIME)
 public @interface JpaRepository {

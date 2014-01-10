@@ -5,8 +5,8 @@ import org.springframework.context.ApplicationListener;
 import org.springframework.stereotype.Component;
 
 import example.ddd.domain.ApplicationBootstrapEvent;
-import example.scrumboard.application.ProductFinder;
-import example.scrumboard.application.ProductService;
+import example.scrumboard.application.finders.ProductFinder;
+import example.scrumboard.application.services.ProductService;
 import example.scrumboard.domain.product.ProductId;
 
 @Component
