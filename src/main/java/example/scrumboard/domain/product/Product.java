@@ -29,7 +29,7 @@ public class Product extends AggregateRoot<ProductId> {
 	private String name;
 
 	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
-	@JoinColumn(nullable = false)
+	@JoinColumn(name = "product_id", nullable = false)
 	private Set<ProductBacklogItem> backlogItems;
 
 	Product() {

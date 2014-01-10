@@ -7,6 +7,7 @@ import org.springframework.stereotype.Component;
 import example.ddd.domain.ApplicationBootstrapEvent;
 import example.scrumboard.application.ScrumBoardFinder;
 import example.scrumboard.application.ScrumBoardService;
+import example.scrumboard.domain.product.ProductId;
 
 @Component
 public class ScrumBoardBootstrap implements ApplicationListener<ApplicationBootstrapEvent> {
@@ -25,8 +26,12 @@ public class ScrumBoardBootstrap implements ApplicationListener<ApplicationBoots
 	}
 
 	private void initializeProducts() {
-		scrumBoardService.createProduct("Example DDD server");
-		scrumBoardService.createProduct("Example DDD client");
+		ProductId productId1 = scrumBoardService.createProduct("Example DDD server");
+		scrumBoardService.createBacklogItem(productId1, "Write documentation");
+		scrumBoardService.createBacklogItem(productId1, "Add more unit tests");
+
+		ProductId productId2 = scrumBoardService.createProduct("Example DDD client");
+		// no backlog items
 	}
 
 }

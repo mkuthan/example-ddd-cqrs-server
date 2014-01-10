@@ -1,15 +1,12 @@
 package example.scrumboard.application.dto;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class ProductDto {
 
 	private String id;
 
 	private String name;
-
-	private List<ProductBacklogItemDto> backlogItems = new ArrayList<>();
+	
+	private int backlogItemsCount;
 
 	public String getId() {
 		return id;
@@ -27,12 +24,12 @@ public class ProductDto {
 		this.name = name;
 	}
 
-	public List<ProductBacklogItemDto> getBacklogItems() {
-		return backlogItems;
+	public int getBacklogItemsCount() {
+		return backlogItemsCount;
 	}
 
-	public void setBacklogItems(List<ProductBacklogItemDto> backlogItems) {
-		this.backlogItems = backlogItems;
+	public void setBacklogItemsCount(int backlogItemsCount) {
+		this.backlogItemsCount = backlogItemsCount;
 	}
 
 }

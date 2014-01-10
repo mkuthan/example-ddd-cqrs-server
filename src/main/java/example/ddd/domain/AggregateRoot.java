@@ -4,6 +4,7 @@ import static java.util.Objects.requireNonNull;
 
 import java.util.Objects;
 
+import javax.persistence.Embedded;
 import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
 import javax.persistence.Transient;
@@ -13,6 +14,7 @@ import javax.persistence.Version;
 public abstract class AggregateRoot<ID> {
 
 	@Id
+	@Embedded
 	private ID id;
 
 	@Version

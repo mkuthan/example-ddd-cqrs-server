@@ -18,17 +18,19 @@ import example.scrumboard.domain.sprint.SprintRepository;
 @ApplicationService
 public class ScrumBoardService {
 
-	private SprintRepository sprintRepository;
-
-	private BacklogItemFactory backlogItemFactory;
-
-	private BacklogItemRepository backlogItemRepository;
-
 	@Autowired
 	private ProductRepository productRepository;
 
 	@Autowired
 	private ProductFactory productFactory;
+
+	@Autowired
+	private BacklogItemFactory backlogItemFactory;
+
+	@Autowired
+	private BacklogItemRepository backlogItemRepository;
+
+	private SprintRepository sprintRepository;
 
 	public ProductId createProduct(String name) {
 		Product product = productFactory.create(name);
@@ -37,8 +39,8 @@ public class ScrumBoardService {
 		return product.getId();
 	}
 
-	public BacklogItemId createBacklogItem(ProductId productId) {
-		BacklogItem backlogItem = backlogItemFactory.create();
+	public BacklogItemId createBacklogItem(ProductId productId, String name) {
+		BacklogItem backlogItem = backlogItemFactory.create(name);
 		backlogItemRepository.save(backlogItem);
 
 		Product product = productRepository.load(productId);
