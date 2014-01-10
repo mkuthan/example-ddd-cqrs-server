@@ -4,12 +4,21 @@ import static java.util.Objects.requireNonNull;
 
 import java.util.Objects;
 
+import javax.persistence.Id;
+import javax.persistence.MappedSuperclass;
+import javax.persistence.Transient;
+import javax.persistence.Version;
+
+@MappedSuperclass
 public abstract class AggregateRoot<ID> {
 
+	@Id
 	private ID id;
 
+	@Version
 	private Integer version;
 
+	@Transient
 	private EventPublisher eventPublisher;
 
 	protected AggregateRoot() {

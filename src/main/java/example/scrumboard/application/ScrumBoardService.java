@@ -1,5 +1,8 @@
 package example.scrumboard.application;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
 import example.scrumboard.domain.backlog.item.BacklogItem;
 import example.scrumboard.domain.backlog.item.BacklogItemFactory;
 import example.scrumboard.domain.backlog.item.BacklogItemId;
@@ -12,6 +15,7 @@ import example.scrumboard.domain.sprint.SprintFactory;
 import example.scrumboard.domain.sprint.SprintId;
 import example.scrumboard.domain.sprint.SprintRepository;
 
+@Component
 public class ScrumBoardService {
 
 	private SprintFactory sprintFactory;
@@ -22,6 +26,7 @@ public class ScrumBoardService {
 
 	private BacklogItemRepository backlogItemRepository;
 
+	@Autowired
 	private ProductRepository productRepository;
 
 	public BacklogItemId createBacklogItem(ProductId productId) {

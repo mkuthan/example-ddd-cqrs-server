@@ -7,6 +7,12 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Set;
 
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
+
 import com.google.common.base.Function;
 import com.google.common.base.Optional;
 import com.google.common.collect.Ordering;
@@ -15,8 +21,11 @@ import example.ddd.domain.AggregateRoot;
 import example.scrumboard.domain.backlog.item.BacklogItem;
 import example.scrumboard.domain.backlog.item.BacklogItemId;
 
+@Entity
 public class Product extends AggregateRoot<ProductId> {
 
+	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
+	@JoinColumn(nullable = false)
 	private Set<ProductBacklogItem> backlogItems;
 
 	Product() {

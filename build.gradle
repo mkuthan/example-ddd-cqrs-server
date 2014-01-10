@@ -1,10 +1,21 @@
-apply plugin: 'java'
+apply plugin: 'war'
+apply plugin: 'tomcat'
 
 apply plugin: 'eclipse'
 apply plugin: 'idea'
 
 sourceCompatibility = 1.7
 targetCompatibility = 1.7
+
+buildscript {
+    repositories {
+        jcenter()
+    }
+
+    dependencies {
+        classpath 'org.gradle.api.plugins:gradle-tomcat-plugin:1.0'
+    }
+}
 
 repositories {
 	mavenCentral()
@@ -13,7 +24,9 @@ repositories {
 	
 ext {
 	springVersion = '4.0.0.RELEASE'
-	hibernateVersion = '4.3.0.Final'	
+	hibernateVersion = '4.3.0.Final'
+	
+	tomcatVersion = '7.0.47'	
 }
 
 configurations {
@@ -21,11 +34,16 @@ configurations {
 }	
 	
 dependencies {
+	providedCompile 'javax.servlet:javax.servlet-api:3.0.1'
+
 	compile "org.springframework:spring-aop:$springVersion"
 	compile "org.springframework:spring-aspects:$springVersion"
 	compile "org.springframework:spring-context:$springVersion"
 	compile "org.springframework:spring-core:$springVersion"
+	compile "org.springframework:spring-jdbc:$springVersion"
 	compile "org.springframework:spring-orm:$springVersion"
+	compile "org.springframework:spring-web:$springVersion"
+	compile "org.springframework:spring-webmvc:$springVersion"
 	testCompile "org.springframework:spring-test:$springVersion"
 
 	compile "org.hibernate:hibernate-entitymanager:$hibernateVersion"
@@ -41,12 +59,22 @@ dependencies {
 	    
 	testCompile 'org.assertj:assertj-core:1.5.0'
 	testCompile 'org.mockito:mockito-core:1.9.5'
-	testCompile 'org.testng:testng:6.8.7'   
+	testCompile 'org.testng:testng:6.8.7'
+	
+	tomcat "org.apache.tomcat.embed:tomcat-embed-core:${tomcatVersion}"
+    tomcat "org.apache.tomcat.embed:tomcat-embed-logging-juli:${tomcatVersion}"
+    tomcat("org.apache.tomcat.embed:tomcat-embed-jasper:${tomcatVersion}") {
+        exclude group: 'org.eclipse.jdt.core.compiler', module: 'ecj'
+    }   
 }
 
 test {
     useTestNG {
     }
+}
+
+tomcatRun {
+    contextPath = '/'
 }
 
 task wrapper(type: Wrapper) {

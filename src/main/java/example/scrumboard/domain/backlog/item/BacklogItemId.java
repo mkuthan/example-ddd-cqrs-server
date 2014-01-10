@@ -1,12 +1,18 @@
 package example.scrumboard.domain.backlog.item;
 
 import static java.util.Objects.requireNonNull;
+
+import javax.persistence.Column;
+import javax.persistence.Embeddable;
+
 import example.ddd.domain.ValueObject;
 
+@Embeddable
 public class BacklogItemId extends ValueObject {
 
 	private static final long serialVersionUID = 1L;
 
+	@Column(nullable = false)
 	private String id;
 
 	BacklogItemId() {
