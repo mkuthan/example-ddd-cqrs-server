@@ -1,16 +1,11 @@
 package example.scrumboard.domain.backlog.item;
 
+import java.util.UUID;
+
 public class BacklogItemFactory {
 
-	private BacklogItemRepository backlogItemRepository;
-
-	public BacklogItemFactory(BacklogItemRepository backlogItemRepository) {
-		this.backlogItemRepository = backlogItemRepository;
-	};
-
 	public BacklogItem create() {
-		BacklogItemId id = backlogItemRepository.generateId();
-
+		BacklogItemId id = new BacklogItemId(UUID.randomUUID().toString());
 		return new BacklogItem(id);
 	}
 }

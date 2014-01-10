@@ -1,15 +1,11 @@
 package example.scrumboard.domain.sprint;
 
+import java.util.UUID;
+
 public class SprintFactory {
 
-	private SprintRepository sprintRepository;
-
-	public SprintFactory(SprintRepository repository) {
-		this.sprintRepository = repository;
-	};
-
 	public Sprint create() {
-		SprintId id = sprintRepository.generateId();
+		SprintId id = new SprintId(UUID.randomUUID().toString());
 
 		return new Sprint(id);
 	}

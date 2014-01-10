@@ -59,12 +59,6 @@ public class GenericJpaRepository<E extends AggregateRoot<K>, K> implements Repo
 		entityManager.flush();
 	}
 
-	@Override
-	public K generateId() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
 	protected EntityManager getEntityManager() {
 		return entityManager;
 	}

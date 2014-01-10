@@ -14,15 +14,12 @@ import org.testng.annotations.Test;
 import example.ddd.domain.EventPublisher;
 import example.ddd.domain.EventPublisherAssert;
 import example.scrumboard.domain.backlog.item.BacklogItemId;
-import example.scrumboard.domain.product.Product;
-import example.scrumboard.domain.product.ProductBacklogItem;
-import example.scrumboard.domain.product.ProductBacklogItemReordered;
-import example.scrumboard.domain.product.ProductId;
 
 @Test
 public class ProductTest {
 
 	private static final ProductId ANY_ID = new ProductId("any id");
+	private static final String ANY_NAME = "any name";
 
 	@Mock
 	private EventPublisher eventPublisher;
@@ -34,7 +31,7 @@ public class ProductTest {
 
 	@BeforeMethod
 	protected void initializeBuilder() {
-		builder = new Builder().product(ANY_ID);
+		builder = new Builder().product(ANY_ID, ANY_NAME);
 	}
 
 	public void shouldReorder() {
@@ -104,10 +101,13 @@ public class ProductTest {
 
 		private ProductId id;
 
+		private String name;
+
 		private Set<ProductBacklogItem> backlogItems = new HashSet<>();
 
-		public Builder product(ProductId id) {
+		public Builder product(ProductId id, String name) {
 			this.id = id;
+			this.name = name;
 			return this;
 		}
 
@@ -122,7 +122,7 @@ public class ProductTest {
 		}
 
 		public Product build() {
-			return new Product(id, backlogItems);
+			return new Product(id, name, backlogItems);
 		}
 	}
 

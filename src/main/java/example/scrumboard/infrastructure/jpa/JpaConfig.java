@@ -6,11 +6,10 @@ import java.util.Map;
 import javax.sql.DataSource;
 
 import org.hibernate.jpa.AvailableSettings;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseBuilder;
-import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseType;
 import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 import org.springframework.orm.jpa.vendor.Database;
@@ -24,14 +23,8 @@ import example.scrumboard.ScrumBoardConfig;
 public class JpaConfig {
 
 	@Bean
-	public DataSource dataSource() {
-		EmbeddedDatabaseBuilder builder = new EmbeddedDatabaseBuilder();
-		builder.setType(EmbeddedDatabaseType.H2);
-		return builder.build();
-	}
-
-	@Bean
-	public LocalContainerEntityManagerFactoryBean entityManagerFactory() {
+	@Autowired
+	public LocalContainerEntityManagerFactoryBean entityManagerFactory(DataSource dataSource) {
 		HibernateJpaVendorAdapter jpaVendorAdapter = new HibernateJpaVendorAdapter();
 
 		jpaVendorAdapter.setDatabase(Database.H2);
@@ -43,7 +36,7 @@ public class JpaConfig {
 
 		LocalContainerEntityManagerFactoryBean entityManagerFactoryBean = new LocalContainerEntityManagerFactoryBean();
 
-		entityManagerFactoryBean.setDataSource(dataSource());
+		entityManagerFactoryBean.setDataSource(dataSource);
 		entityManagerFactoryBean.setPackagesToScan(ScrumBoardConfig.class.getPackage().getName());
 		entityManagerFactoryBean.setJpaVendorAdapter(jpaVendorAdapter);
 		entityManagerFactoryBean.setJpaPropertyMap(jpaProperties);
@@ -52,10 +45,11 @@ public class JpaConfig {
 	}
 
 	@Bean
-	public PlatformTransactionManager transactionManager() {
+	@Autowired
+	public PlatformTransactionManager transactionManager(LocalContainerEntityManagerFactoryBean entityManagerFactoryBean) {
 		JpaTransactionManager transactionManager = new JpaTransactionManager();
 
-		transactionManager.setEntityManagerFactory(entityManagerFactory().getObject());
+		transactionManager.setEntityManagerFactory(entityManagerFactoryBean.getObject());
 
 		return transactionManager;
 	}

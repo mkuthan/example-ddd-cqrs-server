@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
@@ -24,6 +25,9 @@ import example.scrumboard.domain.backlog.item.BacklogItemId;
 @Entity
 public class Product extends AggregateRoot<ProductId> {
 
+	@Column(nullable = false)
+	private String name;
+
 	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
 	@JoinColumn(nullable = false)
 	private Set<ProductBacklogItem> backlogItems;
@@ -31,8 +35,9 @@ public class Product extends AggregateRoot<ProductId> {
 	Product() {
 	}
 
-	Product(ProductId id, Set<ProductBacklogItem> backlogItems) {
+	Product(ProductId id, String name, Set<ProductBacklogItem> backlogItems) {
 		super(id);
+		this.name = requireNonNull(name);
 		this.backlogItems = requireNonNull(backlogItems);
 	}
 
