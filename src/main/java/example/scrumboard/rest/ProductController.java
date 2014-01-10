@@ -3,6 +3,9 @@ package example.scrumboard.rest;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -20,8 +23,8 @@ public class ProductController {
 	private ProductFinder productFinder;
 
 	@RequestMapping(value = "/products", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-	public List<ProductDto> product() {
-		return productFinder.findAll();
+	public Page<ProductDto> product(Pageable pageable) {
+		return new PageImpl<>(productFinder.findAll(pageable), pageable, productFinder.count());
 	}
 
 	@RequestMapping(value = "/product/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)

@@ -6,6 +6,7 @@ import static org.springframework.jdbc.core.simple.ParameterizedBeanPropertyRowM
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
 import org.springframework.jdbc.core.JdbcTemplate;
 
 import example.scrumboard.application.ProductFinder;
@@ -19,17 +20,18 @@ public class JdbcProductFinder implements ProductFinder {
 	private JdbcTemplate jdbcTemplate;
 
 	@Override
-	public List<ProductDto> findAll() {
+	public List<ProductDto> findAll(Pageable pageable) {
 		// @formatter:off
 		String query = "SELECT p.c_id id, p.c_name name, COUNT(pbi.c_id) backlogItemsCount "
 				+ "FROM t_product p "
 				+ "LEFT OUTER JOIN t_product_backlog_item pbi "
 				+ "ON p.c_id = pbi.c_product_id "
 				+ "GROUP BY p.c_id, p.c_name "
-				+ "ORDER BY p.c_name";
+				+ "ORDER BY p.c_name "
+				+ "LIMIT ? OFFSET ?";
 		// @formatter:on
 
-		return jdbcTemplate.query(query, newInstance(ProductDto.class));
+		return jdbcTemplate.query(query, newInstance(ProductDto.class), pageable.getPageSize(), pageable.getOffset());
 	}
 
 	@Override
