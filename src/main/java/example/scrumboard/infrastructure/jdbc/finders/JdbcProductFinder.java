@@ -9,9 +9,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.jdbc.core.JdbcTemplate;
 
+import example.scrumboard.application.finders.ProductBacklogItemDto;
+import example.scrumboard.application.finders.ProductDto;
 import example.scrumboard.application.finders.ProductFinder;
-import example.scrumboard.application.finders.dto.ProductBacklogItemDto;
-import example.scrumboard.application.finders.dto.ProductDto;
 
 @JdbcFinder
 public class JdbcProductFinder implements ProductFinder {

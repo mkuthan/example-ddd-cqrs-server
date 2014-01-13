@@ -13,4 +13,13 @@ public class Sprint extends AggregateRoot<SprintId> {
 		// TODO Auto-generated method stub
 	}
 
+	public void uncommit(BacklogItem backlogItem) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public void captureRetrospective(String retrospective) {
+		// TODO Auto-generated method stub
+	}
+
 }

@@ -1,4 +1,4 @@
-package example.scrumboard.application.finders.dto;
+package example.scrumboard.application.finders;
 
 public class ProductDto {
 

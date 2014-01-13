@@ -12,9 +12,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import example.scrumboard.application.finders.ProductBacklogItemDto;
+import example.scrumboard.application.finders.ProductDto;
 import example.scrumboard.application.finders.ProductFinder;
-import example.scrumboard.application.finders.dto.ProductBacklogItemDto;
-import example.scrumboard.application.finders.dto.ProductDto;
 
 @RestController
 public class ProductController {

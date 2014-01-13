@@ -21,6 +21,7 @@ import com.google.common.collect.Ordering;
 import example.ddd.domain.AggregateRoot;
 import example.scrumboard.domain.backlog.item.BacklogItem;
 import example.scrumboard.domain.backlog.item.BacklogItemId;
+import example.scrumboard.domain.sprint.Sprint;
 
 @Entity
 public class Product extends AggregateRoot<ProductId> {
@@ -52,6 +53,10 @@ public class Product extends AggregateRoot<ProductId> {
 
 		ProductBacklogItem productBacklogItem = new ProductBacklogItem(backlogItemId, lastPosition());
 		backlogItems.add(productBacklogItem);
+	}
+
+	public void plan(Sprint sprint) {
+		// TODO Auto-generated method stub
 	}
 
 	public void reorder(BacklogItemId backlogItemId, Integer newPosition) {

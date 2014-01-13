@@ -26,4 +26,16 @@ public class BacklogItem extends AggregateRoot<BacklogItemId> {
 		// TODO Auto-generated method stub
 	}
 
+	public void uncommitFrom(Sprint sprint) {
+		// TODO Auto-generated method stub
+	}
+
+	public void assignStoryPoints(StoryPoints storyPoints) {
+		// TODO Auto-generated method stub
+	}
+
+	public void assignPriority(BacklogItemPriority priority) {
+		// TODO Auto-generated method stub
+	}
+
 }
