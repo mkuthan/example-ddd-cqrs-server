@@ -28,6 +28,13 @@
 		<testng.version>6.8.7</testng.version>
 	</properties>
 
+	<repositories>
+		<repository>
+			<id>spring-milestone</id>
+			<url>http://maven.springframework.org/milestone/</url>
+		</repository>
+	</repositories>
+
 	<build>
 		<pluginManagement>
 			<plugins>
