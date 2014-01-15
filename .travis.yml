@@ -1,3 +1,15 @@
-language: java
+language:
+    - java
+
 jdk:
-  - openjdk7
+    - openjdk7
+
+branches:
+  only:
+    - master
+
+before_install: true
+install: true
+
+before_script: true
+script: mvn test
