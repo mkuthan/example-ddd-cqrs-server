@@ -5,26 +5,26 @@ import org.springframework.context.ApplicationListener;
 import org.springframework.stereotype.Component;
 
 import example.ddd.domain.ApplicationBootstrapEvent;
-import example.scrumboard.application.finders.ProductFinder;
 import example.scrumboard.application.services.BacklogItemService;
 import example.scrumboard.application.services.ProductService;
 import example.scrumboard.domain.product.ProductId;
+import example.scrumboard.domain.product.ProductRepository;
 
 @Component
 public class ScrumBoardBootstrap implements ApplicationListener<ApplicationBootstrapEvent> {
 
 	@Autowired
-	private ProductFinder productFinder;
+	private ProductService productService;
 
 	@Autowired
-	private ProductService productService;
+	private ProductRepository productRepository;
 
 	@Autowired
 	private BacklogItemService backlogItemService;
 
 	@Override
 	public void onApplicationEvent(ApplicationBootstrapEvent event) {
-		if (productFinder.count() == 0) {
+		if (productRepository.count() == 0) {
 			initializeProducts();
 		}
 	}

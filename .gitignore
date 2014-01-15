@@ -1,8 +1,9 @@
-.gradle
-.settings
-/build
-/bin
-/test-output
+# Maven
+/target
+
+# STS
 .classpath
+.groovy
 .project
-rebel.xml
+.settings
+.springBeans

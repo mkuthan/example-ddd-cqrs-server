@@ -29,7 +29,7 @@ public class JpaConfig {
 
 		jpaVendorAdapter.setDatabase(Database.H2);
 		jpaVendorAdapter.setGenerateDdl(true);
-		jpaVendorAdapter.setShowSql(true);
+		jpaVendorAdapter.setShowSql(false);
 
 		Map<String, Object> jpaProperties = new HashMap<>();
 		jpaProperties.put(AvailableSettings.NAMING_STRATEGY, FixedPrefixNamingStrategy.class.getName());

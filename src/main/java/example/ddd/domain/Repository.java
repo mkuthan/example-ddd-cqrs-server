@@ -8,4 +8,6 @@ public interface Repository<E extends AggregateRoot<K>, K> {
 
 	void delete(E entity);
 
+	long count();
+
 }
