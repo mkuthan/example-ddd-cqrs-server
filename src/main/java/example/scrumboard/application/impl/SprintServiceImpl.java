@@ -1,4 +1,4 @@
-package example.scrumboard.application.services;
+package example.scrumboard.application.impl;
 
 import java.sql.Date;
 
@@ -17,7 +17,7 @@ import example.scrumboard.domain.sprint.SprintId;
 import example.scrumboard.domain.sprint.SprintRepository;
 
 @ApplicationService
-public class SprintService {
+public class SprintServiceImpl {
 
 	@Autowired
 	private SprintRepository sprintRepository;

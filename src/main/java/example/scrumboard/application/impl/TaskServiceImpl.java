@@ -1,11 +1,11 @@
-package example.scrumboard.application.services;
+package example.scrumboard.application.impl;
 
 import example.ddd.domain.ApplicationService;
 import example.scrumboard.domain.backlog.item.BacklogItemId;
 import example.scrumboard.domain.backlog.task.TaskId;
 
 @ApplicationService
-public class TaskService {
+public class TaskServiceImpl {
 
 	public TaskId createTask(BacklogItemId backlogItemId, String name, Integer hoursRemaining) {
 		return null;

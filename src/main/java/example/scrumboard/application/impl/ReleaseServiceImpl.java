@@ -1,4 +1,4 @@
-package example.scrumboard.application.services;
+package example.scrumboard.application.impl;
 
 import java.sql.Date;
 
@@ -7,7 +7,7 @@ import example.scrumboard.domain.backlog.item.BacklogItemId;
 import example.scrumboard.domain.release.ReleaseId;
 
 @ApplicationService
-public class ReleaseService {
+public class ReleaseServiceImpl {
 
 	public ReleaseId scheduleRelease(String name, Date releaseDate) {
 		return null;

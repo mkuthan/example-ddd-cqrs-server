@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-import example.scrumboard.application.services.ProductService;
+import example.scrumboard.application.api.ProductService;
 import example.scrumboard.domain.product.ProductId;
 
 @RestController
