@@ -8,13 +8,12 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 
-import example.ddd.domain.ValueObject;
+import com.google.common.base.Predicate;
+
 import example.scrumboard.domain.backlog.item.BacklogItemId;
 
 @Entity
-public class ProductBacklogItem extends ValueObject {
-
-	private static final long serialVersionUID = 1L;
+public class ProductBacklogItem {
 
 	@Id
 	@GeneratedValue
@@ -34,15 +33,24 @@ public class ProductBacklogItem extends ValueObject {
 		this.position = requireNonNull(position);
 	}
 
-	public BacklogItemId getId() {
+	static Predicate<ProductBacklogItem> hasId(final BacklogItemId id) {
+		return new Predicate<ProductBacklogItem>() {
+			@Override
+			public boolean apply(ProductBacklogItem input) {
+				return input.getId().equals(id);
+			}
+		};
+	}
+
+	BacklogItemId getId() {
 		return id;
 	}
 
-	public Integer getPosition() {
+	Integer getPosition() {
 		return position;
 	}
 
-	public void setPosition(Integer position) {
+	void setPosition(Integer position) {
 		this.position = position;
 	}
 }

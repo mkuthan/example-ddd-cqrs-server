@@ -2,9 +2,6 @@ package example.scrumboard.domain.product;
 
 import static com.google.common.collect.Lists.newArrayList;
 
-import java.util.HashSet;
-import java.util.Set;
-
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
@@ -27,11 +24,11 @@ public class ProductTest {
 	@InjectMocks
 	private Product product;
 
-	private Builder builder;
+	private ProductBuilder productBuilder;
 
 	@BeforeMethod
 	protected void initializeBuilder() {
-		builder = new Builder().product(ANY_ID, ANY_NAME);
+		productBuilder = new ProductBuilder().withId(ANY_ID).withName(ANY_NAME);
 	}
 
 	public void shouldReorder() {
@@ -39,8 +36,12 @@ public class ProductTest {
 		BacklogItemId backlogItemId1 = new BacklogItemId("1");
 		BacklogItemId backlogItemId2 = new BacklogItemId("2");
 
-		givenProduct().addBacklogItemOnPosition(backlogItemId0, 0).addBacklogItemOnPosition(backlogItemId1, 1)
-				.addBacklogItemOnPosition(backlogItemId2, 2);
+		// @formatter:off
+		givenProduct()
+			.addBacklogItem(backlogItemId0)
+			.addBacklogItem(backlogItemId1)
+			.addBacklogItem(backlogItemId2);
+		// @formatter:on
 
 		whenProduct().reorder(backlogItemId0, 1);
 
@@ -55,8 +56,12 @@ public class ProductTest {
 		BacklogItemId backlogItemId1 = new BacklogItemId("1");
 		BacklogItemId backlogItemId2 = new BacklogItemId("2");
 
-		givenProduct().addBacklogItemOnPosition(backlogItemId0, 0).addBacklogItemOnPosition(backlogItemId1, 1)
-				.addBacklogItemOnPosition(backlogItemId2, 2);
+		// @formatter:off
+		givenProduct()
+			.addBacklogItem(backlogItemId0)
+			.addBacklogItem(backlogItemId1)
+			.addBacklogItem(backlogItemId2);
+		// @formatter:on
 
 		whenProduct().reorder(backlogItemId1, 1);
 
@@ -81,12 +86,12 @@ public class ProductTest {
 		whenProduct().reorder(new BacklogItemId("another id"), 1);
 	}
 
-	private Builder givenProduct() {
-		return builder;
+	private ProductBuilder givenProduct() {
+		return productBuilder;
 	}
 
 	private Product whenProduct() {
-		this.product = builder.build();
+		this.product = productBuilder.build();
 
 		MockitoAnnotations.initMocks(this);
 
@@ -95,35 +100,6 @@ public class ProductTest {
 
 	private EventPublisherAssert thenProduct() {
 		return new EventPublisherAssert(eventPublisher);
-	}
-
-	public static class Builder {
-
-		private ProductId id;
-
-		private String name;
-
-		private Set<ProductBacklogItem> backlogItems = new HashSet<>();
-
-		public Builder product(ProductId id, String name) {
-			this.id = id;
-			this.name = name;
-			return this;
-		}
-
-		public Builder addBacklogItem(BacklogItemId id) {
-			this.backlogItems.add(new ProductBacklogItem(id, 0));
-			return this;
-		}
-
-		public Builder addBacklogItemOnPosition(BacklogItemId id, int position) {
-			this.backlogItems.add(new ProductBacklogItem(id, position));
-			return this;
-		}
-
-		public Product build() {
-			return new Product(id, name, backlogItems);
-		}
 	}
 
 }

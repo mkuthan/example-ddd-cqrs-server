@@ -7,6 +7,8 @@
 
 	<logger name="example" level="TRACE" />
 
+	<logger name="org.hibernate.SQL" level="DEBUG" />
+
 	<!-- <logger name="org.springframework" level="DEBUG" /> -->
 	<!-- <logger name="org.hibernate" level="DEBUG" /> -->
 

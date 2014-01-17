@@ -8,8 +8,10 @@ import java.lang.annotation.Target;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.web.WebAppConfiguration;
 
+import example.scrumboard.rest.config.ScrumBoardRestCommonConfig;
+
 @WebAppConfiguration
-@ContextConfiguration(classes = ScrumBoardRestCommandsConfig.class)
+@ContextConfiguration(classes = { ScrumBoardRestCommandsConfig.class, ScrumBoardRestCommonConfig.class })
 @Target(ElementType.TYPE)
 @Retention(RetentionPolicy.RUNTIME)
 public @interface ScrumBoardRestCommandTest {

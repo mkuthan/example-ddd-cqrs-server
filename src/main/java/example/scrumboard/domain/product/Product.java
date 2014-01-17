@@ -16,6 +16,7 @@ import javax.persistence.OneToMany;
 
 import com.google.common.base.Function;
 import com.google.common.base.Optional;
+import com.google.common.collect.FluentIterable;
 import com.google.common.collect.Ordering;
 
 import example.ddd.domain.AggregateRoot;
@@ -26,7 +27,7 @@ import example.scrumboard.domain.sprint.Sprint;
 @Entity
 public class Product extends AggregateRoot<ProductId> {
 
-	@Column(nullable = false)
+	@Column(nullable = false, unique = true)
 	private String name;
 
 	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
@@ -98,21 +99,24 @@ public class Product extends AggregateRoot<ProductId> {
 		publish(new ProductBacklogItemReordered(getId(), backlogItemIds));
 	}
 
+	String getName() {
+		return name;
+	}
+
+	Set<ProductBacklogItem> getBacklogItems() {
+		return backlogItems;
+	}
+
+	Optional<ProductBacklogItem> findBacklogItem(BacklogItemId backlogItemId) {
+		return FluentIterable.from(backlogItems).firstMatch(ProductBacklogItem.hasId(backlogItemId));
+	}
+
+	boolean containsBacklogItem(BacklogItemId backlogItemId) {
+		return findBacklogItem(backlogItemId).isPresent();
+	}
+
 	private int lastPosition() {
 		return backlogItems.size();
-	}
-
-	private Optional<ProductBacklogItem> findBacklogItem(BacklogItemId backlogItemId) {
-		for (ProductBacklogItem backlogItem : backlogItems) {
-			if (backlogItem.getId().equals(backlogItemId)) {
-				return Optional.of(backlogItem);
-			}
-		}
-		return Optional.absent();
-	}
-
-	private boolean containsBacklogItem(BacklogItemId backlogItemId) {
-		return findBacklogItem(backlogItemId).isPresent();
 	}
 
 	private int requirePositivePosition(int position) {
