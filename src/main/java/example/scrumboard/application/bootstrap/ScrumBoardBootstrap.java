@@ -2,15 +2,15 @@ package example.scrumboard.application.bootstrap;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationListener;
-import org.springframework.stereotype.Component;
 
-import example.ddd.domain.ApplicationBootstrapEvent;
+import example.bootstrap.domain.BootstrapEvent;
+import example.bootstrap.domain.BootstrapListener;
 import example.scrumboard.application.api.ProductService;
 import example.scrumboard.domain.product.ProductId;
 import example.scrumboard.domain.product.ProductRepository;
 
-@Component
-public class ScrumBoardBootstrap implements ApplicationListener<ApplicationBootstrapEvent> {
+@BootstrapListener
+public class ScrumBoardBootstrap implements ApplicationListener<BootstrapEvent> {
 
 	@Autowired
 	private ProductService productServiceImpl;
@@ -19,7 +19,7 @@ public class ScrumBoardBootstrap implements ApplicationListener<ApplicationBoots
 	private ProductRepository productRepository;
 
 	@Override
-	public void onApplicationEvent(ApplicationBootstrapEvent event) {
+	public void onApplicationEvent(BootstrapEvent event) {
 		if (productRepository.count() == 0) {
 			initializeProducts();
 		}

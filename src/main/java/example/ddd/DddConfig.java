@@ -1,4 +1,4 @@
-package example.ddd.infrastructure;
+package example.ddd;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
@@ -8,7 +8,7 @@ import com.google.common.eventbus.EventBus;
 
 @Configuration
 @ComponentScan
-public class DddInfrastructureConfig {
+public class DddConfig {
 
 	@Bean
 	public EventBus eventBus() {

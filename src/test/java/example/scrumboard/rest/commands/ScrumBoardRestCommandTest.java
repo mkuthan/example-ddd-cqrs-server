@@ -8,9 +8,9 @@ import java.lang.annotation.Target;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.web.WebAppConfiguration;
 
-@Target(ElementType.TYPE)
-@Retention(RetentionPolicy.RUNTIME)
 @WebAppConfiguration
 @ContextConfiguration(classes = ScrumBoardRestCommandsConfig.class)
+@Target(ElementType.TYPE)
+@Retention(RetentionPolicy.RUNTIME)
 public @interface ScrumBoardRestCommandTest {
 }

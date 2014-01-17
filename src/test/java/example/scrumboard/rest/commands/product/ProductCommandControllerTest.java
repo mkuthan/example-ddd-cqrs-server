@@ -9,28 +9,17 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
-import org.springframework.test.context.testng.AbstractTestNGSpringContextTests;
-import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.setup.MockMvcBuilders;
-import org.springframework.web.context.WebApplicationContext;
-import org.testng.annotations.BeforeClass;
-import org.testng.annotations.Test;
 
 import example.scrumboard.application.api.ProductService;
 import example.scrumboard.domain.product.ProductId;
+import example.scrumboard.rest.AbstractControllerTest;
 import example.scrumboard.rest.commands.ScrumBoardRestCommandTest;
 
 @ScrumBoardRestCommandTest
-@Test
-public class ProductCommandControllerTest extends AbstractTestNGSpringContextTests {
-
-	@Autowired
-	private WebApplicationContext webApplicationContext;
+public class ProductCommandControllerTest extends AbstractControllerTest {
 
 	@Autowired
 	private ProductService productService;
-
-	private MockMvc mockMvc;
 
 	public void createProduct() throws Exception {
 		String productName = "any name";
@@ -39,7 +28,7 @@ public class ProductCommandControllerTest extends AbstractTestNGSpringContextTes
 		when(productService.createProduct(eq(productName))).thenReturn(productId);
 
 		// @formatter:off
-		this.mockMvc.perform(post("/products").param("name", productName).accept(MediaType.APPLICATION_JSON))
+		getMockMvc().perform(post("/products").param("name", productName).accept(MediaType.APPLICATION_JSON))
 			//.andDo(print())
 			.andExpect(status().isCreated())
 			.andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
@@ -47,8 +36,4 @@ public class ProductCommandControllerTest extends AbstractTestNGSpringContextTes
 		// @formatter:on
 	}
 
-	@BeforeClass
-	void setup() {
-		this.mockMvc = MockMvcBuilders.webAppContextSetup(this.webApplicationContext).build();
-	}
 }

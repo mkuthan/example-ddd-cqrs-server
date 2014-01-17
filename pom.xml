@@ -62,6 +62,14 @@
 				</plugin>
 
 				<plugin>
+					<artifactId>maven-surefire-plugin</artifactId>
+					<version>2.16</version>
+					<configuration>
+						<parallel>classes</parallel>
+					</configuration>
+				</plugin>
+
+				<plugin>
 					<groupId>org.zeroturnaround</groupId>
 					<artifactId>jrebel-maven-plugin</artifactId>
 					<version>1.1.5</version>
@@ -84,6 +92,7 @@
 						<systemProperties>
 							<java.util.logging.manager>org.apache.juli.ClassLoaderLogManager</java.util.logging.manager>
 							<logback.ContextSelector>JNDI</logback.ContextSelector>
+							<spring.profiles.active>local,bootstrap</spring.profiles.active>
 						</systemProperties>
 					</configuration>
 					<dependencies>

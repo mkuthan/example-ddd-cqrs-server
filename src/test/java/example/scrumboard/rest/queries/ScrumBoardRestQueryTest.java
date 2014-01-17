@@ -5,14 +5,16 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.web.WebAppConfiguration;
 
 import example.scrumboard.ScrumBoardConfig;
 
-@Target(ElementType.TYPE)
-@Retention(RetentionPolicy.RUNTIME)
 @WebAppConfiguration
 @ContextConfiguration(classes = ScrumBoardConfig.class)
+@ActiveProfiles({ "test", "bootstrap" })
+@Target(ElementType.TYPE)
+@Retention(RetentionPolicy.RUNTIME)
 public @interface ScrumBoardRestQueryTest {
 }

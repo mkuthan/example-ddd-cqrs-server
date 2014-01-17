@@ -5,7 +5,7 @@
 		</encoder>
 	</appender>
 
-	<logger name="example" level="INFO" />
+	<logger name="example" level="TRACE" />
 
 	<!-- <logger name="org.springframework" level="DEBUG" /> -->
 	<!-- <logger name="org.hibernate" level="DEBUG" /> -->

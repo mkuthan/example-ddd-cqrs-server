@@ -5,7 +5,7 @@
 		</encoder>
 	</appender>
 
-	<logger name="example" level="DEBUG" />
+	<logger name="example" level="TRACE" />
 	
 	<root level="INFO">
 		<appender-ref ref="STDOUT" />

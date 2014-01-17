@@ -8,13 +8,13 @@ import org.springframework.stereotype.Component;
 
 @Component
 @Aspect
-public class AutowiredRepositoryAspect {
+public class RepositoryAutowiringAspect {
 
 	@Autowired
 	private AutowireCapableBeanFactory beanFactory;
 
 	@AfterReturning(pointcut = "execution(public * example.ddd.domain.Repository+.load(..))", returning = "entity")
-	public void autowireEntity(Object entity) {
+	public void autowireLoadedEntity(Object entity) {
 		beanFactory.autowireBean(entity);
 	}
 

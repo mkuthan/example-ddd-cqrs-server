@@ -1,13 +1,13 @@
-package example.ddd.domain;
+package example.bootstrap.domain;
 
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.event.ApplicationContextEvent;
 
-public class ApplicationBootstrapEvent extends ApplicationContextEvent {
+public class BootstrapEvent extends ApplicationContextEvent {
 
 	private static final long serialVersionUID = 1L;
 
-	public ApplicationBootstrapEvent(ApplicationContext source) {
+	public BootstrapEvent(ApplicationContext source) {
 		super(source);
 	}
 
