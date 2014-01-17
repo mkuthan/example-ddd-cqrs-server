@@ -9,6 +9,6 @@ public interface ProductService {
 
 	BacklogItemId createProductBacklogItem(ProductId productId, String name);
 
-	void reorderProductBacklogItem(ProductId productId, BacklogItemId backlogItemId, int newPosition);
+	void reorderProductBacklogItems(ProductId productId, BacklogItemId... backlogItemIds);
 
 }

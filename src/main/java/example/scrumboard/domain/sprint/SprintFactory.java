@@ -11,6 +11,6 @@ public class SprintFactory {
 	public Sprint create(String name, Date beginDate, Date endDate) {
 		SprintId id = new SprintId(UUID.randomUUID().toString());
 
-		return new Sprint(id);
+		return new Sprint(id, null);
 	}
 }

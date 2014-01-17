@@ -15,9 +15,6 @@ import example.scrumboard.infrastructure.jpa.AbstractJpaTest;
 @JpaRepositoryTest
 public class JpaProductRepositoryTest extends AbstractJpaTest {
 
-	private static final ProductId ANY_ID = new ProductId("any id");
-	private static final String ANY_NAME = "any name";
-
 	@Autowired
 	private ProductRepository repository;
 
@@ -62,7 +59,7 @@ public class JpaProductRepositoryTest extends AbstractJpaTest {
 	}
 
 	private ProductBuilder givenProduct() {
-		return new ProductBuilder().withId(ANY_ID).withName(ANY_NAME);
+		return new ProductBuilder();
 	}
 
 	private ProductAssert thenProduct(ProductId id) {

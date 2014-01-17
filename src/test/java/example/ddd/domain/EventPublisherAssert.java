@@ -6,21 +6,18 @@ import static org.mockito.Mockito.verifyNoMoreInteractions;
 
 import org.assertj.core.api.AbstractAssert;
 
-import example.ddd.domain.Event;
-import example.ddd.domain.EventPublisher;
-
 public class EventPublisherAssert extends AbstractAssert<EventPublisherAssert, EventPublisher> {
 
 	public EventPublisherAssert(EventPublisher actual) {
 		super(actual, EventPublisherAssert.class);
 	}
 
-	public EventPublisherAssert eventPublished(Event event) {
+	public EventPublisherAssert published(Event event) {
 		verify(actual).publish(eq(event));
 		return this;
 	}
 
-	public EventPublisherAssert eventWasNotPublished() {
+	public EventPublisherAssert notPublished() {
 		verifyNoMoreInteractions(actual);
 		return this;
 	}

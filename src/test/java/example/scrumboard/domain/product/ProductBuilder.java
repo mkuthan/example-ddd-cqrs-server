@@ -8,9 +8,9 @@ import example.scrumboard.domain.backlog.item.BacklogItemId;
 
 public class ProductBuilder {
 
-	private ProductId id;
+	private ProductId id = new ProductId("any id");
 
-	private String name;
+	private String name = "any name";
 
 	private List<ProductBacklogItem> backlogItems = new ArrayList<>();
 

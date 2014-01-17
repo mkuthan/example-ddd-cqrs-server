@@ -1,22 +1,22 @@
 package example.scrumboard.domain.product;
 
-import static com.google.common.collect.Lists.newArrayList;
+import static com.googlecode.catchexception.CatchException.catchException;
+import static com.googlecode.catchexception.CatchException.caughtException;
+import static org.assertj.core.api.Assertions.assertThat;
 
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
-import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
 import example.ddd.domain.EventPublisher;
 import example.ddd.domain.EventPublisherAssert;
+import example.scrumboard.domain.backlog.item.BacklogItem;
+import example.scrumboard.domain.backlog.item.BacklogItemBuilder;
 import example.scrumboard.domain.backlog.item.BacklogItemId;
 
 @Test
 public class ProductTest {
-
-	private static final ProductId ANY_ID = new ProductId("any id");
-	private static final String ANY_NAME = "any name";
 
 	@Mock
 	private EventPublisher eventPublisher;
@@ -26,9 +26,40 @@ public class ProductTest {
 
 	private ProductBuilder productBuilder;
 
-	@BeforeMethod
-	protected void initializeBuilder() {
-		productBuilder = new ProductBuilder().withId(ANY_ID).withName(ANY_NAME);
+	public void shouldAssignFirstBacklogItem() {
+		BacklogItemId backlogItemId = new BacklogItemId("id");
+		BacklogItem backlogItem = givenBacklogItem().withId(backlogItemId).build();
+
+		givenProduct();
+
+		whenProduct().assign(backlogItem);
+
+		thenProduct().hasBacklogItem(backlogItemId, 0);
+		thenEvent().published(new BacklogItemAssignedToProductEvent(product.getId(), backlogItemId));
+	}
+
+	public void shouldAssignSecondBacklogItem() {
+		BacklogItemId backlogItemId = new BacklogItemId("id");
+		BacklogItem backlogItem = givenBacklogItem().withId(backlogItemId).build();
+
+		givenProduct().addBacklogItem(new BacklogItemId("existing id"));
+
+		whenProduct().assign(backlogItem);
+
+		thenProduct().hasBacklogItem(backlogItemId, 1);
+		thenEvent().published(new BacklogItemAssignedToProductEvent(product.getId(), backlogItemId));
+	}
+
+	public void shouldNotAssignExistingBacklogItem() {
+		BacklogItemId backlogItemId = new BacklogItemId("id");
+		BacklogItem backlogItem = givenBacklogItem().withId(backlogItemId).build();
+
+		givenProduct().addBacklogItem(backlogItemId);
+
+		catchException(whenProduct()).assign(backlogItem);
+
+		assertThat(caughtException()).isInstanceOf(IllegalArgumentException.class);
+		thenEvent().notPublished();
 	}
 
 	public void shouldReorder() {
@@ -43,15 +74,19 @@ public class ProductTest {
 			.addBacklogItem(backlogItemId2);
 		// @formatter:on
 
-		whenProduct().reorder(backlogItemId0, 1);
+		whenProduct().reorder(backlogItemId2, backlogItemId1, backlogItemId0);
 
-		ProductBacklogItemReordered expectedEvent = new ProductBacklogItemReordered(product.getId(), newArrayList(
-				backlogItemId1, backlogItemId0, backlogItemId2));
+		// @formatter:off
+		thenProduct()
+			.hasBacklogItem(backlogItemId0, 2)
+			.hasBacklogItem(backlogItemId1, 1)
+			.hasBacklogItem(backlogItemId2, 0);
+		// @formatter:on
 
-		thenProduct().eventPublished(expectedEvent);
+		thenEvent().notPublished();
 	}
 
-	public void shouldNotReorderWhenPositionDoesNotChange() {
+	public void shouldNotReorderWhenNoChanges() {
 		BacklogItemId backlogItemId0 = new BacklogItemId("0");
 		BacklogItemId backlogItemId1 = new BacklogItemId("1");
 		BacklogItemId backlogItemId2 = new BacklogItemId("2");
@@ -63,30 +98,32 @@ public class ProductTest {
 			.addBacklogItem(backlogItemId2);
 		// @formatter:on
 
-		whenProduct().reorder(backlogItemId1, 1);
+		whenProduct().reorder(backlogItemId0, backlogItemId1, backlogItemId2);
 
-		thenProduct().eventWasNotPublished();
+		// @formatter:off
+		thenProduct()
+			.hasBacklogItem(backlogItemId0, 0)
+			.hasBacklogItem(backlogItemId1, 1)
+			.hasBacklogItem(backlogItemId2, 2);
+		// @formatter:on
+
+		thenEvent().notPublished();
 	}
 
-	@Test(expectedExceptions = IllegalArgumentException.class)
-	public void mustThrowExceptionWhenReorderedBacklogItemPositionIsNegative() {
-		BacklogItemId backlogItemId = new BacklogItemId("any id");
+	public void shouldNotReorderNonExistingBacklogItem() {
+		BacklogItemId backlogItemId0 = new BacklogItemId("0");
+		BacklogItemId backlogItemId1 = new BacklogItemId("1");
 
-		givenProduct().addBacklogItem(backlogItemId);
+		givenProduct().addBacklogItem(backlogItemId0);
 
-		whenProduct().reorder(backlogItemId, -1);
-	}
+		catchException(whenProduct()).reorder(backlogItemId1);
+		assertThat(caughtException()).isInstanceOf(IllegalArgumentException.class);
 
-	@Test(expectedExceptions = IllegalArgumentException.class)
-	public void mustThrowExceptionWhenReorderedBacklogItemDoesNotExist() {
-		BacklogItemId backlogItemId = new BacklogItemId("any id");
-
-		givenProduct().addBacklogItem(backlogItemId);
-
-		whenProduct().reorder(new BacklogItemId("another id"), 1);
+		thenEvent().notPublished();
 	}
 
 	private ProductBuilder givenProduct() {
+		productBuilder = new ProductBuilder();
 		return productBuilder;
 	}
 
@@ -98,8 +135,16 @@ public class ProductTest {
 		return product;
 	}
 
-	private EventPublisherAssert thenProduct() {
+	private ProductAssert thenProduct() {
+		return new ProductAssert(product);
+	}
+
+	private EventPublisherAssert thenEvent() {
 		return new EventPublisherAssert(eventPublisher);
+	}
+
+	private BacklogItemBuilder givenBacklogItem() {
+		return new BacklogItemBuilder();
 	}
 
 }
