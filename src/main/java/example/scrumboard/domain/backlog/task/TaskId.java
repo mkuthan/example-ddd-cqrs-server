@@ -1,12 +1,18 @@
 package example.scrumboard.domain.backlog.task;
 
 import static java.util.Objects.requireNonNull;
+
+import javax.persistence.Column;
+import javax.persistence.Embeddable;
+
 import example.ddd.domain.ValueObject;
 
+@Embeddable
 public class TaskId extends ValueObject {
 
 	private static final long serialVersionUID = 1L;
 
+	@Column(name = "task_id", nullable = false)
 	private String id;
 
 	TaskId() {

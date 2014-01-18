@@ -10,6 +10,8 @@ import javax.persistence.MappedSuperclass;
 import javax.persistence.Transient;
 import javax.persistence.Version;
 
+import org.springframework.beans.factory.annotation.Autowired;
+
 @MappedSuperclass
 public abstract class AggregateRoot<ID> {
 
@@ -21,6 +23,7 @@ public abstract class AggregateRoot<ID> {
 	private Integer version;
 
 	@Transient
+	@Autowired
 	private EventPublisher eventPublisher;
 
 	protected AggregateRoot() {

@@ -10,10 +10,9 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.web.WebAppConfiguration;
 
 import example.scrumboard.config.ScrumBoardConfig;
-import example.scrumboard.rest.config.ScrumBoardRestCommonConfig;
 
 @WebAppConfiguration
-@ContextConfiguration(classes = { ScrumBoardConfig.class, ScrumBoardRestCommonConfig.class })
+@ContextConfiguration(classes = { ScrumBoardConfig.class })
 @ActiveProfiles({ "test", "bootstrap" })
 @Target(ElementType.TYPE)
 @Retention(RetentionPolicy.RUNTIME)

@@ -32,7 +32,7 @@ public class ProductTest {
 
 		givenProduct();
 
-		whenProduct().assign(backlogItem);
+		whenProduct().planBacklogItem(backlogItem);
 
 		thenProduct().hasBacklogItem(backlogItemId, 0);
 		thenEvent().published(new BacklogItemAssignedToProductEvent(product.getId(), backlogItemId));
@@ -44,7 +44,7 @@ public class ProductTest {
 
 		givenProduct().addBacklogItem(new BacklogItemId("existing id"));
 
-		whenProduct().assign(backlogItem);
+		whenProduct().planBacklogItem(backlogItem);
 
 		thenProduct().hasBacklogItem(backlogItemId, 1);
 		thenEvent().published(new BacklogItemAssignedToProductEvent(product.getId(), backlogItemId));
@@ -56,7 +56,7 @@ public class ProductTest {
 
 		givenProduct().addBacklogItem(backlogItemId);
 
-		catchException(whenProduct()).assign(backlogItem);
+		catchException(whenProduct()).planBacklogItem(backlogItem);
 
 		assertThat(caughtException()).isInstanceOf(IllegalArgumentException.class);
 		thenEvent().notPublished();
@@ -74,7 +74,7 @@ public class ProductTest {
 			.addBacklogItem(backlogItemId2);
 		// @formatter:on
 
-		whenProduct().reorder(backlogItemId2, backlogItemId1, backlogItemId0);
+		whenProduct().reorderBacklogItems(backlogItemId2, backlogItemId1, backlogItemId0);
 
 		// @formatter:off
 		thenProduct()
@@ -98,7 +98,7 @@ public class ProductTest {
 			.addBacklogItem(backlogItemId2);
 		// @formatter:on
 
-		whenProduct().reorder(backlogItemId0, backlogItemId1, backlogItemId2);
+		whenProduct().reorderBacklogItems(backlogItemId0, backlogItemId1, backlogItemId2);
 
 		// @formatter:off
 		thenProduct()
@@ -116,7 +116,7 @@ public class ProductTest {
 
 		givenProduct().addBacklogItem(backlogItemId0);
 
-		catchException(whenProduct()).reorder(backlogItemId1);
+		catchException(whenProduct()).reorderBacklogItems(backlogItemId1);
 		assertThat(caughtException()).isInstanceOf(IllegalArgumentException.class);
 
 		thenEvent().notPublished();

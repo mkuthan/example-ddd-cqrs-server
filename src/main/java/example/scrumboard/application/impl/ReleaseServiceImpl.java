@@ -1,25 +1,52 @@
 package example.scrumboard.application.impl;
 
-import java.sql.Date;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import example.ddd.domain.ApplicationService;
+import example.scrumboard.application.api.ReleaseService;
+import example.scrumboard.domain.backlog.item.BacklogItem;
 import example.scrumboard.domain.backlog.item.BacklogItemId;
+import example.scrumboard.domain.backlog.item.BacklogItemRepository;
+import example.scrumboard.domain.release.Release;
 import example.scrumboard.domain.release.ReleaseId;
+import example.scrumboard.domain.release.ReleaseRepository;
 
 @ApplicationService
-public class ReleaseServiceImpl {
+public class ReleaseServiceImpl implements ReleaseService {
 
-	public ReleaseId scheduleRelease(String name, Date releaseDate) {
-		return null;
-	}
+	@Autowired
+	private ReleaseRepository releaseRepository;
 
+	@Autowired
+	private BacklogItemRepository backlogItemRepository;
+
+	@Override
 	public void scheduleBacklogItem(ReleaseId releaseId, BacklogItemId backlogItemId) {
+		Release release = releaseRepository.load(releaseId);
+
+		BacklogItem backlogItem = backlogItemRepository.load(backlogItemId);
+		backlogItem.scheduleToRelease(release);
+
+		release.scheduleBacklogItem(backlogItem);
+
+		releaseRepository.save(release);
 	}
 
+	@Override
 	public void unscheduleBacklogItem(ReleaseId releaseId, BacklogItemId backlogItemId) {
+		Release release = releaseRepository.load(releaseId);
+
+		BacklogItem backlogItem = backlogItemRepository.load(backlogItemId);
+		backlogItem.unscheduleFromRelease(release);
+
+		release.unscheduleBacklogItem(backlogItem);
+
+		releaseRepository.save(release);
 	}
-	
+
+	@Override
 	public void archive(ReleaseId releaseId) {
+		// TODO Auto-generated method stub
 	}
 
 }

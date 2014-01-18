@@ -6,27 +6,28 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 
 import example.ddd.domain.AggregateRoot;
+import example.scrumboard.domain.release.Release;
 import example.scrumboard.domain.sprint.Sprint;
 
 @Entity
 public class BacklogItem extends AggregateRoot<BacklogItemId> {
 
 	@Column(nullable = false)
-	private String name;
+	private String story;
 
 	BacklogItem() {
 	}
 
-	BacklogItem(BacklogItemId id, String name) {
+	BacklogItem(BacklogItemId id, String story) {
 		super(id);
-		this.name = requireNonNull(name);
+		this.story = requireNonNull(story);
 	}
 
-	public void commitTo(Sprint sprint) {
+	public void commitToSprint(Sprint sprint) {
 		// TODO Auto-generated method stub
 	}
 
-	public void uncommitFrom(Sprint sprint) {
+	public void uncommitFromSprint(Sprint sprint) {
 		// TODO Auto-generated method stub
 	}
 
@@ -36,6 +37,16 @@ public class BacklogItem extends AggregateRoot<BacklogItemId> {
 
 	public void assignPriority(BacklogItemPriority priority) {
 		// TODO Auto-generated method stub
+	}
+
+	public void scheduleToRelease(Release release) {
+		// TODO Auto-generated method stub
+
+	}
+
+	public void unscheduleFromRelease(Release release) {
+		// TODO Auto-generated method stub
+
 	}
 
 }

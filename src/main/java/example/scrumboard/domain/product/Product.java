@@ -19,8 +19,6 @@ import com.google.common.collect.FluentIterable;
 import example.ddd.domain.AggregateRoot;
 import example.scrumboard.domain.backlog.item.BacklogItem;
 import example.scrumboard.domain.backlog.item.BacklogItemId;
-import example.scrumboard.domain.release.Release;
-import example.scrumboard.domain.sprint.Sprint;
 
 @Entity
 public class Product extends AggregateRoot<ProductId> {
@@ -41,7 +39,7 @@ public class Product extends AggregateRoot<ProductId> {
 		this.backlogItems = requireNonNull(backlogItems);
 	}
 
-	public void assign(BacklogItem backlogItem) {
+	public void planBacklogItem(BacklogItem backlogItem) {
 		requireNonNull(backlogItem);
 
 		BacklogItemId backlogItemId = backlogItem.getId();
@@ -56,15 +54,7 @@ public class Product extends AggregateRoot<ProductId> {
 		publish(new BacklogItemAssignedToProductEvent(getId(), backlogItemId));
 	}
 
-	public void plan(Sprint sprint) {
-		// TODO Auto-generated method stub
-	}
-
-	public void plan(Release sprint) {
-		// TODO Auto-generated method stub
-	}
-
-	public void reorder(List<BacklogItemId> backlogItemIds) {
+	public void reorderBacklogItems(List<BacklogItemId> backlogItemIds) {
 		requireNonNull(backlogItemIds);
 
 		for (ProductBacklogItem backlogItem : backlogItems) {
@@ -80,9 +70,9 @@ public class Product extends AggregateRoot<ProductId> {
 
 	}
 
-	public void reorder(BacklogItemId... backlogItemIds) {
+	public void reorderBacklogItems(BacklogItemId... backlogItemIds) {
 		requireNonNull(backlogItemIds);
-		reorder(newArrayList(backlogItemIds));
+		reorderBacklogItems(newArrayList(backlogItemIds));
 	}
 
 	String getName() {

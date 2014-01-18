@@ -1,14 +1,22 @@
 package example.scrumboard.application.api;
 
+import java.sql.Date;
+
 import example.scrumboard.domain.backlog.item.BacklogItemId;
 import example.scrumboard.domain.product.ProductId;
+import example.scrumboard.domain.release.ReleaseId;
+import example.scrumboard.domain.sprint.SprintId;
 
 public interface ProductService {
 
-	ProductId createProduct(String name);
+	ProductId createProduct(String productName);
 
-	BacklogItemId createProductBacklogItem(ProductId productId, String name);
+	BacklogItemId planBacklogItem(ProductId productId, String backlogItemStory);
 
-	void reorderProductBacklogItems(ProductId productId, BacklogItemId... backlogItemIds);
+	void reorderBacklogItems(ProductId productId, BacklogItemId... backlogItemIds);
+
+	ReleaseId scheduleRelease(ProductId productId, String releaseName, Date releaseDate);
+
+	SprintId scheduleSprint(ProductId productId, String sprintName, Date sprintBeginDate, Date sprintEndDate);
 
 }

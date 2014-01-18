@@ -12,7 +12,7 @@ public class BacklogItemId extends ValueObject {
 
 	private static final long serialVersionUID = 1L;
 
-	@Column(nullable = false)
+	@Column(name = "backlog_item_id", nullable = false)
 	private String id;
 
 	BacklogItemId() {

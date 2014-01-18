@@ -7,8 +7,8 @@ import org.springframework.stereotype.Component;
 @Component
 public class BacklogItemFactory {
 
-	public BacklogItem create(String name) {
+	public BacklogItem create(String story) {
 		BacklogItemId id = new BacklogItemId(UUID.randomUUID().toString());
-		return new BacklogItem(id, name);
+		return new BacklogItem(id, story);
 	}
 }

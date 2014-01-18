@@ -1,5 +1,6 @@
 package example.scrumboard.rest.queries.product
 
+import example.scrumboard.domain.backlog.item.StoryPoints
 import groovy.sql.Sql
 
 import org.springframework.beans.factory.annotation.Autowired
@@ -27,22 +28,22 @@ class ProductQueryController {
 	def product(@PathVariable("productId") String productId) {
 		def query = """
 			SELECT 
-				p.c_id, 
+				p.c_product_id, 
 				p.c_name, 
-				COUNT(pbi.c_id) count
+				COUNT(pbi.c_product_id) count
 			FROM 
 				t_product p
 			LEFT OUTER JOIN t_product_backlog_item pbi ON 
-				p.c_id = pbi.c_product_id
+				p.c_product_id = pbi.c_product_id 
 			WHERE 
-				p.c_id = ?
+				p.c_product_id = ?
 			GROUP BY 
-				p.c_id, p.c_name
+				p.c_product_id, p.c_name
 		"""
 
 		sql.rows(query, [productId], 0, 1).collect { row ->
 			new ProductDto(
-					id: row.c_id,
+					id: row.c_product_id,
 					name: row.c_name,
 					backlogItemsCount: row.count
 					)
@@ -53,24 +54,24 @@ class ProductQueryController {
 	def backlogItems(@PathVariable("productId") String productId) {
 		def query = """
 			SELECT 
-				bi.c_id, 
-				bi.c_name, 
+				bi.c_backlog_item_id, 
+				bi.c_story, 
 				pbi.c_position
 			FROM 
 				t_product_backlog_item pbi
 			RIGHT OUTER JOIN t_product p ON
-				pbi.c_product_id = p.c_id
+				pbi.c_product_id = p.c_product_id
 			RIGHT OUTER JOIN t_backlog_item bi ON
-				pbi.c_id = bi.c_id
+				pbi.c_backlog_item_id = bi.c_backlog_item_id
 			WHERE 
-				p.c_id = ?
+				p.c_product_id = ?
 				ORDER BY pbi.c_position
 		"""
 
 		sql.rows(query, [productId]).collect { row ->
 			new ProductBacklogItemDto(
-					id: row.c_id,
-					name: row.c_name,
+					id: row.c_product_id,
+					story: row.c_story,
 					position: row.c_position
 					)
 		}
@@ -79,15 +80,15 @@ class ProductQueryController {
 	private List<ProductDto> productsContent(Pageable page) {
 		def query = """
 			SELECT 
-				p.c_id, 
+				p.c_product_id, 
 				p.c_name, 
-				COUNT(pbi.c_id) count
+				COUNT(pbi.c_product_id) count
 			FROM
 				t_product p
 			LEFT OUTER JOIN t_product_backlog_item pbi ON 
-				p.c_id = pbi.c_product_id
+				p.c_product_id = pbi.c_product_id
 			GROUP BY 
-				p.c_id, 
+				p.c_product_id, 
 				p.c_name
 			ORDER BY
 				p.c_name
@@ -95,7 +96,7 @@ class ProductQueryController {
 
 		sql.rows(query, page.offset, page.pageSize).collect { row ->
 			new ProductDto(
-					id: row.c_id,
+					id: row.c_product_id,
 					name: row.c_name,
 					backlogItemsCount: row.count
 					)

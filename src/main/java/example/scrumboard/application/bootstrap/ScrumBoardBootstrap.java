@@ -27,12 +27,12 @@ public class ScrumBoardBootstrap implements ApplicationListener<BootstrapEvent> 
 
 	private void initializeProducts() {
 		ProductId productId1 = productServiceImpl.createProduct("Example DDD/CQRS server");
-		productServiceImpl.createProductBacklogItem(productId1, "Write documentation");
-		productServiceImpl.createProductBacklogItem(productId1, "Add more unit tests");
+		productServiceImpl.planBacklogItem(productId1, "Write documentation");
+		productServiceImpl.planBacklogItem(productId1, "Add more unit tests");
 
 		ProductId productId2 = productServiceImpl.createProduct("Example DDD/CQRS client");
-		productServiceImpl.createProductBacklogItem(productId2, "Apply Twitter Bootstrap");
-		productServiceImpl.createProductBacklogItem(productId2, "Create Angular controllers");
+		productServiceImpl.planBacklogItem(productId2, "Apply Twitter Bootstrap");
+		productServiceImpl.planBacklogItem(productId2, "Create Angular controllers");
 
 		productServiceImpl.createProduct("Product with no backlog items");
 	}

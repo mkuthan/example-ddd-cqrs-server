@@ -1,6 +1,9 @@
 # Maven
 /target
 
+# TestNG
+/test-output
+
 # STS
 .classpath
 .groovy
