@@ -1,4 +1,4 @@
-package example.scrumboard.domain.backlog.task;
+package example.scrumboard.domain.backlogitem.task;
 
 public class TaskStateAdapter implements TaskState {
 

@@ -2,7 +2,7 @@ package example.scrumboard.application.api;
 
 import java.sql.Date;
 
-import example.scrumboard.domain.backlog.item.BacklogItemId;
+import example.scrumboard.domain.backlogitem.BacklogItemId;
 import example.scrumboard.domain.product.ProductId;
 import example.scrumboard.domain.release.ReleaseId;
 import example.scrumboard.domain.sprint.SprintId;

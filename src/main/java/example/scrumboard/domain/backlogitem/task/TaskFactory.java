@@ -1,4 +1,4 @@
-package example.scrumboard.domain.backlog.task;
+package example.scrumboard.domain.backlogitem.task;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -6,7 +6,7 @@ import java.util.UUID;
 
 import org.springframework.stereotype.Component;
 
-import example.scrumboard.domain.backlog.item.BacklogItem;
+import example.scrumboard.domain.backlogitem.BacklogItem;
 
 @Component
 public class TaskFactory {

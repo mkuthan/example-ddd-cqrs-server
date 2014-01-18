@@ -1,4 +1,4 @@
-package example.scrumboard.domain.backlog.task;
+package example.scrumboard.domain.backlogitem.task;
 
 import static java.util.Objects.requireNonNull;
 
@@ -16,8 +16,8 @@ import javax.persistence.OneToMany;
 import javax.persistence.OrderColumn;
 
 import example.ddd.domain.AggregateRoot;
-import example.scrumboard.domain.backlog.item.BacklogItem;
-import example.scrumboard.domain.backlog.item.BacklogItemId;
+import example.scrumboard.domain.backlogitem.BacklogItem;
+import example.scrumboard.domain.backlogitem.BacklogItemId;
 
 @Entity
 public class Task extends AggregateRoot<TaskId> {

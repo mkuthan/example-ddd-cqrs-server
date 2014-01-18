@@ -1,4 +1,8 @@
-package example.scrumboard.domain.backlog.item;
+package example.scrumboard.domain.backlogitem;
+
+import example.scrumboard.domain.backlogitem.BacklogItem;
+import example.scrumboard.domain.backlogitem.BacklogItemBuilder;
+import example.scrumboard.domain.backlogitem.BacklogItemId;
 
 public class BacklogItemBuilder {
 

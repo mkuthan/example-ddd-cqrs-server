@@ -1,4 +1,4 @@
-package example.scrumboard.domain.backlog.item;
+package example.scrumboard.domain.backlogitem;
 
 import java.util.UUID;
 

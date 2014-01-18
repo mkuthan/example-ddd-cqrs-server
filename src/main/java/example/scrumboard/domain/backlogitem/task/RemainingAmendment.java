@@ -1,4 +1,4 @@
-package example.scrumboard.domain.backlog.task;
+package example.scrumboard.domain.backlogitem.task;
 
 import static java.util.Objects.requireNonNull;
 

@@ -4,9 +4,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import example.ddd.domain.ApplicationService;
 import example.scrumboard.application.api.ReleaseService;
-import example.scrumboard.domain.backlog.item.BacklogItem;
-import example.scrumboard.domain.backlog.item.BacklogItemId;
-import example.scrumboard.domain.backlog.item.BacklogItemRepository;
+import example.scrumboard.domain.backlogitem.BacklogItem;
+import example.scrumboard.domain.backlogitem.BacklogItemId;
+import example.scrumboard.domain.backlogitem.BacklogItemRepository;
 import example.scrumboard.domain.release.Release;
 import example.scrumboard.domain.release.ReleaseId;
 import example.scrumboard.domain.release.ReleaseRepository;

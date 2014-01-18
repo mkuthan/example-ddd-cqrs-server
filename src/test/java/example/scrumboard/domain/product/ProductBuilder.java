@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 
-import example.scrumboard.domain.backlog.item.BacklogItemId;
+import example.scrumboard.domain.backlogitem.BacklogItemId;
 
 public class ProductBuilder {
 

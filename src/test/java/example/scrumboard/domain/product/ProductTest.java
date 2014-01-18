@@ -11,9 +11,9 @@ import org.testng.annotations.Test;
 
 import example.ddd.domain.EventPublisher;
 import example.ddd.domain.EventPublisherAssert;
-import example.scrumboard.domain.backlog.item.BacklogItem;
-import example.scrumboard.domain.backlog.item.BacklogItemBuilder;
-import example.scrumboard.domain.backlog.item.BacklogItemId;
+import example.scrumboard.domain.backlogitem.BacklogItem;
+import example.scrumboard.domain.backlogitem.BacklogItemBuilder;
+import example.scrumboard.domain.backlogitem.BacklogItemId;
 
 @Test
 public class ProductTest {

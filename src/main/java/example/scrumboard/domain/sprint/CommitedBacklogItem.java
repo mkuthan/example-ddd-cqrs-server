@@ -9,7 +9,7 @@ import javax.persistence.Id;
 
 import com.google.common.base.Predicate;
 
-import example.scrumboard.domain.backlog.item.BacklogItemId;
+import example.scrumboard.domain.backlogitem.BacklogItemId;
 
 @Entity
 public class CommitedBacklogItem {

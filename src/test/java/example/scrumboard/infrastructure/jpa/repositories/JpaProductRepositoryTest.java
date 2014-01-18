@@ -4,7 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.testng.annotations.Test;
 
-import example.scrumboard.domain.backlog.item.BacklogItemId;
+import example.scrumboard.domain.backlogitem.BacklogItemId;
 import example.scrumboard.domain.product.Product;
 import example.scrumboard.domain.product.ProductAssert;
 import example.scrumboard.domain.product.ProductBuilder;

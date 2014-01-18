@@ -14,7 +14,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 
 import example.ddd.domain.AggregateRoot;
-import example.scrumboard.domain.backlog.item.BacklogItem;
+import example.scrumboard.domain.backlogitem.BacklogItem;
 import example.scrumboard.domain.product.Product;
 import example.scrumboard.domain.product.ProductId;
 

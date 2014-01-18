@@ -1,6 +1,6 @@
 package example.scrumboard.application.api;
 
-import example.scrumboard.domain.backlog.item.BacklogItemId;
+import example.scrumboard.domain.backlogitem.BacklogItemId;
 import example.scrumboard.domain.release.ReleaseId;
 
 public interface ReleaseService {

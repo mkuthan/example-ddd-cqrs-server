@@ -2,7 +2,7 @@ package example.scrumboard.domain.product;
 
 import static java.util.Objects.requireNonNull;
 import example.ddd.domain.Event;
-import example.scrumboard.domain.backlog.item.BacklogItemId;
+import example.scrumboard.domain.backlogitem.BacklogItemId;
 
 public class BacklogItemAssignedToProductEvent extends Event {
 

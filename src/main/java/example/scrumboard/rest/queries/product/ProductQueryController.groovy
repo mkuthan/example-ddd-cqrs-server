@@ -1,6 +1,5 @@
 package example.scrumboard.rest.queries.product
 
-import example.scrumboard.domain.backlog.item.StoryPoints
 import groovy.sql.Sql
 
 import org.springframework.beans.factory.annotation.Autowired

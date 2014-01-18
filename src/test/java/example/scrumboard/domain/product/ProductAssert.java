@@ -6,7 +6,7 @@ import org.assertj.core.api.AbstractAssert;
 
 import com.google.common.base.Optional;
 
-import example.scrumboard.domain.backlog.item.BacklogItemId;
+import example.scrumboard.domain.backlogitem.BacklogItemId;
 
 public class ProductAssert extends AbstractAssert<ProductAssert, Product> {
 

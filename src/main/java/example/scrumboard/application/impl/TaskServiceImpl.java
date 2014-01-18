@@ -3,13 +3,13 @@ package example.scrumboard.application.impl;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import example.ddd.domain.ApplicationService;
-import example.scrumboard.domain.backlog.item.BacklogItem;
-import example.scrumboard.domain.backlog.item.BacklogItemId;
-import example.scrumboard.domain.backlog.item.BacklogItemRepository;
-import example.scrumboard.domain.backlog.task.Task;
-import example.scrumboard.domain.backlog.task.TaskFactory;
-import example.scrumboard.domain.backlog.task.TaskId;
-import example.scrumboard.domain.backlog.task.TaskRepository;
+import example.scrumboard.domain.backlogitem.BacklogItem;
+import example.scrumboard.domain.backlogitem.BacklogItemId;
+import example.scrumboard.domain.backlogitem.BacklogItemRepository;
+import example.scrumboard.domain.backlogitem.task.Task;
+import example.scrumboard.domain.backlogitem.task.TaskFactory;
+import example.scrumboard.domain.backlogitem.task.TaskId;
+import example.scrumboard.domain.backlogitem.task.TaskRepository;
 
 @ApplicationService
 public class TaskServiceImpl {
