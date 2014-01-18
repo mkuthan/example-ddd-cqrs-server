@@ -2,7 +2,7 @@ package example.scrumboard.domain.sprint;
 
 import static java.util.Objects.requireNonNull;
 
-import java.sql.Date;
+import java.util.Date;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -45,6 +45,10 @@ public class Sprint extends AggregateRoot<SprintId> {
 		this.beginDate = requireNonNull(beginDate);
 		this.endDate = requireNonNull(endDate);
 		this.backlogItems = requireNonNull(backlogItems);
+
+		if (beginDate.after(endDate)) {
+			throw new IllegalArgumentException("Begin date " + beginDate + " must be before end date " + endDate + ".");
+		}
 	}
 
 	public void commitBacklogItem(BacklogItem backlogItem) {

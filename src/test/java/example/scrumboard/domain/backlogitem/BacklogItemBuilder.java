@@ -1,14 +1,14 @@
 package example.scrumboard.domain.backlogitem;
 
-import example.scrumboard.domain.backlogitem.BacklogItem;
-import example.scrumboard.domain.backlogitem.BacklogItemBuilder;
-import example.scrumboard.domain.backlogitem.BacklogItemId;
+import example.scrumboard.domain.sprint.Sprint;
 
 public class BacklogItemBuilder {
 
 	private BacklogItemId id = new BacklogItemId("any id");
 
 	private String name = "any name";
+
+	private Sprint sprint;
 
 	public BacklogItemBuilder withId(BacklogItemId id) {
 		this.id = id;
@@ -20,8 +20,13 @@ public class BacklogItemBuilder {
 		return this;
 	}
 
+	public BacklogItemBuilder commitedToSprint(Sprint sprint) {
+		this.sprint = sprint;
+		return this;
+	}
+
 	public BacklogItem build() {
-		return new BacklogItem(id, name);
+		return new BacklogItem(id, name, sprint);
 	}
 
 }

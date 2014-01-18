@@ -2,6 +2,8 @@ package example.scrumboard.domain.product;
 
 import static com.googlecode.catchexception.CatchException.catchException;
 import static com.googlecode.catchexception.CatchException.caughtException;
+import static example.ddd.domain.DddAssertions.thenEvent;
+import static example.scrumboard.domain.ScrumBoardBuilders.givenBacklogItem;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import org.mockito.InjectMocks;
@@ -10,9 +12,7 @@ import org.mockito.MockitoAnnotations;
 import org.testng.annotations.Test;
 
 import example.ddd.domain.EventPublisher;
-import example.ddd.domain.EventPublisherAssert;
 import example.scrumboard.domain.backlogitem.BacklogItem;
-import example.scrumboard.domain.backlogitem.BacklogItemBuilder;
 import example.scrumboard.domain.backlogitem.BacklogItemId;
 
 @Test
@@ -35,7 +35,7 @@ public class ProductTest {
 		whenProduct().planBacklogItem(backlogItem);
 
 		thenProduct().hasBacklogItem(backlogItemId, 0);
-		thenEvent().published(new BacklogItemAssignedToProductEvent(product.getId(), backlogItemId));
+		thenEvent(eventPublisher).published(new BacklogItemAssignedToProductEvent(product.getId(), backlogItemId));
 	}
 
 	public void shouldAssignSecondBacklogItem() {
@@ -47,7 +47,7 @@ public class ProductTest {
 		whenProduct().planBacklogItem(backlogItem);
 
 		thenProduct().hasBacklogItem(backlogItemId, 1);
-		thenEvent().published(new BacklogItemAssignedToProductEvent(product.getId(), backlogItemId));
+		thenEvent(eventPublisher).published(new BacklogItemAssignedToProductEvent(product.getId(), backlogItemId));
 	}
 
 	public void shouldNotAssignExistingBacklogItem() {
@@ -59,7 +59,7 @@ public class ProductTest {
 		catchException(whenProduct()).planBacklogItem(backlogItem);
 
 		assertThat(caughtException()).isInstanceOf(IllegalArgumentException.class);
-		thenEvent().notPublished();
+		thenEvent(eventPublisher).notPublished();
 	}
 
 	public void shouldReorder() {
@@ -83,7 +83,7 @@ public class ProductTest {
 			.hasBacklogItem(backlogItemId2, 0);
 		// @formatter:on
 
-		thenEvent().notPublished();
+		thenEvent(eventPublisher).notPublished();
 	}
 
 	public void shouldNotReorderWhenNoChanges() {
@@ -107,7 +107,7 @@ public class ProductTest {
 			.hasBacklogItem(backlogItemId2, 2);
 		// @formatter:on
 
-		thenEvent().notPublished();
+		thenEvent(eventPublisher).notPublished();
 	}
 
 	public void shouldNotReorderNonExistingBacklogItem() {
@@ -119,7 +119,7 @@ public class ProductTest {
 		catchException(whenProduct()).reorderBacklogItems(backlogItemId1);
 		assertThat(caughtException()).isInstanceOf(IllegalArgumentException.class);
 
-		thenEvent().notPublished();
+		thenEvent(eventPublisher).notPublished();
 	}
 
 	private ProductBuilder givenProduct() {
@@ -137,14 +137,6 @@ public class ProductTest {
 
 	private ProductAssert thenProduct() {
 		return new ProductAssert(product);
-	}
-
-	private EventPublisherAssert thenEvent() {
-		return new EventPublisherAssert(eventPublisher);
-	}
-
-	private BacklogItemBuilder givenBacklogItem() {
-		return new BacklogItemBuilder();
 	}
 
 }
