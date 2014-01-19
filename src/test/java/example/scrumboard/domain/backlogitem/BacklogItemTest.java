@@ -1,7 +1,10 @@
 package example.scrumboard.domain.backlogitem;
 
+import static com.googlecode.catchexception.CatchException.catchException;
+import static com.googlecode.catchexception.CatchException.caughtException;
 import static example.ddd.domain.DddAssertions.thenEvent;
 import static example.scrumboard.domain.ScrumBoardBuilders.givenSprint;
+import static org.assertj.core.api.Assertions.assertThat;
 
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
@@ -68,6 +71,48 @@ public class BacklogItemTest {
 			.published(new BacklogItemUncommited(backlogItemId, oldSprintId))
 			.published(new BacklogItemCommited(backlogItemId, newSprintId));
 		// @formatter:on
+	}
+
+	public void shouldUncommitFromSprint() {
+		SprintId sprintId = new SprintId("id");
+		Sprint sprint = givenSprint().withId(sprintId).build();
+
+		BacklogItemId backlogItemId = new BacklogItemId("id");
+		givenBacklogItem().withId(backlogItemId).commitedToSprint(sprint);
+
+		whenBacklogItem().uncommitFromSprint(sprint);
+
+		thenBacklogItem().isNotCommited();
+		thenEvent(eventPublisher).published(new BacklogItemUncommited(backlogItemId, sprintId));
+	}
+
+	public void shouldNotUncommitFromSprintWhenNotCommited() {
+		SprintId sprintId = new SprintId("id");
+		Sprint sprint = givenSprint().withId(sprintId).build();
+
+		BacklogItemId backlogItemId = new BacklogItemId("id");
+		givenBacklogItem().withId(backlogItemId);
+
+		catchException(whenBacklogItem()).uncommitFromSprint(sprint);
+
+		assertThat(caughtException()).isInstanceOf(IllegalArgumentException.class);
+		thenEvent(eventPublisher).notPublished();
+	}
+
+	public void shouldNotUncommitFromSprintWhenNotCommitedToGivenSprint() {
+		SprintId oldSprintId = new SprintId("old");
+		Sprint oldSprint = givenSprint().withId(oldSprintId).build();
+
+		SprintId newSprintId = new SprintId("new");
+		Sprint newSprint = givenSprint().withId(newSprintId).build();
+
+		BacklogItemId backlogItemId = new BacklogItemId("id");
+		givenBacklogItem().withId(backlogItemId).commitedToSprint(oldSprint);
+
+		catchException(whenBacklogItem()).uncommitFromSprint(newSprint);
+
+		assertThat(caughtException()).isInstanceOf(IllegalArgumentException.class);
+		thenEvent(eventPublisher).notPublished();
 	}
 
 	private BacklogItemBuilder givenBacklogItem() {

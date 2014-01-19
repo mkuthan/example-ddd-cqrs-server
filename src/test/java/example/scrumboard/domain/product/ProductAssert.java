@@ -5,6 +5,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import org.assertj.core.api.AbstractAssert;
 
 import com.google.common.base.Optional;
+import com.google.common.collect.Iterables;
 
 import example.scrumboard.domain.backlogitem.BacklogItemId;
 
@@ -20,7 +21,8 @@ public class ProductAssert extends AbstractAssert<ProductAssert, Product> {
 	}
 
 	public ProductAssert hasBacklogItem(BacklogItemId backlogItemId, int position) {
-		Optional<ProductBacklogItem> backlogItem = actual.findBacklogItem(backlogItemId);
+		Optional<ProductBacklogItem> backlogItem = Iterables.tryFind(actual.getBacklogItems(),
+				ProductBacklogItem.hasId(backlogItemId));
 		assertThat(backlogItem.orNull()).overridingErrorMessage("Backlog item %s not found", backlogItemId).isNotNull();
 
 		int actualPosition = backlogItem.get().getPosition();
@@ -30,5 +32,4 @@ public class ProductAssert extends AbstractAssert<ProductAssert, Product> {
 
 		return this;
 	}
-
 }

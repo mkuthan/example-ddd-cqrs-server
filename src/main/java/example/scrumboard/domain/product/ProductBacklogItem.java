@@ -15,6 +15,15 @@ import example.scrumboard.domain.backlogitem.BacklogItemId;
 @Entity
 public class ProductBacklogItem {
 
+	static Predicate<ProductBacklogItem> hasId(final BacklogItemId id) {
+		return new Predicate<ProductBacklogItem>() {
+			@Override
+			public boolean apply(ProductBacklogItem input) {
+				return input.getId().equals(id);
+			}
+		};
+	}
+
 	@Id
 	@GeneratedValue
 	private Long entityId;
@@ -31,15 +40,6 @@ public class ProductBacklogItem {
 	ProductBacklogItem(BacklogItemId id, Integer position) {
 		this.id = requireNonNull(id);
 		this.position = requireNonNull(position);
-	}
-
-	static Predicate<ProductBacklogItem> hasId(final BacklogItemId id) {
-		return new Predicate<ProductBacklogItem>() {
-			@Override
-			public boolean apply(ProductBacklogItem input) {
-				return input.getId().equals(id);
-			}
-		};
 	}
 
 	BacklogItemId getId() {

@@ -35,7 +35,7 @@ public class Task extends AggregateRoot<TaskId> {
 	private Integer hoursRemaining;
 
 	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
-	@JoinColumn(name = "task_id", nullable = false)
+	@JoinColumn(name = "task_id", nullable = false, insertable = false, updatable = false)
 	@OrderColumn
 	private List<RemainingAmendment> remainingAmendments;
 

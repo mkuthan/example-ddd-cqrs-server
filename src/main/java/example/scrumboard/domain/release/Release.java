@@ -2,7 +2,7 @@ package example.scrumboard.domain.release;
 
 import static java.util.Objects.requireNonNull;
 
-import java.sql.Date;
+import java.util.Date;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -31,7 +31,7 @@ public class Release extends AggregateRoot<ReleaseId> {
 	private Date releaseDate;
 
 	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
-	@JoinColumn(name = "release_id", nullable = false)
+	@JoinColumn(name = "release_id", nullable = false, insertable = false, updatable = false)
 	private Set<ScheduledBacklogItem> backlogItems;
 
 	Release() {

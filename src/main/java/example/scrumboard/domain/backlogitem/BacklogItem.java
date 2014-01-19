@@ -8,12 +8,17 @@ import javax.persistence.Embedded;
 import javax.persistence.Entity;
 
 import example.ddd.domain.AggregateRoot;
+import example.scrumboard.domain.product.Product;
+import example.scrumboard.domain.product.ProductId;
 import example.scrumboard.domain.release.Release;
 import example.scrumboard.domain.sprint.Sprint;
 import example.scrumboard.domain.sprint.SprintId;
 
 @Entity
 public class BacklogItem extends AggregateRoot<BacklogItemId> {
+
+	@Embedded
+	private ProductId productId;
 
 	@Column(nullable = false)
 	private String story;
@@ -25,23 +30,30 @@ public class BacklogItem extends AggregateRoot<BacklogItemId> {
 	BacklogItem() {
 	}
 
-	BacklogItem(BacklogItemId id, String story) {
+	BacklogItem(BacklogItemId id, Product product, String story) {
 		super(id);
+		this.productId = requireNonNull(product).getId();
 		this.story = requireNonNull(story);
 	}
 
-	BacklogItem(BacklogItemId id, String story, Sprint sprint) {
-		this(id, story);
+	BacklogItem(BacklogItemId id, Product product, String story, Sprint sprint) {
+		this(id, product, story);
 		if (sprint != null) {
 			this.sprintId = sprint.getId();
 		}
 	}
 
+	public ProductId getProductId() {
+		return productId;
+	}
+
 	public void commitToSprint(Sprint sprint) {
 		requireNonNull(sprint);
+		checkProduct(sprint.getProductId());
 
 		if (isCommited()) {
-			if (sprintId.equals(sprint.getId())) {
+			if (isEqualTo(sprint)) {
+				// do nothing
 				return;
 			} else {
 				uncommitFromSprint();
@@ -54,17 +66,26 @@ public class BacklogItem extends AggregateRoot<BacklogItemId> {
 
 	public void uncommitFromSprint(Sprint sprint) {
 		requireNonNull(sprint);
+		checkProduct(sprint.getProductId());
 
 		if (!isCommited()) {
 			throw new IllegalArgumentException("Backlog item " + getId() + " is not commited.");
 		}
 
-		if (!sprintId.equals(sprint.getId())) {
+		if (!isEqualTo(sprint)) {
 			throw new IllegalArgumentException("Backlog item " + getId() + " is commited to " + sprintId
 					+ " but expected " + sprint.getId() + ".");
 		}
 
 		uncommitFromSprint();
+	}
+
+	public void scheduleToRelease(Release release) {
+		// TODO Auto-generated method stub
+	}
+
+	public void unscheduleFromRelease(Release release) {
+		// TODO Auto-generated method stub
 	}
 
 	public void assignStoryPoints(StoryPoints storyPoints) {
@@ -75,13 +96,11 @@ public class BacklogItem extends AggregateRoot<BacklogItemId> {
 		// TODO Auto-generated method stub
 	}
 
-	public void scheduleToRelease(Release release) {
-		// TODO Auto-generated method stub
-
-	}
-
-	public void unscheduleFromRelease(Release release) {
-		// TODO Auto-generated method stub
+	public void checkProduct(ProductId productId) {
+		if (!this.productId.equals(productId)) {
+			throw new IllegalArgumentException("Products do not match, product was " + productId + " but expected "
+					+ this.productId + ".");
+		}
 	}
 
 	SprintId getSprintId() {
@@ -90,6 +109,10 @@ public class BacklogItem extends AggregateRoot<BacklogItemId> {
 
 	private boolean isCommited() {
 		return sprintId != null;
+	}
+
+	private boolean isEqualTo(Sprint sprint) {
+		return sprintId.equals(sprint.getId());
 	}
 
 	private void uncommitFromSprint() {

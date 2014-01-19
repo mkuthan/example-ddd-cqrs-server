@@ -17,5 +17,5 @@ import example.scrumboard.infrastructure.jpa.ScrumBoardInfrastructureJpaConfig;
 @ActiveProfiles("test")
 @Target(ElementType.TYPE)
 @Retention(RetentionPolicy.RUNTIME)
-public @interface JpaRepositoryTest {
+public @interface JpaRepositoryTests {
 }

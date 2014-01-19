@@ -16,5 +16,5 @@ import example.scrumboard.config.ScrumBoardConfig;
 @ActiveProfiles({ "test", "bootstrap" })
 @Target(ElementType.TYPE)
 @Retention(RetentionPolicy.RUNTIME)
-public @interface ScrumBoardRestQueryTest {
+public @interface ScrumBoardRestQueryTests {
 }

@@ -17,4 +17,9 @@ public class BacklogItemAssert extends AbstractAssert<BacklogItemAssert, Backlog
 		return this;
 	}
 
+	public BacklogItemAssert isNotCommited() {
+		assertThat(actual.getSprintId()).isNull();
+		return this;
+	}
+
 }

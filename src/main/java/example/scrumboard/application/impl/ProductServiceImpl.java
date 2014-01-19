@@ -1,6 +1,6 @@
 package example.scrumboard.application.impl;
 
-import java.sql.Date;
+import java.util.Date;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -60,10 +60,11 @@ public class ProductServiceImpl implements ProductService {
 
 	@Override
 	public BacklogItemId planBacklogItem(ProductId productId, String backlogItemStory) {
-		BacklogItem backlogItem = backlogItemFactory.create(backlogItemStory);
+		Product product = productRepository.load(productId);
+
+		BacklogItem backlogItem = backlogItemFactory.create(product, backlogItemStory);
 		backlogItemRepository.save(backlogItem);
 
-		Product product = productRepository.load(productId);
 		product.planBacklogItem(backlogItem);
 		productRepository.save(product);
 

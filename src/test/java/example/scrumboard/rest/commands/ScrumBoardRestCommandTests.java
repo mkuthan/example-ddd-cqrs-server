@@ -5,14 +5,16 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.web.WebAppConfiguration;
 
-import example.scrumboard.rest.config.ScrumBoardRestCommonConfig;
+import example.scrumboard.config.ScrumBoardRestCommonConfig;
 
 @WebAppConfiguration
-@ContextConfiguration(classes = { ScrumBoardRestCommandsConfig.class, ScrumBoardRestCommonConfig.class })
+@ContextConfiguration(classes = { ScrumBoardRestCommonConfig.class, ScrumBoardRestCommandsConfig.class })
+@ActiveProfiles("mock")
 @Target(ElementType.TYPE)
 @Retention(RetentionPolicy.RUNTIME)
-public @interface ScrumBoardRestCommandTest {
+public @interface ScrumBoardRestCommandTests {
 }

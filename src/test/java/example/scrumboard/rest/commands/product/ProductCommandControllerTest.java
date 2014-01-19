@@ -13,9 +13,9 @@ import org.springframework.http.MediaType;
 import example.scrumboard.application.api.ProductService;
 import example.scrumboard.domain.product.ProductId;
 import example.scrumboard.rest.AbstractControllerTest;
-import example.scrumboard.rest.commands.ScrumBoardRestCommandTest;
+import example.scrumboard.rest.commands.ScrumBoardRestCommandTests;
 
-@ScrumBoardRestCommandTest
+@ScrumBoardRestCommandTests
 public class ProductCommandControllerTest extends AbstractControllerTest {
 
 	@Autowired

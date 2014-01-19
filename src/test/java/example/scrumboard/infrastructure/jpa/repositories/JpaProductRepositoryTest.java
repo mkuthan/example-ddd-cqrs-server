@@ -1,5 +1,7 @@
 package example.scrumboard.infrastructure.jpa.repositories;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.testng.annotations.Test;
@@ -10,10 +12,9 @@ import example.scrumboard.domain.product.ProductAssert;
 import example.scrumboard.domain.product.ProductBuilder;
 import example.scrumboard.domain.product.ProductId;
 import example.scrumboard.domain.product.ProductRepository;
-import example.scrumboard.infrastructure.jpa.AbstractJpaTest;
 
-@JpaRepositoryTest
-public class JpaProductRepositoryTest extends AbstractJpaTest {
+@JpaRepositoryTests
+public class JpaProductRepositoryTest extends AbstractJpaRepositoryTest {
 
 	@Autowired
 	private ProductRepository repository;
@@ -46,16 +47,32 @@ public class JpaProductRepositoryTest extends AbstractJpaTest {
 	}
 
 	@Test(expectedExceptions = DataIntegrityViolationException.class)
-	public void couldNotSaveProductWithDuplicatedName() {
+	public void shouldNotSaveProductWithDuplicatedName() {
 		String name = "name";
 		Product product1 = givenProduct().withId(new ProductId("id1")).withName(name).build();
-		Product product2 = givenProduct().withId(new ProductId("id1")).withName(name).build();
+		Product product2 = givenProduct().withId(new ProductId("id2")).withName(name).build();
 
 		// when
 		repository.save(product1);
-		clear();
-
 		repository.save(product2);
+	}
+
+	public void shouldDeleteProduct() {
+		ProductId id = new ProductId("id");
+
+		// @formatter:off
+		Product product = givenProduct()
+			.withId(id)
+			.addBacklogItem(new BacklogItemId("id1"))
+			.addBacklogItem(new BacklogItemId("id2"))
+			.build();
+		// @formatter:on
+
+		repository.save(product);
+		repository.delete(product);
+
+		assertThat(countRowsInTable("t_product")).isEqualTo(0);
+		assertThat(countRowsInTable("t_product_backlog_item")).isEqualTo(0);
 	}
 
 	private ProductBuilder givenProduct() {

@@ -13,8 +13,11 @@ import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 
+import com.google.common.collect.Iterables;
+
 import example.ddd.domain.AggregateRoot;
 import example.scrumboard.domain.backlogitem.BacklogItem;
+import example.scrumboard.domain.backlogitem.BacklogItemId;
 import example.scrumboard.domain.product.Product;
 import example.scrumboard.domain.product.ProductId;
 
@@ -34,7 +37,7 @@ public class Sprint extends AggregateRoot<SprintId> {
 	private Date endDate;
 
 	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
-	@JoinColumn(name = "sprint_id", nullable = false)
+	@JoinColumn(name = "sprint_id", nullable = false, insertable = false, updatable = false)
 	private Set<CommitedBacklogItem> backlogItems;
 
 	Sprint(SprintId id, Product product, String name, Date beginDate, Date endDate,
@@ -47,20 +50,36 @@ public class Sprint extends AggregateRoot<SprintId> {
 		this.backlogItems = requireNonNull(backlogItems);
 
 		if (beginDate.after(endDate)) {
-			throw new IllegalArgumentException("Begin date " + beginDate + " must be before end date " + endDate + ".");
+			throw new IllegalArgumentException("Begin date must be before end date " + endDate + " but was "
+					+ beginDate + ".");
 		}
 	}
 
+	public ProductId getProductId() {
+		return productId;
+	}
+
 	public void commitBacklogItem(BacklogItem backlogItem) {
-		// TODO Auto-generated method stub
+		requireNonNull(backlogItem);
+		backlogItem.checkProduct(productId);
+
+		BacklogItemId backlogItemId = backlogItem.getId();
+		if (Iterables.any(backlogItems, CommitedBacklogItem.hasId(backlogItemId))) {
+			throw new IllegalArgumentException("Backlog item is already commited " + backlogItemId);
+		}
+
+		backlogItems.add(new CommitedBacklogItem(backlogItemId));
 	}
 
 	public void uncommitBacklogItem(BacklogItem backlogItem) {
-		// TODO Auto-generated method stub
-	}
+		requireNonNull(backlogItem);
+		backlogItem.checkProduct(productId);
 
-	ProductId getProductId() {
-		return productId;
+		BacklogItemId backlogItemId = backlogItem.getId();
+		boolean removed = Iterables.removeIf(backlogItems, CommitedBacklogItem.hasId(backlogItemId));
+		if (!removed) {
+			throw new IllegalArgumentException("Backlog item is not commited " + backlogItemId);
+		}
 	}
 
 	String getName() {

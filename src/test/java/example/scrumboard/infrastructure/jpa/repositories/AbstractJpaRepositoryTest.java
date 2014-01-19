@@ -1,4 +1,4 @@
-package example.scrumboard.infrastructure.jpa;
+package example.scrumboard.infrastructure.jpa.repositories;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -7,7 +7,7 @@ import org.springframework.test.context.testng.AbstractTransactionalTestNGSpring
 import org.testng.annotations.Test;
 
 @Test(singleThreaded = true)
-public abstract class AbstractJpaTest extends AbstractTransactionalTestNGSpringContextTests {
+public abstract class AbstractJpaRepositoryTest extends AbstractTransactionalTestNGSpringContextTests {
 
 	@PersistenceContext
 	private EntityManager entityManager;

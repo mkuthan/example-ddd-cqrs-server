@@ -5,8 +5,9 @@ import org.springframework.context.annotation.Import;
 
 import example.scrumboard.application.ScrumBoardApplicationConfig;
 import example.scrumboard.domain.ScrumBoardDomainConfig;
-import example.scrumboard.infrastructure.config.ScrumBoardInfrastructureConfig;
-import example.scrumboard.rest.config.ScrumBoardRestConfig;
+import example.scrumboard.infrastructure.jpa.ScrumBoardInfrastructureJpaConfig;
+import example.scrumboard.rest.commands.ScrumBoardRestCommandsConfig;
+import example.scrumboard.rest.queries.ScrumBoardRestQueriesConfig;
 
 @Configuration
 //@formatter:off
@@ -15,8 +16,10 @@ import example.scrumboard.rest.config.ScrumBoardRestConfig;
 	ScrumBoardDataSourcesConfig.class, 
 	ScrumBoardApplicationConfig.class,
 	ScrumBoardDomainConfig.class, 
-	ScrumBoardInfrastructureConfig.class,
-	ScrumBoardRestConfig.class 
+	ScrumBoardInfrastructureJpaConfig.class,
+	ScrumBoardRestCommonConfig.class,
+	ScrumBoardRestCommandsConfig.class,
+	ScrumBoardRestQueriesConfig.class
 })
 //@formatter:on
 public class ScrumBoardConfig {

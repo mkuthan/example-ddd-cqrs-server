@@ -1,6 +1,6 @@
 package example.scrumboard.application.api;
 
-import java.sql.Date;
+import java.util.Date;
 
 import example.scrumboard.domain.backlogitem.BacklogItemId;
 import example.scrumboard.domain.product.ProductId;

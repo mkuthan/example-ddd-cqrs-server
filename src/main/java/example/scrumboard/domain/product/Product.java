@@ -13,8 +13,7 @@ import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 
-import com.google.common.base.Optional;
-import com.google.common.collect.FluentIterable;
+import com.google.common.collect.Iterables;
 
 import example.ddd.domain.AggregateRoot;
 import example.scrumboard.domain.backlogitem.BacklogItem;
@@ -27,7 +26,7 @@ public class Product extends AggregateRoot<ProductId> {
 	private String name;
 
 	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
-	@JoinColumn(name = "product_id", nullable = false)
+	@JoinColumn(name = "product_id", nullable = false, insertable = false, updatable = false)
 	private Set<ProductBacklogItem> backlogItems;
 
 	Product() {
@@ -41,11 +40,11 @@ public class Product extends AggregateRoot<ProductId> {
 
 	public void planBacklogItem(BacklogItem backlogItem) {
 		requireNonNull(backlogItem);
+		backlogItem.checkProduct(getId());
 
 		BacklogItemId backlogItemId = backlogItem.getId();
-		if (containsBacklogItem(backlogItemId)) {
-			throw new IllegalArgumentException("Could not assign backlog item, backlog item is already assigned "
-					+ backlogItemId);
+		if (Iterables.any(backlogItems, ProductBacklogItem.hasId(backlogItemId))) {
+			throw new IllegalArgumentException("Backlog item is already planned " + backlogItemId);
 		}
 
 		int position = backlogItems.size();
@@ -81,14 +80,6 @@ public class Product extends AggregateRoot<ProductId> {
 
 	Set<ProductBacklogItem> getBacklogItems() {
 		return backlogItems;
-	}
-
-	Optional<ProductBacklogItem> findBacklogItem(BacklogItemId backlogItemId) {
-		return FluentIterable.from(backlogItems).firstMatch(ProductBacklogItem.hasId(backlogItemId));
-	}
-
-	boolean containsBacklogItem(BacklogItemId backlogItemId) {
-		return findBacklogItem(backlogItemId).isPresent();
 	}
 
 }

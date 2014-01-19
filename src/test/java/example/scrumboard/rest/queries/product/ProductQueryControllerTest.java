@@ -8,9 +8,9 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import org.springframework.http.MediaType;
 
 import example.scrumboard.rest.AbstractControllerTest;
-import example.scrumboard.rest.queries.ScrumBoardRestQueryTest;
+import example.scrumboard.rest.queries.ScrumBoardRestQueryTests;
 
-@ScrumBoardRestQueryTest
+@ScrumBoardRestQueryTests
 public class ProductQueryControllerTest extends AbstractControllerTest {
 
 	public void getProducts() throws Exception {
