@@ -24,4 +24,5 @@ public abstract class AbstractControllerTest extends AbstractTestNGSpringContext
 	protected void setup() {
 		mockMvc = MockMvcBuilders.webAppContextSetup(this.webApplicationContext).build();
 	}
+
 }

@@ -8,13 +8,12 @@ import java.lang.annotation.Target;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
 
-import example.scrumboard.config.ScrumBoardCommonConfig;
-import example.scrumboard.config.ScrumBoardDataSourcesConfig;
+import example.ddd.DddConfig;
+import example.scrumboard.config.ScrumBoardTestConfig;
 import example.scrumboard.infrastructure.jpa.ScrumBoardInfrastructureJpaConfig;
 
-@ContextConfiguration(classes = { ScrumBoardInfrastructureJpaConfig.class, ScrumBoardDataSourcesConfig.class,
-		ScrumBoardCommonConfig.class })
-@ActiveProfiles("test")
+@ContextConfiguration(classes = { ScrumBoardInfrastructureJpaConfig.class, ScrumBoardTestConfig.class })
+@ActiveProfiles({ ScrumBoardTestConfig.PROFILE, DddConfig.PROFILE })
 @Target(ElementType.TYPE)
 @Retention(RetentionPolicy.RUNTIME)
 public @interface JpaRepositoryTests {

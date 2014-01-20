@@ -9,11 +9,14 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.web.WebAppConfiguration;
 
+import example.bootstrap.BootstrapConfig;
+import example.ddd.DddConfig;
 import example.scrumboard.config.ScrumBoardConfig;
+import example.scrumboard.config.ScrumBoardTestConfig;
 
 @WebAppConfiguration
-@ContextConfiguration(classes = { ScrumBoardConfig.class })
-@ActiveProfiles({ "test", "bootstrap" })
+@ContextConfiguration(classes = { ScrumBoardConfig.class, ScrumBoardTestConfig.class })
+@ActiveProfiles({ ScrumBoardTestConfig.PROFILE, BootstrapConfig.PROFILE, DddConfig.PROFILE })
 @Target(ElementType.TYPE)
 @Retention(RetentionPolicy.RUNTIME)
 public @interface ScrumBoardRestQueryTests {

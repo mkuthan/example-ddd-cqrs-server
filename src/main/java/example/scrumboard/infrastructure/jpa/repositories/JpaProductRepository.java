@@ -1,6 +1,7 @@
 package example.scrumboard.infrastructure.jpa.repositories;
 
 import example.ddd.infrastructure.GenericJpaRepository;
+import example.ddd.infrastructure.JpaRepository;
 import example.scrumboard.domain.product.Product;
 import example.scrumboard.domain.product.ProductId;
 import example.scrumboard.domain.product.ProductRepository;

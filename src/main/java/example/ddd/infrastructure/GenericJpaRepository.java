@@ -70,6 +70,10 @@ public class GenericJpaRepository<E extends AggregateRoot<K>, K> implements Repo
 		return query.getSingleResult();
 	}
 
+	protected Class<E> getEntityClass() {
+		return entityClass;
+	}
+
 	protected EntityManager getEntityManager() {
 		return entityManager;
 	}

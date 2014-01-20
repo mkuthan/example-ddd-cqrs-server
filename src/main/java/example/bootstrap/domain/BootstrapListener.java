@@ -8,8 +8,10 @@ import java.lang.annotation.Target;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
 
+import example.bootstrap.BootstrapConfig;
+
 @Component
-@Profile("bootstrap")
+@Profile(BootstrapConfig.PROFILE)
 @Target({ ElementType.TYPE, ElementType.METHOD })
 @Retention(RetentionPolicy.RUNTIME)
 public @interface BootstrapListener {
