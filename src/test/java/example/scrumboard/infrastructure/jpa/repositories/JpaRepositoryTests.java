@@ -12,7 +12,7 @@ import example.ddd.DddConfig;
 import example.scrumboard.config.ScrumBoardTestConfig;
 import example.scrumboard.infrastructure.jpa.ScrumBoardInfrastructureJpaConfig;
 
-@ContextConfiguration(classes = { ScrumBoardInfrastructureJpaConfig.class, ScrumBoardTestConfig.class })
+@ContextConfiguration(classes = { ScrumBoardTestConfig.class, ScrumBoardInfrastructureJpaConfig.class })
 @ActiveProfiles({ ScrumBoardTestConfig.PROFILE, DddConfig.PROFILE })
 @Target(ElementType.TYPE)
 @Retention(RetentionPolicy.RUNTIME)

@@ -5,6 +5,7 @@ import java.util.Date;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import example.ddd.domain.ApplicationService;
+import example.scrumboard.application.api.CreateProductCommand;
 import example.scrumboard.application.api.ProductService;
 import example.scrumboard.domain.backlogitem.BacklogItem;
 import example.scrumboard.domain.backlogitem.BacklogItemFactory;
@@ -51,8 +52,8 @@ public class ProductServiceImpl implements ProductService {
 	private SprintRepository sprintRepository;
 
 	@Override
-	public ProductId createProduct(String productName) {
-		Product product = productFactory.create(productName);
+	public ProductId createProduct(CreateProductCommand command) {
+		Product product = productFactory.create(command.getProductName());
 		productRepository.save(product);
 
 		return product.getId();

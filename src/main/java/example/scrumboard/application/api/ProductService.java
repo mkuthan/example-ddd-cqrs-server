@@ -9,7 +9,7 @@ import example.scrumboard.domain.sprint.SprintId;
 
 public interface ProductService {
 
-	ProductId createProduct(String productName);
+	ProductId createProduct(CreateProductCommand command);
 
 	BacklogItemId planBacklogItem(ProductId productId, String backlogItemStory);
 

@@ -15,7 +15,7 @@ import example.scrumboard.config.ScrumBoardConfig;
 import example.scrumboard.config.ScrumBoardTestConfig;
 
 @WebAppConfiguration
-@ContextConfiguration(classes = { ScrumBoardConfig.class, ScrumBoardTestConfig.class })
+@ContextConfiguration(classes = { ScrumBoardTestConfig.class, ScrumBoardConfig.class })
 @ActiveProfiles({ ScrumBoardTestConfig.PROFILE, BootstrapConfig.PROFILE, DddConfig.PROFILE })
 @Target(ElementType.TYPE)
 @Retention(RetentionPolicy.RUNTIME)
