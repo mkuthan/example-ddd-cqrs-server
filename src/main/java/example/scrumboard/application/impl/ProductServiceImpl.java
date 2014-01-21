@@ -1,12 +1,14 @@
 package example.scrumboard.application.impl;
 
-import java.util.Date;
-
 import org.springframework.beans.factory.annotation.Autowired;
 
 import example.ddd.domain.ApplicationService;
-import example.scrumboard.application.api.CreateProductCommand;
 import example.scrumboard.application.api.ProductService;
+import example.scrumboard.application.api.commands.CreateProductCommand;
+import example.scrumboard.application.api.commands.PlanBacklogItemCommand;
+import example.scrumboard.application.api.commands.ReorderBacklogItemsCommand;
+import example.scrumboard.application.api.commands.ScheduleReleaseCommand;
+import example.scrumboard.application.api.commands.ScheduleSprintCommand;
 import example.scrumboard.domain.backlogitem.BacklogItem;
 import example.scrumboard.domain.backlogitem.BacklogItemFactory;
 import example.scrumboard.domain.backlogitem.BacklogItemId;
@@ -60,10 +62,10 @@ public class ProductServiceImpl implements ProductService {
 	}
 
 	@Override
-	public BacklogItemId planBacklogItem(ProductId productId, String backlogItemStory) {
+	public BacklogItemId planBacklogItem(ProductId productId, PlanBacklogItemCommand command) {
 		Product product = productRepository.load(productId);
 
-		BacklogItem backlogItem = backlogItemFactory.create(product, backlogItemStory);
+		BacklogItem backlogItem = backlogItemFactory.create(product, command.getBacklogItemStory());
 		backlogItemRepository.save(backlogItem);
 
 		product.planBacklogItem(backlogItem);
@@ -73,28 +75,29 @@ public class ProductServiceImpl implements ProductService {
 	}
 
 	@Override
-	public void reorderBacklogItems(ProductId productId, BacklogItemId... backlogItemIds) {
-		Product product = productRepository.load(productId);
-		product.reorderBacklogItems(backlogItemIds);
+	public void reorderBacklogItems(ReorderBacklogItemsCommand command) {
+		Product product = productRepository.load(command.getProductId());
+		product.reorderBacklogItems(command.getBacklogItemIds());
 
 		productRepository.save(product);
 	}
 
 	@Override
-	public ReleaseId scheduleRelease(ProductId productId, String releaseName, Date releaseDate) {
-		Product product = productRepository.load(productId);
+	public ReleaseId scheduleRelease(ScheduleReleaseCommand command) {
+		Product product = productRepository.load(command.getProductId());
 
-		Release release = releaseFactory.create(product, releaseName, releaseDate);
+		Release release = releaseFactory.create(product, command.getReleaseName(), command.getReleaseDate());
 		releaseRepository.save(release);
 
 		return release.getId();
 	}
 
 	@Override
-	public SprintId scheduleSprint(ProductId productId, String sprintName, Date sprintBeginDate, Date sprintEndDate) {
-		Product product = productRepository.load(productId);
+	public SprintId scheduleSprint(ScheduleSprintCommand command) {
+		Product product = productRepository.load(command.getProductId());
 
-		Sprint sprint = sprintFactory.create(product, sprintName, sprintBeginDate, sprintEndDate);
+		Sprint sprint = sprintFactory.create(product, command.getSprintName(), command.getSprintBeginDate(),
+				command.getSprintEndDate());
 		sprintRepository.save(sprint);
 
 		return sprint.getId();

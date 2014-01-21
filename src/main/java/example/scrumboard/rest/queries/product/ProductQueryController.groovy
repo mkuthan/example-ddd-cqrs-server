@@ -1,15 +1,17 @@
 package example.scrumboard.rest.queries.product
 
-import groovy.sql.Sql
-
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.data.domain.PageImpl
 import org.springframework.data.domain.Pageable
-import org.springframework.http.MediaType
 import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RequestMethod
 import org.springframework.web.bind.annotation.RestController
+
+import example.scrumboard.domain.product.ProductId
+import example.scrumboard.rest.queries.product.dtos.ProductBacklogItemDto
+import example.scrumboard.rest.queries.product.dtos.ProductDto
+import groovy.sql.Sql
 
 
 @RestController
@@ -18,13 +20,13 @@ class ProductQueryController {
 	@Autowired
 	Sql sql
 
-	@RequestMapping(value = "/products", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+	@RequestMapping(value = "/products", method = RequestMethod.GET)
 	def products(Pageable page) {
 		new PageImpl(productsContent(page), page, productsCount())
 	}
 
-	@RequestMapping(value = "/products/{productId}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-	def product(@PathVariable("productId") String productId) {
+	@RequestMapping(value = "/products/{productId}", method = RequestMethod.GET)
+	def product(@PathVariable("productId") ProductId productId) {
 		def query = """
 			SELECT 
 				p.c_product_id, 
@@ -40,17 +42,17 @@ class ProductQueryController {
 				p.c_product_id, p.c_name
 		"""
 
-		sql.rows(query, [productId], 0, 1).collect { row ->
+		sql.rows(query, [productId.id], 0, 1).collect { row ->
 			new ProductDto(
-					id: row.c_product_id,
-					name: row.c_name,
+					productId: row.c_product_id,
+					productName: row.c_name,
 					backlogItemsCount: row.count
 					)
-		}
+		}.first()
 	}
 
-	@RequestMapping(value = "/products/{productId}/backlogItems", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-	def backlogItems(@PathVariable("productId") String productId) {
+	@RequestMapping(value = "/products/{productId}/backlogItems", method = RequestMethod.GET)
+	def backlogItems(@PathVariable("productId") ProductId productId) {
 		def query = """
 			SELECT 
 				bi.c_backlog_item_id, 
@@ -67,11 +69,11 @@ class ProductQueryController {
 				ORDER BY pbi.c_position
 		"""
 
-		sql.rows(query, [productId]).collect { row ->
+		sql.rows(query, [productId.id]).collect { row ->
 			new ProductBacklogItemDto(
-					id: row.c_product_id,
-					story: row.c_story,
-					position: row.c_position
+					backlogItemId: row.c_backlog_item_id,
+					backlogItemStory: row.c_story,
+					backlogItemPosition: row.c_position
 					)
 		}
 	}
@@ -95,8 +97,8 @@ class ProductQueryController {
 
 		sql.rows(query, page.offset, page.pageSize).collect { row ->
 			new ProductDto(
-					id: row.c_product_id,
-					name: row.c_name,
+					productId: row.c_product_id,
+					productName: row.c_name,
 					backlogItemsCount: row.count
 					)
 		}

@@ -17,6 +17,7 @@ public abstract class AbstractControllerTest extends AbstractTestNGSpringContext
 	@Autowired
 	private WebApplicationContext webApplicationContext;
 
+	@Autowired
 	private ObjectMapper objectMapper;
 
 	private MockMvc mockMvc;
@@ -36,8 +37,6 @@ public abstract class AbstractControllerTest extends AbstractTestNGSpringContext
 	@BeforeMethod
 	protected void setup() {
 		mockMvc = MockMvcBuilders.webAppContextSetup(this.webApplicationContext).build();
-		// TODO: inject objectMapper
-		objectMapper = new ObjectMapper();
 	}
 
 }
