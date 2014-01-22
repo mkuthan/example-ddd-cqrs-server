@@ -14,6 +14,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 import example.bootstrap.BootstrapConfig;
 import example.ddd.DddConfig;
 import example.scrumboard.application.ScrumBoardApplicationConfig;
+import example.scrumboard.application.bootstrap.ScrumBoardSchedulingConfig;
 import example.scrumboard.domain.ScrumBoardDomainConfig;
 import example.scrumboard.infrastructure.jpa.ScrumBoardInfrastructureJpaConfig;
 import example.scrumboard.infrastructure.rest.ScrumBoardInfrastructureRestConfig;
@@ -26,6 +27,8 @@ import example.scrumboard.rest.queries.ScrumBoardRestQueriesConfig;
 	// external modules
 	BootstrapConfig.class, 
 	DddConfig.class,
+	// scheduling
+	ScrumBoardSchedulingConfig.class,
 	// infrastructure modules
 	ScrumBoardInfrastructureJpaConfig.class,
 	ScrumBoardInfrastructureRestConfig.class,

@@ -3,6 +3,7 @@ package example.bootstrap.infrastructure;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.event.ContextRefreshedEvent;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
 
 import example.bootstrap.domain.BootstrapEvent;
@@ -10,6 +11,7 @@ import example.bootstrap.domain.BootstrapEvent;
 @Component
 public class BootstrapEventPublisher implements ApplicationListener<ContextRefreshedEvent> {
 
+	@Async
 	@Override
 	public void onApplicationEvent(ContextRefreshedEvent event) {
 		ApplicationContext applicationContext = event.getApplicationContext();
