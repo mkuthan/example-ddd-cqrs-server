@@ -1,5 +1,7 @@
 package example.scrumboard.config;
 
+import java.util.concurrent.Executor;
+
 import javax.sql.DataSource;
 
 import org.mockito.Mockito;
@@ -7,6 +9,9 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
 import org.springframework.context.annotation.Profile;
+import org.springframework.context.annotation.PropertySource;
+import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
+import org.springframework.core.task.SyncTaskExecutor;
 import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseBuilder;
 import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseType;
 
@@ -24,30 +29,38 @@ import example.scrumboard.application.api.SprintService;
 	DddConfig.class,
 })
 //@formatter:on
+@PropertySource("classpath:/test.properties")
+@Profile(ScrumBoardTestConfig.PROFILE)
 public class ScrumBoardTestConfig {
 
 	public static final String PROFILE = "test";
+	
+	@Bean
+	public static PropertySourcesPlaceholderConfigurer propertySourcesPlaceholderConfigurer() {
+		return new PropertySourcesPlaceholderConfigurer();
+	}
 
 	@Bean
-	@Profile(PROFILE)
-	public DataSource localDataSource() {
+	public DataSource dataSource() {
 		return new EmbeddedDatabaseBuilder().setType(EmbeddedDatabaseType.H2).build();
 	}
 
 	@Bean
-	@Profile(PROFILE)
+	public Executor asyncExecutor() {
+		return new SyncTaskExecutor();
+	}
+
+	@Bean
 	public ProductService productService() {
 		return Mockito.mock(ProductService.class);
 	}
 
 	@Bean
-	@Profile(PROFILE)
 	public ReleaseService releaseService() {
 		return Mockito.mock(ReleaseService.class);
 	}
 
 	@Bean
-	@Profile(PROFILE)
 	public SprintService sprintService() {
 		return Mockito.mock(SprintService.class);
 	}

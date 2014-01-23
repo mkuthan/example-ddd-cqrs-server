@@ -9,6 +9,7 @@ import org.testng.annotations.Test;
 import example.scrumboard.domain.backlogitem.BacklogItemId;
 import example.scrumboard.domain.product.Product;
 import example.scrumboard.domain.product.ProductAssert;
+import example.scrumboard.domain.product.ProductBacklogItem;
 import example.scrumboard.domain.product.ProductBuilder;
 import example.scrumboard.domain.product.ProductId;
 import example.scrumboard.domain.product.ProductRepository;
@@ -71,8 +72,8 @@ public class JpaProductRepositoryTest extends AbstractJpaRepositoryTest {
 		repository.save(product);
 		repository.delete(product);
 
-		assertThat(countRowsInTable("t_product")).isEqualTo(0);
-		assertThat(countRowsInTable("t_product_backlog_item")).isEqualTo(0);
+		assertThat(countEntities(Product.class)).isEqualTo(0);
+		assertThat(countEntities(ProductBacklogItem.class)).isEqualTo(0);
 	}
 
 	private ProductBuilder givenProduct() {

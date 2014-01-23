@@ -11,8 +11,8 @@ import example.bootstrap.domain.BootstrapEvent;
 @Component
 public class BootstrapEventPublisher implements ApplicationListener<ContextRefreshedEvent> {
 
-	@Async
 	@Override
+	@Async
 	public void onApplicationEvent(ContextRefreshedEvent event) {
 		ApplicationContext applicationContext = event.getApplicationContext();
 

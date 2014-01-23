@@ -1,4 +1,4 @@
-package example.scrumboard.infrastructure.jpa;
+package example.scrumboard.infrastructure.jpa.hibernate;
 
 import org.hibernate.cfg.ImprovedNamingStrategy;
 
