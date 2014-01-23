@@ -19,7 +19,7 @@ import example.scrumboard.config.ScrumBoardConfig;
 @Configuration
 @Profile({ ScrumBoardConfig.Local.PROFILE, ScrumBoardConfig.Remote.PROFILE })
 @EnableScheduling
-public class ScrumBoardInfrastructureSchedulingConfig implements SchedulingConfigurer {
+public class ScrumBoardInfrastructureTaskConfig implements SchedulingConfigurer {
 
 	@Value("${scheduling.taskExecutorCorePoolSize}")
 	private int taskExecutorCorePoolSize;
