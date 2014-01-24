@@ -1,5 +1,9 @@
 package example.scrumboard.config;
 
+import java.util.EnumSet;
+
+import javax.servlet.DispatcherType;
+import javax.servlet.FilterRegistration;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRegistration;
@@ -7,10 +11,15 @@ import javax.servlet.ServletRegistration;
 import org.h2.server.web.WebServlet;
 import org.springframework.web.WebApplicationInitializer;
 import org.springframework.web.context.ContextLoaderListener;
+import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.context.support.AnnotationConfigWebApplicationContext;
+import org.springframework.web.filter.HttpPutFormContentFilter;
 import org.springframework.web.servlet.DispatcherServlet;
 
 public class ScrumBoardInitializer implements WebApplicationInitializer {
+
+	private static final String DISPATCHER_SERVLET_NAME = "rest";
+	private static final String H2_SERVLET_NAME = "h2";
 
 	@Override
 	public void onStartup(ServletContext servletContext) throws ServletException {
@@ -19,13 +28,30 @@ public class ScrumBoardInitializer implements WebApplicationInitializer {
 
 		servletContext.addListener(new ContextLoaderListener(rootContext));
 
-		ServletRegistration.Dynamic rest = servletContext.addServlet("rest", new DispatcherServlet(rootContext));
+		registerDispatcherServlet(servletContext, rootContext);
+		registerH2WebServlet(servletContext);
+
+		registerHttpPutContentFilter(servletContext);
+	}
+
+	private void registerDispatcherServlet(ServletContext servletContext, WebApplicationContext rootContext) {
+		ServletRegistration.Dynamic rest = servletContext.addServlet(DISPATCHER_SERVLET_NAME, new DispatcherServlet(
+				rootContext));
 		rest.setLoadOnStartup(1);
 		rest.addMapping("/rest/*");
+	}
 
-		ServletRegistration.Dynamic h2 = servletContext.addServlet("h2", new WebServlet());
+	private void registerH2WebServlet(ServletContext servletContext) {
+		ServletRegistration.Dynamic h2 = servletContext.addServlet(H2_SERVLET_NAME, new WebServlet());
 		h2.setLoadOnStartup(2);
 		h2.addMapping("/h2/*");
+	}
+
+	private void registerHttpPutContentFilter(ServletContext servletContext) {
+		FilterRegistration.Dynamic registration = servletContext.addFilter("httpPutFormContentFilter",
+				HttpPutFormContentFilter.class);
+		registration.addMappingForServletNames(EnumSet.of(DispatcherType.REQUEST, DispatcherType.FORWARD), false,
+				DISPATCHER_SERVLET_NAME);
 	}
 
 }
