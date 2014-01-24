@@ -16,7 +16,7 @@ public interface ProductService {
 
 	BacklogItemId planBacklogItem(ProductId productId, PlanBacklogItemCommand command);
 
-	void reorderBacklogItems(ReorderBacklogItemsCommand command);
+	void reorderBacklogItems(ProductId productId, ReorderBacklogItemsCommand command);
 
 	ReleaseId scheduleRelease(ScheduleReleaseCommand command);
 

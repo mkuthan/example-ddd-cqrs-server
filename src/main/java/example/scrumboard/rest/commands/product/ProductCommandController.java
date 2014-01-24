@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 import example.scrumboard.application.api.ProductService;
 import example.scrumboard.application.api.commands.CreateProductCommand;
 import example.scrumboard.application.api.commands.PlanBacklogItemCommand;
+import example.scrumboard.application.api.commands.ReorderBacklogItemsCommand;
 import example.scrumboard.domain.backlogitem.BacklogItemId;
 import example.scrumboard.domain.product.ProductId;
 
@@ -33,4 +34,11 @@ public class ProductCommandController {
 			@RequestBody PlanBacklogItemCommand command) {
 		return productService.planBacklogItem(productId, command);
 	}
+
+	@RequestMapping(value = "/products/{productId}/reorderBacklogItems", method = RequestMethod.POST)
+	public void reorderBacklogItems(@PathVariable("productId") ProductId productId,
+			@RequestBody ReorderBacklogItemsCommand command) {
+		productService.reorderBacklogItems(productId, command);
+	}
+
 }

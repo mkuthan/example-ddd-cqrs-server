@@ -75,8 +75,8 @@ public class ProductServiceImpl implements ProductService {
 	}
 
 	@Override
-	public void reorderBacklogItems(ReorderBacklogItemsCommand command) {
-		Product product = productRepository.load(command.getProductId());
+	public void reorderBacklogItems(ProductId productId, ReorderBacklogItemsCommand command) {
+		Product product = productRepository.load(productId);
 		product.reorderBacklogItems(command.getBacklogItemIds());
 
 		productRepository.save(product);
