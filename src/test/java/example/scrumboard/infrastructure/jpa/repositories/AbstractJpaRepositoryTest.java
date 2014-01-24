@@ -7,7 +7,9 @@ import javax.persistence.TypedQuery;
 import org.springframework.test.context.testng.AbstractTransactionalTestNGSpringContextTests;
 import org.testng.annotations.Test;
 
-@Test(singleThreaded = true)
+import example.scrumboard.TestGroups;
+
+@Test(groups = TestGroups.INTEGRATION)
 public abstract class AbstractJpaRepositoryTest extends AbstractTransactionalTestNGSpringContextTests {
 
 	@PersistenceContext

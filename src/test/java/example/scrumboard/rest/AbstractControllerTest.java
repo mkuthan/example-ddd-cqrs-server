@@ -11,7 +11,9 @@ import org.testng.annotations.Test;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-@Test(singleThreaded = true)
+import example.scrumboard.TestGroups;
+
+@Test(groups = TestGroups.INTEGRATION)
 public abstract class AbstractControllerTest extends AbstractTestNGSpringContextTests {
 
 	@Autowired

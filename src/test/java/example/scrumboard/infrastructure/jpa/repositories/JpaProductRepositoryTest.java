@@ -71,7 +71,7 @@ public class JpaProductRepositoryTest extends AbstractJpaRepositoryTest {
 
 		repository.save(product);
 		repository.delete(product);
-
+		
 		assertThat(countEntities(Product.class)).isEqualTo(0);
 		assertThat(countEntities(ProductBacklogItem.class)).isEqualTo(0);
 	}

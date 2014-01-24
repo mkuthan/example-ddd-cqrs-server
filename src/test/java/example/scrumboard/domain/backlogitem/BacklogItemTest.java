@@ -12,10 +12,11 @@ import org.mockito.MockitoAnnotations;
 import org.testng.annotations.Test;
 
 import example.ddd.domain.EventPublisher;
+import example.scrumboard.TestGroups;
 import example.scrumboard.domain.sprint.Sprint;
 import example.scrumboard.domain.sprint.SprintId;
 
-@Test
+@Test(groups = TestGroups.UNIT)
 public class BacklogItemTest {
 
 	@Mock
