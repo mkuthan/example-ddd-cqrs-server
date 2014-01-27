@@ -5,15 +5,14 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
-import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
 
 import example.ddd.DddConfig;
-import example.scrumboard.config.ScrumBoardTestConfig;
+import example.scrumboard.config.ScrumBoardBeansTestConfig;
 import example.scrumboard.infrastructure.jpa.ScrumBoardInfrastructureJpaConfig;
 
-@ContextConfiguration(classes = { ScrumBoardTestConfig.class, ScrumBoardInfrastructureJpaConfig.class })
-@ActiveProfiles({ ScrumBoardTestConfig.PROFILE, DddConfig.PROFILE })
+@ContextConfiguration(classes = { ScrumBoardBeansTestConfig.class, ScrumBoardInfrastructureJpaConfig.class,
+		DddConfig.class })
 @Target(ElementType.TYPE)
 @Retention(RetentionPolicy.RUNTIME)
 public @interface JpaRepositoryTests {

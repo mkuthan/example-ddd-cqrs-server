@@ -116,7 +116,7 @@
 						<systemProperties>
 							<java.util.logging.manager>org.apache.juli.ClassLoaderLogManager</java.util.logging.manager>
 							<logback.ContextSelector>JNDI</logback.ContextSelector>
-							<spring.profiles.active>local,bootstrap,ddd</spring.profiles.active>
+							<spring.profiles.active>local</spring.profiles.active>
 						</systemProperties>
 					</configuration>
 					<dependencies>

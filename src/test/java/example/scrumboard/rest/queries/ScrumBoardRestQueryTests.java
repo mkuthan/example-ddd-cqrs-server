@@ -5,18 +5,14 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
-import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.web.WebAppConfiguration;
 
-import example.bootstrap.BootstrapConfig;
-import example.ddd.DddConfig;
-import example.scrumboard.config.ScrumBoardConfig;
-import example.scrumboard.config.ScrumBoardTestConfig;
+import example.scrumboard.config.ScrumBoardBeansTestConfig;
+import example.scrumboard.config.ScrumBoardModulesConfig;
 
 @WebAppConfiguration
-@ContextConfiguration(classes = { ScrumBoardTestConfig.class, ScrumBoardConfig.class })
-@ActiveProfiles({ ScrumBoardTestConfig.PROFILE, BootstrapConfig.PROFILE, DddConfig.PROFILE })
+@ContextConfiguration(classes = { ScrumBoardBeansTestConfig.class, ScrumBoardModulesConfig.class })
 @Target(ElementType.TYPE)
 @Retention(RetentionPolicy.RUNTIME)
 public @interface ScrumBoardRestQueryTests {
