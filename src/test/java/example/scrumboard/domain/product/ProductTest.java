@@ -36,7 +36,7 @@ public class ProductTest {
 		whenProduct().planBacklogItem(backlogItem);
 
 		thenProduct().hasBacklogItem(backlogItemId, 0);
-		thenEvent(eventPublisher).published(new BacklogItemAssignedToProductEvent(product.getId(), backlogItemId));
+		thenEvent(eventPublisher).published(new BacklogItemPlannedEvent(product.getId(), backlogItemId));
 	}
 
 	public void shouldAssignSecondBacklogItem() {
@@ -48,7 +48,7 @@ public class ProductTest {
 		whenProduct().planBacklogItem(backlogItem);
 
 		thenProduct().hasBacklogItem(backlogItemId, 1);
-		thenEvent(eventPublisher).published(new BacklogItemAssignedToProductEvent(product.getId(), backlogItemId));
+		thenEvent(eventPublisher).published(new BacklogItemPlannedEvent(product.getId(), backlogItemId));
 	}
 
 	public void shouldNotAssignExistingBacklogItem() {

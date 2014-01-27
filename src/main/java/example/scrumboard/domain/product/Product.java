@@ -50,7 +50,7 @@ public class Product extends AggregateRoot<ProductId> {
 		int position = backlogItems.size();
 		backlogItems.add(new ProductBacklogItem(backlogItemId, position));
 
-		publish(new BacklogItemAssignedToProductEvent(getId(), backlogItemId));
+		publish(new BacklogItemPlannedEvent(getId(), backlogItemId));
 	}
 
 	public void reorderBacklogItems(List<BacklogItemId> backlogItemIds) {
