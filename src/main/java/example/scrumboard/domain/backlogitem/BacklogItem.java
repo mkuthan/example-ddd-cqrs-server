@@ -7,7 +7,7 @@ import javax.persistence.Column;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
 
-import example.ddd.domain.AggregateRoot;
+import example.ddd.AggregateRoot;
 import example.scrumboard.domain.product.Product;
 import example.scrumboard.domain.product.ProductId;
 import example.scrumboard.domain.release.Release;

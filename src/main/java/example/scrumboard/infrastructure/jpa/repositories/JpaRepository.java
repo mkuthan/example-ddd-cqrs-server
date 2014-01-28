@@ -1,4 +1,4 @@
-package example.ddd.infrastructure;
+package example.scrumboard.infrastructure.jpa.repositories;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;

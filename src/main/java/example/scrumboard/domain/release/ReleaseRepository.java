@@ -1,6 +1,6 @@
 package example.scrumboard.domain.release;
 
-import example.ddd.domain.Repository;
+import example.ddd.Repository;
 
 public interface ReleaseRepository extends Repository<Release, ReleaseId> {
 

@@ -1,4 +1,4 @@
-package example.bootstrap.domain;
+package example.bootstrap;
 
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.event.ApplicationContextEvent;

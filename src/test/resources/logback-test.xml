@@ -9,8 +9,8 @@
 
 	<logger name="org.hibernate.SQL" level="DEBUG" />
 
-	<!-- <logger name="org.springframework" level="DEBUG" /> -->
-	<!-- <logger name="org.hibernate" level="DEBUG" /> -->
+	<!-- <logger name="org.springframework" level="INFO" /> -->
+	<!-- <logger name="org.hibernate" level="INFO" /> -->
 
 	<root level="OFF">
 		<appender-ref ref="STDOUT" />

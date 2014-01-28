@@ -1,4 +1,4 @@
-package example.ddd.domain;
+package example.ddd;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;

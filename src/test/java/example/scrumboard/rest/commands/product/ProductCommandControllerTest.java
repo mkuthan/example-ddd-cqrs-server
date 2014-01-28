@@ -18,9 +18,9 @@ import example.scrumboard.application.api.commands.ReorderBacklogItemsCommand;
 import example.scrumboard.domain.backlogitem.BacklogItemId;
 import example.scrumboard.domain.product.ProductId;
 import example.scrumboard.rest.AbstractControllerTest;
-import example.scrumboard.rest.commands.ScrumBoardRestCommandTests;
+import example.scrumboard.rest.commands.RestCommandTest;
 
-@ScrumBoardRestCommandTests
+@RestCommandTest
 public class ProductCommandControllerTest extends AbstractControllerTest {
 
 	private static final ProductId ANY_PRODUCT_ID = new ProductId("any product id");

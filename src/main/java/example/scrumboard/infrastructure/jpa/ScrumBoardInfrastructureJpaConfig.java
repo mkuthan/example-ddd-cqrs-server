@@ -12,11 +12,9 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.env.Environment;
 import org.springframework.dao.annotation.PersistenceExceptionTranslationPostProcessor;
-import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 import org.springframework.orm.jpa.vendor.Database;
 import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
-import org.springframework.transaction.PlatformTransactionManager;
 
 import example.scrumboard.domain.ScrumBoardDomainConfig;
 import example.scrumboard.infrastructure.jpa.hibernate.FixedPrefixNamingStrategy;
@@ -28,9 +26,11 @@ public class ScrumBoardInfrastructureJpaConfig {
 	@Autowired
 	private Environment environment;
 
-	@Bean
 	@Autowired
-	public LocalContainerEntityManagerFactoryBean entityManagerFactory(DataSource dataSource) {
+	private DataSource dataSource;
+
+	@Bean
+	public LocalContainerEntityManagerFactoryBean entityManagerFactory() {
 		HibernateJpaVendorAdapter jpaVendorAdapter = new HibernateJpaVendorAdapter();
 
 		jpaVendorAdapter.setDatabase(Database.H2);
@@ -48,16 +48,6 @@ public class ScrumBoardInfrastructureJpaConfig {
 		entityManagerFactoryBean.setJpaPropertyMap(jpaProperties);
 
 		return entityManagerFactoryBean;
-	}
-
-	@Bean
-	@Autowired
-	public PlatformTransactionManager transactionManager(LocalContainerEntityManagerFactoryBean entityManagerFactoryBean) {
-		JpaTransactionManager transactionManager = new JpaTransactionManager();
-
-		transactionManager.setEntityManagerFactory(entityManagerFactoryBean.getObject());
-
-		return transactionManager;
 	}
 
 	@Bean

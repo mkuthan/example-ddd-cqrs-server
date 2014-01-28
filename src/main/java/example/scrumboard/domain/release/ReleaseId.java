@@ -5,7 +5,7 @@ import static java.util.Objects.requireNonNull;
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
 
-import example.ddd.domain.ValueObject;
+import example.ddd.ValueObject;
 
 @Embeddable
 public class ReleaseId extends ValueObject {

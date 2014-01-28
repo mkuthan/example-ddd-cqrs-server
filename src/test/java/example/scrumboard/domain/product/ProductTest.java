@@ -11,7 +11,7 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.testng.annotations.Test;
 
-import example.ddd.domain.EventPublisher;
+import example.ddd.EventPublisher;
 import example.scrumboard.TestGroups;
 import example.scrumboard.domain.backlogitem.BacklogItem;
 import example.scrumboard.domain.backlogitem.BacklogItemId;

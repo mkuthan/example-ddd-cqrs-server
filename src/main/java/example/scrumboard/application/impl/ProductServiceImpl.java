@@ -2,7 +2,7 @@ package example.scrumboard.application.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
-import example.ddd.domain.ApplicationService;
+import example.ddd.ApplicationService;
 import example.scrumboard.application.api.ProductService;
 import example.scrumboard.application.api.commands.CreateProductCommand;
 import example.scrumboard.application.api.commands.PlanBacklogItemCommand;

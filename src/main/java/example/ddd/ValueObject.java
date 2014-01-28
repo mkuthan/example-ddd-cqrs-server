@@ -1,4 +1,4 @@
-package example.ddd.domain;
+package example.ddd;
 
 import java.io.Serializable;
 

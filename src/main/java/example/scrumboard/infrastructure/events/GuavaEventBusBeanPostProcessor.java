@@ -1,4 +1,4 @@
-package example.ddd.infrastructure;
+package example.scrumboard.infrastructure.events;
 
 import java.lang.reflect.Method;
 
@@ -26,7 +26,6 @@ public class GuavaEventBusBeanPostProcessor implements BeanPostProcessor {
 
 	@Override
 	public Object postProcessAfterInitialization(Object bean, String beanName) throws BeansException {
-		// to avoid memory leaks register only singletons
 		if (beanFactory.containsBean(beanName) && beanFactory.isSingleton(beanName)) {
 			eventBus.register(bean);
 		} else {
@@ -39,7 +38,6 @@ public class GuavaEventBusBeanPostProcessor implements BeanPostProcessor {
 
 	@Override
 	public Object postProcessBeforeInitialization(Object bean, String beanName) throws BeansException {
-		// do nothing
 		return bean;
 	}
 

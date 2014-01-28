@@ -3,30 +3,32 @@ package example.scrumboard.config;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
 
-import example.bootstrap.BootstrapConfig;
-import example.ddd.DddConfig;
 import example.scrumboard.application.ScrumBoardApplicationConfig;
 import example.scrumboard.domain.ScrumBoardDomainConfig;
+import example.scrumboard.infrastructure.bootstrap.ScrumBoardInfrastructureBootstrapConfig;
+import example.scrumboard.infrastructure.events.ScrumBoardInfrastructureEventsConfig;
 import example.scrumboard.infrastructure.jpa.ScrumBoardInfrastructureJpaConfig;
 import example.scrumboard.infrastructure.rest.ScrumBoardInfrastructureRestConfig;
-import example.scrumboard.infrastructure.scheduling.ScrumBoardInfrastructureAsyncConfig;
-import example.scrumboard.infrastructure.scheduling.ScrumBoardInfrastructureTaskConfig;
-import example.scrumboard.infrastructure.shared.ScrumBoardInfrastructureSharedConfig;
+import example.scrumboard.infrastructure.shared.ScrumBoardInfrastructureAsyncConfig;
+import example.scrumboard.infrastructure.shared.ScrumBoardInfrastructureContextConfig;
+import example.scrumboard.infrastructure.shared.ScrumBoardInfrastructureTaskConfig;
+import example.scrumboard.infrastructure.shared.ScrumBoardInfrastructureTransactionConfig;
 import example.scrumboard.rest.commands.ScrumBoardRestCommandsConfig;
 import example.scrumboard.rest.queries.ScrumBoardRestQueriesConfig;
 
 @Configuration
 //@formatter:off
 @Import({ 
-	// external modules
-	BootstrapConfig.class, 
-	DddConfig.class,
-	// infrastructure modules
+	// infrastructure shared modules
 	ScrumBoardInfrastructureAsyncConfig.class,
+	ScrumBoardInfrastructureContextConfig.class,
+	ScrumBoardInfrastructureTaskConfig.class,	
+	ScrumBoardInfrastructureTransactionConfig.class,	
+	// infrastructure modules
+	ScrumBoardInfrastructureBootstrapConfig.class, 
+	ScrumBoardInfrastructureEventsConfig.class, 
 	ScrumBoardInfrastructureJpaConfig.class,
 	ScrumBoardInfrastructureRestConfig.class,
-	ScrumBoardInfrastructureSharedConfig.class,
-	ScrumBoardInfrastructureTaskConfig.class,
 	// core modules
 	ScrumBoardApplicationConfig.class,
 	ScrumBoardDomainConfig.class,

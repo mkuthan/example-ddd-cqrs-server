@@ -1,4 +1,4 @@
-package example.ddd.domain;
+package example.ddd;
 
 import static java.util.Objects.requireNonNull;
 

@@ -13,8 +13,9 @@ import example.scrumboard.domain.product.ProductBacklogItem;
 import example.scrumboard.domain.product.ProductBuilder;
 import example.scrumboard.domain.product.ProductId;
 import example.scrumboard.domain.product.ProductRepository;
+import example.scrumboard.infrastructure.jpa.JpaTest;
 
-@JpaRepositoryTests
+@JpaTest
 public class JpaProductRepositoryTest extends AbstractJpaRepositoryTest {
 
 	@Autowired

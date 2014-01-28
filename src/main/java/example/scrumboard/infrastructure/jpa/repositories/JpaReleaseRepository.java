@@ -1,7 +1,5 @@
 package example.scrumboard.infrastructure.jpa.repositories;
 
-import example.ddd.infrastructure.GenericJpaRepository;
-import example.ddd.infrastructure.JpaRepository;
 import example.scrumboard.domain.release.Release;
 import example.scrumboard.domain.release.ReleaseId;
 import example.scrumboard.domain.release.ReleaseRepository;

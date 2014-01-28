@@ -5,8 +5,8 @@ import org.joda.time.format.DateTimeFormatter
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.context.ApplicationListener
 
-import example.bootstrap.domain.BootstrapEvent
-import example.bootstrap.domain.BootstrapListener
+import example.bootstrap.BootstrapEvent
+import example.bootstrap.BootstrapListener
 import example.scrumboard.application.api.ProductService
 import example.scrumboard.application.api.commands.CreateProductCommand
 import example.scrumboard.application.api.commands.PlanBacklogItemCommand

@@ -13,9 +13,9 @@ import org.testng.annotations.Test;
 import com.jayway.jsonpath.JsonPath;
 
 import example.scrumboard.rest.AbstractControllerTest;
-import example.scrumboard.rest.queries.ScrumBoardRestQueryTests;
+import example.scrumboard.rest.queries.RestQueryTest;
 
-@ScrumBoardRestQueryTests
+@RestQueryTest
 public class ProductQueryControllerTest extends AbstractControllerTest {
 
 	private String productsJson;

@@ -1,4 +1,4 @@
-package example.bootstrap.domain;
+package example.bootstrap;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;

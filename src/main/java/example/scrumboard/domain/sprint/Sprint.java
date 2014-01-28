@@ -15,7 +15,7 @@ import javax.persistence.OneToMany;
 
 import com.google.common.collect.Iterables;
 
-import example.ddd.domain.AggregateRoot;
+import example.ddd.AggregateRoot;
 import example.scrumboard.domain.backlogitem.BacklogItem;
 import example.scrumboard.domain.backlogitem.BacklogItemId;
 import example.scrumboard.domain.product.Product;

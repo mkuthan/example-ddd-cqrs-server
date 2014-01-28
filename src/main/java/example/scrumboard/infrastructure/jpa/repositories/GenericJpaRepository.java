@@ -1,4 +1,4 @@
-package example.ddd.infrastructure;
+package example.scrumboard.infrastructure.jpa.repositories;
 
 import static java.util.Objects.requireNonNull;
 
@@ -11,8 +11,8 @@ import javax.persistence.TypedQuery;
 
 import org.springframework.orm.ObjectRetrievalFailureException;
 
-import example.ddd.domain.AggregateRoot;
-import example.ddd.domain.Repository;
+import example.ddd.AggregateRoot;
+import example.ddd.Repository;
 
 public class GenericJpaRepository<E extends AggregateRoot<K>, K> implements Repository<E, K> {
 
