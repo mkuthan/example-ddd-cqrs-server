@@ -16,10 +16,10 @@ import org.springframework.scheduling.config.ScheduledTaskRegistrar;
 
 import com.google.common.util.concurrent.ThreadFactoryBuilder;
 
-import example.scrumboard.config.ScrumBoardBeansConfig;
+import example.scrumboard.config.ScrumBoardConfig;
 
 @Configuration
-@Profile({ ScrumBoardBeansConfig.Local.PROFILE, ScrumBoardBeansConfig.Remote.PROFILE })
+@Profile({ ScrumBoardConfig.Local.PROFILE, ScrumBoardConfig.Remote.PROFILE })
 @EnableScheduling
 public class ScrumBoardInfrastructureTaskConfig implements SchedulingConfigurer {
 

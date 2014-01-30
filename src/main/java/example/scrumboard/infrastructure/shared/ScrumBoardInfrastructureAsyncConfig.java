@@ -12,10 +12,10 @@ import org.springframework.scheduling.annotation.AsyncConfigurer;
 import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 
-import example.scrumboard.config.ScrumBoardBeansConfig;
+import example.scrumboard.config.ScrumBoardConfig;
 
 @Configuration
-@Profile({ ScrumBoardBeansConfig.Local.PROFILE, ScrumBoardBeansConfig.Remote.PROFILE })
+@Profile({ ScrumBoardConfig.Local.PROFILE, ScrumBoardConfig.Remote.PROFILE })
 @EnableAsync
 public class ScrumBoardInfrastructureAsyncConfig implements AsyncConfigurer {
 
@@ -26,7 +26,7 @@ public class ScrumBoardInfrastructureAsyncConfig implements AsyncConfigurer {
 	public Executor getAsyncExecutor() {
 		return asyncExecutor();
 	}
-	
+
 	@Bean
 	@Qualifier("asyncExecutor")
 	public Executor asyncExecutor() {
