@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:int="http://www.springframework.org/schema/integration" xmlns:int-jdbc="http://www.springframework.org/schema/integration/jdbc"
+	xmlns:task="http://www.springframework.org/schema/task"
+	xsi:schemaLocation="http://www.springframework.org/schema/integration http://www.springframework.org/schema/integration/spring-integration.xsd
+		http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task.xsd
+		http://www.springframework.org/schema/integration/jdbc http://www.springframework.org/schema/integration/jdbc/spring-integration-jdbc.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+	<int:channel id="eventBus">
+		<int:queue message-store="messageStore" />
+	</int:channel>
+l
+	<int:bridge input-channel="eventBus" output-channel="topic">
+		<int:poller fixed-delay="500" receive-timeout="500" max-messages-per-poll="1" task-executor="pollerExecutor">
+			<int:transactional propagation="REQUIRED" transaction-manager="transactionManager" />
+		</int:poller>
+	</int:bridge>
+
+	<int:channel id="topic" />
+
+	<int:logging-channel-adapter channel="topic" level="INFO" />
+
+	<int:channel id="loggingChannel" />
+	<int:wire-tap pattern="eventBus" channel="loggingChannel" />
+	<int:logging-channel-adapter id="loggingChannel" level="INFO" />
+
+	<task:executor id="pollerExecutor" pool-size="10" queue-capacity="10" rejection-policy="CALLER_RUNS" />
+
+	<bean id="messagingTemplate" class="org.springframework.integration.core.MessagingTemplate">
+		<constructor-arg ref="eventBus" />
+	</bean>
+
+	<bean id="messageStore" class="org.springframework.integration.jdbc.store.JdbcChannelMessageStore">
+		<property name="dataSource" ref="dataSource" />
+		<property name="channelMessageStoreQueryProvider">
+			<bean class="org.springframework.integration.jdbc.store.channel.HsqlChannelMessageStoreQueryProvider" />
+		</property>
+	</bean>
+
+</beans>

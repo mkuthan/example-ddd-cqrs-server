@@ -45,7 +45,7 @@ import example.scrumboard.rest.queries.ScrumBoardRestQueriesConfig;
 })
 //@formatter:on
 public class ScrumBoardConfig {
-	
+
 	@Bean
 	public static PropertySourcesPlaceholderConfigurer propertySourcesPlaceholderConfigurer() {
 		return new PropertySourcesPlaceholderConfigurer();
@@ -59,8 +59,9 @@ public class ScrumBoardConfig {
 		public static final String PROFILE = "local";
 
 		@Bean
-		public DataSource localDataSource() {
-			return new EmbeddedDatabaseBuilder().setType(EmbeddedDatabaseType.H2).build();
+		public DataSource dataSource() {
+			return new EmbeddedDatabaseBuilder().setType(EmbeddedDatabaseType.H2)
+					.addScript("/org/springframework/integration/jdbc/store/channel/schema-hsql.sql").build();
 		}
 
 	}
@@ -73,7 +74,7 @@ public class ScrumBoardConfig {
 		public static final String PROFILE = "remote";
 
 		@Bean
-		public DataSource remoteDataSource() {
+		public DataSource dataSource() {
 			// TODO: JNDI lookup
 			return null;
 		}
