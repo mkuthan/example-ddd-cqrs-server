@@ -16,7 +16,7 @@ public class RestQueryTestConfig {
 
 	@Bean
 	public DataSource dataSource() {
-		return new EmbeddedDatabaseBuilder().setType(EmbeddedDatabaseType.H2).addScript("sample.sql").build();
+		return new EmbeddedDatabaseBuilder().setType(EmbeddedDatabaseType.H2)
+				.setName(RestQueryTestConfig.class.getSimpleName()).addScript("sample.sql").build();
 	}
-
 }

@@ -18,7 +18,8 @@ public class JpaTestConfig {
 
 	@Bean
 	public DataSource dataSource() {
-		return new EmbeddedDatabaseBuilder().setType(EmbeddedDatabaseType.H2).build();
+		return new EmbeddedDatabaseBuilder().setType(EmbeddedDatabaseType.H2)
+				.setName(JpaTestConfig.class.getSimpleName()).build();
 	}
 
 	@Bean
