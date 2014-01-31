@@ -1,58 +1,28 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xmlns:int="http://www.springframework.org/schema/integration" xmlns:int-jdbc="http://www.springframework.org/schema/integration/jdbc"
-	xmlns:task="http://www.springframework.org/schema/task" xmlns:int-jms="http://www.springframework.org/schema/integration/jms"
+	xmlns:int="http://www.springframework.org/schema/integration" xmlns:int-jms="http://www.springframework.org/schema/integration/jms"
 	xmlns:amq="http://activemq.apache.org/schema/core"
 	xsi:schemaLocation="http://www.springframework.org/schema/integration http://www.springframework.org/schema/integration/spring-integration.xsd
 		http://www.springframework.org/schema/integration/jms http://www.springframework.org/schema/integration/jms/spring-integration-jms.xsd
-		http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task.xsd
-		http://www.springframework.org/schema/integration/jdbc http://www.springframework.org/schema/integration/jdbc/spring-integration-jdbc.xsd
-		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
-		http://activemq.apache.org/schema/core http://activemq.apache.org/schema/core/activemq-core.xsd">
+		http://activemq.apache.org/schema/core http://activemq.apache.org/schema/core/activemq-core.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
 
-	<int:channel id="eventChannel">
-		<int:queue message-store="messageStore" />
-	</int:channel>
+	<int:annotation-config />
 
-	<int:bridge input-channel="eventChannel" output-channel="eventBus">
-		<int:poller fixed-delay="1000" max-messages-per-poll="1" task-executor="pollerExecutor">
-			<int:transactional propagation="REQUIRED" transaction-manager="transactionManager" />
-		</int:poller>
-	</int:bridge>
+	<int:publish-subscribe-channel id="eventBus" />
 
-	<int:channel id="eventBus" />
-
-	<int:recipient-list-router input-channel="eventBus">
-		<int:recipient channel="sampleChannel1" />
-		<int:recipient channel="sampleChannel2" />
-	</int:recipient-list-router>
-
-	<int-jms:channel id="sampleChannel1" queue="sampleQueue1" connection-factory="jmsConnectionFactory" />
-	<int-jms:channel id="sampleChannel2" queue="sampleQueue2" connection-factory="jmsConnectionFactory" />
-
-	<int:logging-channel-adapter channel="sampleChannel1" level="INFO" />
-	<int:logging-channel-adapter channel="sampleChannel2" level="INFO" />
+	<int-jms:outbound-channel-adapter channel="eventBus" connection-factory="jmsConnectionFactory"
+		destination="sampleQueue" />
 
 	<int:channel id="logChannel" />
-	<int:wire-tap pattern="eventChannel" channel="logChannel" />
+	<int:wire-tap pattern="eventBus" channel="logChannel" />
 	<int:logging-channel-adapter id="logChannel" level="INFO" />
 
-	<task:executor id="pollerExecutor" pool-size="1" queue-capacity="10" rejection-policy="CALLER_RUNS" />
-
-	<amq:queue id="sampleQueue1" physicalName="sampleQueue1" />
-	<amq:queue id="sampleQueue1Dlq" physicalName="DLQ.sampleQueue1" />
-	<amq:queue id="sampleQueue2" physicalName="sampleQueue2" />
-	<amq:queue id="sampleQueue2Dlq" physicalName="DLQ.sampleQueue2" />
+	<amq:queue id="sampleQueue" physicalName="sampleQueue" />
+	<amq:queue id="sampleQueueDlq" physicalName="DLQ.sampleQueue" />
 
 	<bean id="messagingTemplate" class="org.springframework.integration.core.MessagingTemplate">
-		<constructor-arg ref="eventChannel" />
-	</bean>
-
-	<bean id="messageStore" class="org.springframework.integration.jdbc.store.JdbcChannelMessageStore">
-		<property name="dataSource" ref="dataSource" />
-		<property name="channelMessageStoreQueryProvider">
-			<bean class="org.springframework.integration.jdbc.store.channel.HsqlChannelMessageStoreQueryProvider" />
-		</property>
+		<constructor-arg ref="eventBus" />
 	</bean>
 
 </beans>

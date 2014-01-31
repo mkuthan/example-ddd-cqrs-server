@@ -60,8 +60,7 @@ public class ScrumBoardConfig {
 
 		@Bean
 		public DataSource dataSource() {
-			return new EmbeddedDatabaseBuilder().setType(EmbeddedDatabaseType.H2)
-					.addScript("/org/springframework/integration/jdbc/store/channel/schema-hsql.sql").build();
+			return new EmbeddedDatabaseBuilder().setType(EmbeddedDatabaseType.H2).build();
 		}
 
 	}

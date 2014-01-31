@@ -10,8 +10,8 @@ public class SampleTask {
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(SampleTask.class);
 
-	@Scheduled(fixedRate = 5000)
-	public void task() {
+	@Scheduled(fixedRate = 60000)
+	public void log() {
 		LOGGER.info("Task performed");
 	}
 
