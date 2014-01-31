@@ -14,6 +14,7 @@
 
 		<failOnMissingWebXml>false</failOnMissingWebXml>
 
+		<activemq.version>5.9.0</activemq.version>
 		<commons-lang.version>3.2.1</commons-lang.version>
 		<groovy.version>2.1.8</groovy.version>
 		<guava.version>16.0</guava.version>
@@ -206,6 +207,10 @@
 		</dependency>
 		<dependency>
 			<groupId>org.springframework</groupId>
+			<artifactId>spring-jms</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
 			<artifactId>spring-orm</artifactId>
 		</dependency>
 		<dependency>
@@ -217,16 +222,22 @@
 			<artifactId>spring-webmvc</artifactId>
 		</dependency>
 
-		<!-- Spring Data -->
+		<!-- Spring Integration -->
 		<dependency>
 			<groupId>org.springframework.integration</groupId>
 			<artifactId>spring-integration-core</artifactId>
 			<version>${spring-integration.version}</version>
 		</dependency>
-		
+
 		<dependency>
 			<groupId>org.springframework.integration</groupId>
 			<artifactId>spring-integration-jdbc</artifactId>
+			<version>${spring-integration.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework.integration</groupId>
+			<artifactId>spring-integration-jms</artifactId>
 			<version>${spring-integration.version}</version>
 		</dependency>
 
@@ -310,11 +321,36 @@
 			<version>${jackson.version}</version>
 		</dependency>
 
-		<!-- Database -->
+		<!-- H2 -->
 		<dependency>
 			<groupId>com.h2database</groupId>
 			<artifactId>h2</artifactId>
 			<version>${h2.version}</version>
+		</dependency>
+
+		<!-- ActiveMQ -->
+		<dependency>
+			<groupId>org.apache.activemq</groupId>
+			<artifactId>activemq-broker</artifactId>
+			<version>${activemq.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.apache.activemq</groupId>
+			<artifactId>activemq-kahadb-store</artifactId>
+			<version>${activemq.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.apache.activemq</groupId>
+			<artifactId>activemq-spring</artifactId>
+			<version>${activemq.version}</version>
+			<exclusions>
+				<exclusion>
+					<artifactId>commons-logging</artifactId>
+					<groupId>commons-logging</groupId>
+				</exclusion>
+			</exclusions>
 		</dependency>
 
 		<!-- Tests -->

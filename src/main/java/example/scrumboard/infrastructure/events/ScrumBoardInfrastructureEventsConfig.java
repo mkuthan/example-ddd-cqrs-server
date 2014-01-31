@@ -5,7 +5,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.ImportResource;
 
 @Configuration
-@ImportResource("classpath:/domain-events.xml")
+@ImportResource({ "classpath:/activemq.xml", "classpath:/domain-events.xml" })
 @ComponentScan
 public class ScrumBoardInfrastructureEventsConfig {
 }
