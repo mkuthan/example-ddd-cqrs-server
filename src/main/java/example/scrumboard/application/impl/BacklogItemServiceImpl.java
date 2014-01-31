@@ -6,7 +6,7 @@ import example.ddd.ApplicationService;
 import example.scrumboard.domain.backlogitem.BacklogItem;
 import example.scrumboard.domain.backlogitem.BacklogItemFactory;
 import example.scrumboard.domain.backlogitem.BacklogItemId;
-import example.scrumboard.domain.backlogitem.BacklogItemPriority;
+import example.scrumboard.domain.backlogitem.Priority;
 import example.scrumboard.domain.backlogitem.BacklogItemRepository;
 import example.scrumboard.domain.backlogitem.StoryPoints;
 
@@ -27,7 +27,7 @@ public class BacklogItemServiceImpl {
 		backlogItemRepository.save(backlogItem);
 	}
 
-	public void assignPriority(BacklogItemId backlogItemId, BacklogItemPriority priority) {
+	public void assignPriority(BacklogItemId backlogItemId, Priority priority) {
 		BacklogItem backlogItem = backlogItemRepository.load(backlogItemId);
 
 		backlogItem.assignPriority(priority);

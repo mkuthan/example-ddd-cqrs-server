@@ -38,7 +38,7 @@ public class TaskServiceImpl {
 	public void finish(TaskId taskId) {
 	}
 
-	public void amendeHoursRemaining(TaskId taskId, Integer hoursRemaing) {
+	public void amendHoursRemaining(TaskId taskId, Integer hoursRemaing) {
 	}
 
 }

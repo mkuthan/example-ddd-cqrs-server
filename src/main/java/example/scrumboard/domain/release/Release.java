@@ -45,8 +45,16 @@ public class Release extends AggregateRoot<ReleaseId> {
 		this.backlogItems = requireNonNull(backlogItems);
 	}
 
-	ProductId getProductId() {
+	public ProductId getProductId() {
 		return productId;
+	}
+
+	public void scheduleBacklogItem(BacklogItem backlogItem) {
+		// TODO Auto-generated method stub
+	}
+
+	public void unscheduleBacklogItem(BacklogItem backlogItem) {
+		// TODO Auto-generated method stub
 	}
 
 	String getName() {
@@ -59,16 +67,6 @@ public class Release extends AggregateRoot<ReleaseId> {
 
 	Set<ScheduledBacklogItem> getBacklogItems() {
 		return backlogItems;
-	}
-
-	public void scheduleBacklogItem(BacklogItem backlogItem) {
-		// TODO Auto-generated method stub
-
-	}
-
-	public void unscheduleBacklogItem(BacklogItem backlogItem) {
-		// TODO Auto-generated method stub
-
 	}
 
 }

@@ -43,10 +43,6 @@ public class BacklogItem extends AggregateRoot<BacklogItemId> {
 		}
 	}
 
-	public ProductId getProductId() {
-		return productId;
-	}
-
 	public void commitToSprint(Sprint sprint) {
 		requireNonNull(sprint);
 		checkProduct(sprint.getProductId());
@@ -92,7 +88,7 @@ public class BacklogItem extends AggregateRoot<BacklogItemId> {
 		// TODO Auto-generated method stub
 	}
 
-	public void assignPriority(BacklogItemPriority priority) {
+	public void assignPriority(Priority priority) {
 		// TODO Auto-generated method stub
 	}
 
@@ -101,6 +97,10 @@ public class BacklogItem extends AggregateRoot<BacklogItemId> {
 			throw new IllegalArgumentException("Products do not match, product was " + productId + " but expected "
 					+ this.productId + ".");
 		}
+	}
+
+	ProductId getProductId() {
+		return productId;
 	}
 
 	SprintId getSprintId() {
