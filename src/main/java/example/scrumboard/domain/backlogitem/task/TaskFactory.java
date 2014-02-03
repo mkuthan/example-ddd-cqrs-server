@@ -11,11 +11,11 @@ import example.scrumboard.domain.backlogitem.BacklogItem;
 @Component
 public class TaskFactory {
 
-	public Task create(BacklogItem backlogItem, String name, Integer hoursRemaining) {
+	public Task create(BacklogItem backlogItem, String name, String description, Integer hoursRemaining) {
 		TaskId id = new TaskId(UUID.randomUUID().toString());
 		TaskStatus status = TaskStatus.TODO;
 		List<RemainingAmendment> remainingAmendments = new ArrayList<>();
 
-		return new Task(id, backlogItem, status, name, hoursRemaining, remainingAmendments);
+		return new Task(id, backlogItem, status, name, description, hoursRemaining, remainingAmendments);
 	}
 }

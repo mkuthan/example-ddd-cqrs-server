@@ -47,6 +47,16 @@ public class SprintServiceImpl implements SprintService {
 	}
 
 	@Override
+	public void beginSprint(SprintId sprintId) {
+		// TODO Auto-generated method stub
+	}
+
+	@Override
+	public void finishSprint(SprintId sprintId) {
+		// TODO Auto-generated method stub
+	}
+
+	@Override
 	public void captureRetrospective(SprintId sprintId, String retrospective) {
 		// TODO Auto-generated method stub
 	}

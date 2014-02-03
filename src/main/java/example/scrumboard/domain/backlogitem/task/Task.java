@@ -2,6 +2,7 @@ package example.scrumboard.domain.backlogitem.task;
 
 import static java.util.Objects.requireNonNull;
 
+import java.util.Date;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -32,6 +33,9 @@ public class Task extends AggregateRoot<TaskId> {
 	private String name;
 
 	@Column(nullable = false)
+	private String description;
+
+	@Column(nullable = false)
 	private Integer hoursRemaining;
 
 	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
@@ -42,30 +46,40 @@ public class Task extends AggregateRoot<TaskId> {
 	Task() {
 	}
 
-	Task(TaskId id, BacklogItem backlogItem, TaskStatus status, String name, Integer hoursRemaining,
-			List<RemainingAmendment> remainingAmendments) {
+	Task(TaskId id, BacklogItem backlogItem, TaskStatus status, String name, String description,
+			Integer hoursRemaining, List<RemainingAmendment> remainingAmendments) {
 		super(id);
 		this.backlogItemId = requireNonNull(backlogItem).getId();
 		this.status = requireNonNull(status);
 		this.name = requireNonNull(name);
+		this.description = requireNonNull(description);
 		this.hoursRemaining = requireNonNull(hoursRemaining);
 		this.remainingAmendments = requireNonNull(remainingAmendments);
 	}
 
-	public void start() {
-		status.start(this);
+	public void begin() {
+		status.begin(this);
+	}
+
+	void doBegin() {
+		status = TaskStatus.IN_PROGRESS;
 	}
 
 	public void finish() {
 		status.finish(this);
 	}
 
-	void doStart() {
-		status = TaskStatus.IN_PROGRESS;
-	}
-
 	void doFinish() {
 		status = TaskStatus.DONE;
+	}
+
+	public void amendHoursRemaining(Date effectiveDate, Integer hoursRemaing) {
+		status.amendHoursRemaining(this, effectiveDate, hoursRemaing);
+	}
+
+	void doAmendHoursRemaining(Date effectiveDate, Integer hoursRemaing) {
+		RemainingAmendment remainingAmendment = new RemainingAmendment(effectiveDate, hoursRemaing);
+		remainingAmendments.add(remainingAmendment);
 	}
 
 	BacklogItemId getBacklogItemId() {
@@ -78,6 +92,10 @@ public class Task extends AggregateRoot<TaskId> {
 
 	String getName() {
 		return name;
+	}
+
+	String getDescription() {
+		return description;
 	}
 
 	Integer getHoursRemaining() {

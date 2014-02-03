@@ -28,6 +28,10 @@ public class RemainingAmendment {
 	RemainingAmendment(Date effectiveDate, Integer hoursRemaining) {
 		this.effectiveDate = requireNonNull(effectiveDate);
 		this.hoursRemaining = requireNonNull(hoursRemaining);
+
+		if (hoursRemaining < 0) {
+			throw new IllegalArgumentException("Remaining hours must be positive but was " + hoursRemaining);
+		}
 	}
 
 	Date getEffectiveDate() {

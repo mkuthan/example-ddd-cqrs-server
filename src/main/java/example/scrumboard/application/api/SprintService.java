@@ -9,5 +9,9 @@ public interface SprintService {
 
 	void uncommitBacklogItem(SprintId sprintId, BacklogItemId backlogItemId);
 
+	void beginSprint(SprintId sprintId);
+
+	void finishSprint(SprintId sprintId);
+
 	void captureRetrospective(SprintId sprintId, String retrospective);
 }

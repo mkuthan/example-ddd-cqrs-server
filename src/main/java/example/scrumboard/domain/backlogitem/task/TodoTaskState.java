@@ -1,10 +1,15 @@
 package example.scrumboard.domain.backlogitem.task;
 
 public class TodoTaskState extends TaskStateAdapter {
-	
+
 	@Override
-	public void start(Task task) {
-		task.doStart();
+	public boolean isTodo() {
+		return true;
 	}
-	
+
+	@Override
+	public void begin(Task task) {
+		task.doBegin();
+	}
+
 }

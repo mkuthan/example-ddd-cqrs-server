@@ -1,30 +1,49 @@
 package example.scrumboard.domain.backlogitem.task;
 
+import java.util.Date;
+
 public enum TaskStatus implements TaskState {
-	TODO, IN_PROGRESS, DONE;
+
+	// @formatter:off
+	TODO(new TodoTaskState()),
+	IN_PROGRESS(new InProgressTaskState()), 
+	DONE(new DoneTaskState());
+	// @formatter:on
+
+	private TaskState state;
+
+	private TaskStatus(TaskState state) {
+		this.state = state;
+	}
+
+	@Override
+	public boolean isTodo() {
+		return state.isTodo();
+	}
 
 	@Override
 	public boolean isInProgress() {
-		// TODO Auto-generated method stub
-		return false;
+		return state.isInProgress();
 	}
 
 	@Override
 	public boolean isDone() {
-		// TODO Auto-generated method stub
-		return false;
+		return state.isDone();
 	}
 
 	@Override
-	public void start(Task task) {
-		// TODO Auto-generated method stub
-
+	public void begin(Task task) {
+		state.begin(task);
 	}
 
 	@Override
 	public void finish(Task task) {
-		// TODO Auto-generated method stub
+		state.finish(task);
+	}
 
+	@Override
+	public void amendHoursRemaining(Task task, Date effectiveDate, Integer hoursRemaing) {
+		state.amendHoursRemaining(task, effectiveDate, hoursRemaing);
 	}
 
 }
