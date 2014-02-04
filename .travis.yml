@@ -4,10 +4,6 @@ language:
 jdk:
     - openjdk7
 
-branches:
-  only:
-    - master
-
 before_install: true
 install: true
 
