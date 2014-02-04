@@ -9,8 +9,10 @@ import example.scrumboard.application.api.ProductService;
 import example.scrumboard.application.api.ReleaseService;
 import example.scrumboard.application.api.SprintService;
 import example.scrumboard.infrastructure.rest.ScrumBoardInfrastructureRestConfig;
+import example.scrumboard.infrastructure.security.ScrumBoardInfrastructureSecurityConfig;
 
-@Import({ ScrumBoardInfrastructureRestConfig.class, ScrumBoardRestCommandsConfig.class })
+@Import({ ScrumBoardInfrastructureRestConfig.class, ScrumBoardInfrastructureSecurityConfig.class,
+		ScrumBoardRestCommandsConfig.class })
 @PropertySource("classpath:/test.properties")
 public class RestCommandTestConfig {
 

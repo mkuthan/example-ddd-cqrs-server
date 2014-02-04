@@ -13,6 +13,7 @@ import org.testng.annotations.Test;
 import com.jayway.jsonpath.JsonPath;
 
 import example.scrumboard.rest.AbstractControllerTest;
+import example.scrumboard.rest.SecurityRequestPostProcessors;
 import example.scrumboard.rest.queries.RestQueryTest;
 
 @RestQueryTest
@@ -22,7 +23,9 @@ public class ProductQueryControllerTest extends AbstractControllerTest {
 
 	public void shouldFindProducts() throws Exception {
 		// @formatter:off
-		productsJson = getMockMvc().perform(get("/products").accept(MediaType.APPLICATION_JSON))
+		productsJson = getMockMvc().perform(get("/products")
+				.accept(MediaType.APPLICATION_JSON)
+				.with(SecurityRequestPostProcessors.user("user")))
 			//.andDo(print())
 			.andExpect(status().isOk())
 			.andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
@@ -33,7 +36,7 @@ public class ProductQueryControllerTest extends AbstractControllerTest {
 			.andReturn().getResponse().getContentAsString();
 		// @formatter:on
 	}
-	
+
 	@Test(dependsOnMethods = "shouldFindProducts")
 	public void shouldFindProduct() throws Exception {
 		String productName = "Example DDD/CQRS server";
@@ -41,7 +44,8 @@ public class ProductQueryControllerTest extends AbstractControllerTest {
 
 		// @formatter:off
 		getMockMvc().perform(get("/products/{productId}", productId)
-				.accept(MediaType.APPLICATION_JSON))
+				.accept(MediaType.APPLICATION_JSON)
+				.with(SecurityRequestPostProcessors.user("user")))
 			//.andDo(print())
 			.andExpect(status().isOk())
 			.andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
@@ -57,7 +61,8 @@ public class ProductQueryControllerTest extends AbstractControllerTest {
 
 		// @formatter:off
 		getMockMvc().perform(get("/products/{productId}/backlogItems", productId)
-				.accept(MediaType.APPLICATION_JSON))
+				.accept(MediaType.APPLICATION_JSON)
+				.with(SecurityRequestPostProcessors.user("user")))
 			//.andDo(print())
 			.andExpect(status().isOk())
 			.andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))

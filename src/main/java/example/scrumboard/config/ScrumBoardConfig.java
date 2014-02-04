@@ -17,6 +17,7 @@ import example.scrumboard.infrastructure.bootstrap.ScrumBoardInfrastructureBoots
 import example.scrumboard.infrastructure.events.ScrumBoardInfrastructureEventsConfig;
 import example.scrumboard.infrastructure.jpa.ScrumBoardInfrastructureJpaConfig;
 import example.scrumboard.infrastructure.rest.ScrumBoardInfrastructureRestConfig;
+import example.scrumboard.infrastructure.security.ScrumBoardInfrastructureSecurityConfig;
 import example.scrumboard.infrastructure.shared.ScrumBoardInfrastructureAsyncConfig;
 import example.scrumboard.infrastructure.shared.ScrumBoardInfrastructureContextConfig;
 import example.scrumboard.infrastructure.shared.ScrumBoardInfrastructureTaskConfig;
@@ -37,6 +38,7 @@ import example.scrumboard.rest.queries.ScrumBoardRestQueriesConfig;
 	ScrumBoardInfrastructureEventsConfig.class, 
 	ScrumBoardInfrastructureJpaConfig.class,
 	ScrumBoardInfrastructureRestConfig.class,
+	ScrumBoardInfrastructureSecurityConfig.class,
 	// core modules
 	ScrumBoardApplicationConfig.class,
 	ScrumBoardDomainConfig.class,

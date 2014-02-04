@@ -13,6 +13,7 @@ import org.springframework.web.WebApplicationInitializer;
 import org.springframework.web.context.ContextLoaderListener;
 import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.context.support.AnnotationConfigWebApplicationContext;
+import org.springframework.web.filter.DelegatingFilterProxy;
 import org.springframework.web.filter.HttpPutFormContentFilter;
 import org.springframework.web.servlet.DispatcherServlet;
 
@@ -32,6 +33,7 @@ public class ScrumBoardInitializer implements WebApplicationInitializer {
 		registerH2WebServlet(servletContext);
 
 		registerHttpPutContentFilter(servletContext);
+		registerSpringSecurityFilter(servletContext);
 	}
 
 	private void registerDispatcherServlet(ServletContext servletContext, WebApplicationContext rootContext) {
@@ -50,8 +52,17 @@ public class ScrumBoardInitializer implements WebApplicationInitializer {
 	private void registerHttpPutContentFilter(ServletContext servletContext) {
 		FilterRegistration.Dynamic registration = servletContext.addFilter("httpPutFormContentFilter",
 				HttpPutFormContentFilter.class);
-		registration.addMappingForServletNames(EnumSet.of(DispatcherType.REQUEST, DispatcherType.FORWARD), false,
-				DISPATCHER_SERVLET_NAME);
+		registration.addMappingForServletNames(getDispatcherTypes(), false, DISPATCHER_SERVLET_NAME);
+	}
+
+	private void registerSpringSecurityFilter(ServletContext servletContext) {
+		FilterRegistration.Dynamic springSecurity = servletContext.addFilter("springSecurityFilterChain",
+				new DelegatingFilterProxy("springSecurityFilterChain"));
+		springSecurity.addMappingForServletNames(getDispatcherTypes(), false, DISPATCHER_SERVLET_NAME);
+	}
+
+	private EnumSet<DispatcherType> getDispatcherTypes() {
+		return EnumSet.of(DispatcherType.REQUEST, DispatcherType.ERROR, DispatcherType.ASYNC);
 	}
 
 }

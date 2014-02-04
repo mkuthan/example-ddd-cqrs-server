@@ -9,8 +9,10 @@ import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseBuilder;
 import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseType;
 
 import example.scrumboard.infrastructure.rest.ScrumBoardInfrastructureRestConfig;
+import example.scrumboard.infrastructure.security.ScrumBoardInfrastructureSecurityConfig;
 
-@Import({ ScrumBoardInfrastructureRestConfig.class, ScrumBoardRestQueriesConfig.class })
+@Import({ ScrumBoardInfrastructureRestConfig.class, ScrumBoardInfrastructureSecurityConfig.class,
+		ScrumBoardRestQueriesConfig.class })
 @PropertySource("classpath:/test.properties")
 public class RestQueryTestConfig {
 

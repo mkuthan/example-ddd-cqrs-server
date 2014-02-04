@@ -18,6 +18,7 @@ import example.scrumboard.application.api.commands.ReorderBacklogItemsCommand;
 import example.scrumboard.domain.backlogitem.BacklogItemId;
 import example.scrumboard.domain.product.ProductId;
 import example.scrumboard.rest.AbstractControllerTest;
+import example.scrumboard.rest.SecurityRequestPostProcessors;
 import example.scrumboard.rest.commands.RestCommandTest;
 
 @RestCommandTest
@@ -38,7 +39,8 @@ public class ProductCommandControllerTest extends AbstractControllerTest {
 		// @formatter:off
 		getMockMvc().perform(post("/products")
 				.content(toJson(command)).contentType(MediaType.APPLICATION_JSON)
-				.accept(MediaType.APPLICATION_JSON))
+				.accept(MediaType.APPLICATION_JSON)
+				.with(SecurityRequestPostProcessors.user("user")))
 			//.andDo(print())
 			.andExpect(status().isCreated())
 			.andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
@@ -54,7 +56,8 @@ public class ProductCommandControllerTest extends AbstractControllerTest {
 		// @formatter:off
 		getMockMvc().perform(post("/products/{productId}/backlogItems", ANY_PRODUCT_ID.getId())
 				.content(toJson(command)).contentType(MediaType.APPLICATION_JSON)
-				.accept(MediaType.APPLICATION_JSON))
+				.accept(MediaType.APPLICATION_JSON)
+				.with(SecurityRequestPostProcessors.user("user")))
 			//.andDo(print())
 			.andExpect(status().isCreated())
 			.andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
@@ -68,7 +71,8 @@ public class ProductCommandControllerTest extends AbstractControllerTest {
 		// @formatter:off
 		getMockMvc().perform(post("/products/{productId}/reorderBacklogItems", ANY_PRODUCT_ID.getId())
 				.content(toJson(command)).contentType(MediaType.APPLICATION_JSON)
-				.accept(MediaType.APPLICATION_JSON))
+				.accept(MediaType.APPLICATION_JSON)
+				.with(SecurityRequestPostProcessors.user("user")))
 			//.andDo(print())
 			.andExpect(status().isOk());
 		// @formatter:on

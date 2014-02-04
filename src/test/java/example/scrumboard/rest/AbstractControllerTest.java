@@ -1,6 +1,7 @@
 package example.scrumboard.rest;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.web.FilterChainProxy;
 import org.springframework.test.context.testng.AbstractTestNGSpringContextTests;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
@@ -18,6 +19,9 @@ public abstract class AbstractControllerTest extends AbstractTestNGSpringContext
 
 	@Autowired
 	private WebApplicationContext webApplicationContext;
+
+	@Autowired
+	private FilterChainProxy springSecurityFilterChain;
 
 	@Autowired
 	private ObjectMapper objectMapper;
@@ -38,7 +42,8 @@ public abstract class AbstractControllerTest extends AbstractTestNGSpringContext
 
 	@BeforeMethod
 	protected void setup() {
-		mockMvc = MockMvcBuilders.webAppContextSetup(this.webApplicationContext).build();
+		mockMvc = MockMvcBuilders.webAppContextSetup(this.webApplicationContext).addFilters(springSecurityFilterChain)
+				.build();
 	}
 
 }
