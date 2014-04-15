@@ -2,6 +2,8 @@ package example.ddd;
 
 import static java.util.Objects.requireNonNull;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 import javax.persistence.Embedded;
@@ -9,8 +11,6 @@ import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
 import javax.persistence.Transient;
 import javax.persistence.Version;
-
-import org.springframework.beans.factory.annotation.Autowired;
 
 @MappedSuperclass
 public abstract class AggregateRoot<ID> {
@@ -23,8 +23,7 @@ public abstract class AggregateRoot<ID> {
 	private Integer version;
 
 	@Transient
-	@Autowired
-	private EventPublisher eventPublisher;
+	private List<Event> pendingEvents = new ArrayList<>();
 
 	protected AggregateRoot() {
 	}
@@ -40,6 +39,10 @@ public abstract class AggregateRoot<ID> {
 
 	public Integer getVersion() {
 		return version;
+	}
+
+	public Iterable<Event> getPendingEvents() {
+		return pendingEvents;
 	}
 
 	@Override
@@ -67,14 +70,9 @@ public abstract class AggregateRoot<ID> {
 		return Objects.equals(this.id, that.id);
 	}
 
-	protected void publish(Event event) {
+	protected void register(Event event) {
 		requireNonNull(event);
-
-		if (eventPublisher == null) {
-			throw new IllegalStateException("Could not publish event, event publisher is not initialized");
-		}
-
-		eventPublisher.publish(event);
+		pendingEvents.add(event);
 	}
 
 }

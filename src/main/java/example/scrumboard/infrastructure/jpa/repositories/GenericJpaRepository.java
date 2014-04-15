@@ -7,7 +7,6 @@ import java.lang.reflect.ParameterizedType;
 import javax.persistence.EntityManager;
 import javax.persistence.LockModeType;
 import javax.persistence.PersistenceContext;
-import javax.persistence.TypedQuery;
 
 import org.springframework.orm.ObjectRetrievalFailureException;
 
@@ -58,16 +57,6 @@ public class GenericJpaRepository<E extends AggregateRoot<K>, K> implements Repo
 
 		entityManager.remove(entity);
 		entityManager.flush();
-	}
-
-	@Override
-	public long count() {
-		StringBuffer queryString = new StringBuffer("SELECT count(e) from ") //
-				.append(entityClass.getSimpleName()) //
-				.append(" e");
-
-		TypedQuery<Long> query = entityManager.createQuery(queryString.toString(), Long.class);
-		return query.getSingleResult();
 	}
 
 	protected Class<E> getEntityClass() {

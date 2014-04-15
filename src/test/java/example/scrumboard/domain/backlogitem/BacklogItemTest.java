@@ -2,16 +2,11 @@ package example.scrumboard.domain.backlogitem;
 
 import static com.googlecode.catchexception.CatchException.catchException;
 import static com.googlecode.catchexception.CatchException.caughtException;
-import static example.ddd.domain.DddAssertions.thenEvent;
 import static example.scrumboard.domain.ScrumBoardBuilders.givenSprint;
 import static org.assertj.core.api.Assertions.assertThat;
 
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
 import org.testng.annotations.Test;
 
-import example.ddd.EventPublisher;
 import example.scrumboard.TestGroups;
 import example.scrumboard.domain.sprint.Sprint;
 import example.scrumboard.domain.sprint.SprintId;
@@ -19,10 +14,6 @@ import example.scrumboard.domain.sprint.SprintId;
 @Test(groups = TestGroups.UNIT)
 public class BacklogItemTest {
 
-	@Mock
-	private EventPublisher eventPublisher;
-
-	@InjectMocks
 	private BacklogItem backlogItem;
 
 	private BacklogItemBuilder backlogItemBuilder;
@@ -36,8 +27,11 @@ public class BacklogItemTest {
 
 		whenBacklogItem().commitToSprint(sprint);
 
-		thenBacklogItem().isCommitedToSprint(sprintId);
-		thenEvent(eventPublisher).published(new BacklogItemCommited(backlogItemId, sprintId));
+		// @formatter:off
+		thenBacklogItem()
+			.isCommitedToSprint(sprintId)
+			.backlogItemCommitedPublished(sprintId);
+		// @formatter:on
 	}
 
 	public void shouldNotCommitToSprintWhenNoChanges() {
@@ -49,8 +43,11 @@ public class BacklogItemTest {
 
 		whenBacklogItem().commitToSprint(sprint);
 
-		thenBacklogItem().isCommitedToSprint(sprint.getId());
-		thenEvent(eventPublisher).notPublished();
+		// @formatter:off
+		thenBacklogItem()
+			.isCommitedToSprint(sprint.getId())
+			.eventNotPublished();
+		// @formatter:on
 	}
 
 	public void shouldCommitToSprintWhenCommited() {
@@ -65,12 +62,11 @@ public class BacklogItemTest {
 
 		whenBacklogItem().commitToSprint(newSprint);
 
-		thenBacklogItem().isCommitedToSprint(newSprintId);
-
 		// @formatter:off
-		thenEvent(eventPublisher)
-			.published(new BacklogItemUncommited(backlogItemId, oldSprintId))
-			.published(new BacklogItemCommited(backlogItemId, newSprintId));
+		thenBacklogItem()
+			.isCommitedToSprint(newSprintId)
+			.backlogItemUncommitedPublished(oldSprintId)
+			.backlogItemCommitedPublished(newSprintId);
 		// @formatter:on
 	}
 
@@ -83,8 +79,11 @@ public class BacklogItemTest {
 
 		whenBacklogItem().uncommitFromSprint(sprint);
 
-		thenBacklogItem().isNotCommited();
-		thenEvent(eventPublisher).published(new BacklogItemUncommited(backlogItemId, sprintId));
+		// @formatter:off
+		thenBacklogItem()
+			.isNotCommited()
+			.backlogItemUncommitedPublished(sprintId);
+		// @formatter:on
 	}
 
 	public void shouldNotUncommitFromSprintWhenNotCommited() {
@@ -97,7 +96,7 @@ public class BacklogItemTest {
 		catchException(whenBacklogItem()).uncommitFromSprint(sprint);
 
 		assertThat(caughtException()).isInstanceOf(IllegalArgumentException.class);
-		thenEvent(eventPublisher).notPublished();
+		thenBacklogItem().eventNotPublished();
 	}
 
 	public void shouldNotUncommitFromSprintWhenNotCommitedToGivenSprint() {
@@ -113,7 +112,7 @@ public class BacklogItemTest {
 		catchException(whenBacklogItem()).uncommitFromSprint(newSprint);
 
 		assertThat(caughtException()).isInstanceOf(IllegalArgumentException.class);
-		thenEvent(eventPublisher).notPublished();
+		thenBacklogItem().eventNotPublished();
 	}
 
 	private BacklogItemBuilder givenBacklogItem() {
@@ -123,9 +122,6 @@ public class BacklogItemTest {
 
 	private BacklogItem whenBacklogItem() {
 		backlogItem = backlogItemBuilder.build();
-
-		MockitoAnnotations.initMocks(this);
-
 		return backlogItem;
 	}
 

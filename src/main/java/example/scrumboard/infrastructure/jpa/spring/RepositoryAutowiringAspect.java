@@ -13,9 +13,9 @@ public class RepositoryAutowiringAspect {
 	@Autowired
 	private AutowireCapableBeanFactory beanFactory;
 
-	@AfterReturning(pointcut = "execution(public * example.ddd.Repository+.load(..))", returning = "entity")
-	public void autowireLoadedEntity(Object entity) {
-		beanFactory.autowireBean(entity);
+	@AfterReturning(pointcut = "execution(public * example.ddd.Repository+.load(..))", returning = "aggregateRoot")
+	public void autowireLoadedEntity(Object aggregateRoot) {
+		beanFactory.autowireBean(aggregateRoot);
 	}
 
 }

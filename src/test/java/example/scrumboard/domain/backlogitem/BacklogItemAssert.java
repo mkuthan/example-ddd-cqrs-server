@@ -1,5 +1,6 @@
 package example.scrumboard.domain.backlogitem;
 
+import static example.ddd.domain.DddAssertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import org.assertj.core.api.AbstractAssert;
@@ -22,4 +23,18 @@ public class BacklogItemAssert extends AbstractAssert<BacklogItemAssert, Backlog
 		return this;
 	}
 
+	public BacklogItemAssert backlogItemCommitedPublished(SprintId sprintId) {
+		assertThat(actual).published(new BacklogItemCommited(actual.getId(), sprintId));
+		return this;
+	}
+
+	public BacklogItemAssert backlogItemUncommitedPublished(SprintId sprintId) {
+		assertThat(actual).published(new BacklogItemUncommited(actual.getId(), sprintId));
+		return this;
+	}
+
+	public BacklogItemAssert eventNotPublished() {
+		assertThat(actual).notPublished();
+		return this;
+	}
 }

@@ -1,5 +1,6 @@
 package example.scrumboard.domain.product;
 
+import static example.ddd.domain.DddAssertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import org.assertj.core.api.AbstractAssert;
@@ -30,6 +31,16 @@ public class ProductAssert extends AbstractAssert<ProductAssert, Product> {
 				"Expected backlog item '%s' at position %s, but was at position %s", backlogItemId, position,
 				actualPosition).isEqualTo(position);
 
+		return this;
+	}
+
+	public ProductAssert backlogItemPlannedEventPublished(BacklogItemId backlogItemId) {
+		assertThat(actual).published(new BacklogItemPlannedEvent(actual.getId(), backlogItemId));
+		return this;
+	}
+
+	public ProductAssert eventNotPublished() {
+		assertThat(actual).notPublished();
 		return this;
 	}
 }

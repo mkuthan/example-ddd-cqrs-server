@@ -13,11 +13,9 @@ import example.scrumboard.application.api.commands.PlanBacklogItemCommand
 import example.scrumboard.application.api.commands.ScheduleReleaseCommand
 import example.scrumboard.application.api.commands.ScheduleSprintCommand
 import example.scrumboard.domain.product.ProductId
-import example.scrumboard.domain.product.ProductRepository
-import groovy.transform.TypeChecked
+import groovy.sql.Sql
 
 @BootstrapListener
-@TypeChecked
 class ScrumBoardBootstrap implements ApplicationListener<BootstrapEvent> {
 
 	static final DateTimeFormatter DATE_TIME_FORMATTER = DateTimeFormat.forPattern("YYYY-MM-DD")
@@ -26,11 +24,11 @@ class ScrumBoardBootstrap implements ApplicationListener<BootstrapEvent> {
 	ProductService productService
 
 	@Autowired
-	ProductRepository productRepository
+	Sql sql
 
 	@Override
 	void onApplicationEvent(BootstrapEvent event) {
-		if (productRepository.count() != 0) {
+		if (sql.firstRow("SELECT count(*) count FROM t_product").count > 0) {
 			return
 		}
 

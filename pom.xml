@@ -14,25 +14,27 @@
 
 		<failOnMissingWebXml>false</failOnMissingWebXml>
 
-		<activemq.version>5.9.0</activemq.version>
-		<commons-lang.version>3.2.1</commons-lang.version>
-		<groovy.version>2.1.8</groovy.version>
-		<guava.version>16.0</guava.version>
-		<h2.version>1.3.175</h2.version>
-		<hibernate.version>4.3.1.Final</hibernate.version>
-		<jackson.version>2.3.1</jackson.version>
+		<commons-lang.version>3.3.2</commons-lang.version>
+		<guava.version>16.0.1</guava.version>
+		<h2.version>1.4.177</h2.version>
+		<hibernate.version>4.3.5.Final</hibernate.version>
+		<jackson.version>2.3.3</jackson.version>
 		<jodatime.version>2.3</jodatime.version>
-		<logback.version>1.1.0</logback.version>
-		<slf4j.version>1.7.5</slf4j.version>
-		<spring.version>4.0.1.RELEASE</spring.version>
-		<spring-integration.version>3.0.0.RELEASE</spring-integration.version>
-		<spring-data-commons.version>1.6.2.RELEASE</spring-data-commons.version>
+		<logback.version>1.1.2</logback.version>
+		<slf4j.version>1.7.7</slf4j.version>
+		<spring.version>4.0.3.RELEASE</spring.version>
+		<spring-integration.version>4.0.0.M4</spring-integration.version>
+		<spring-data-commons.version>1.7.1.RELEASE</spring-data-commons.version>
 
-		<assertj.version>1.5.0</assertj.version>
+		<groovy.version>2.1.8</groovy.version>
+		<groovy-eclipse-compiler.version>2.8.0-01</groovy-eclipse-compiler.version>
+		<groovy-eclipse-batch.version>2.1.8-01</groovy-eclipse-batch.version>
+
+		<assertj.version>1.6.0</assertj.version>
 		<catchexception.version>1.2.0</catchexception.version>
 		<jsonpath.version>0.9.1</jsonpath.version>
 		<mockito.version>1.9.5</mockito.version>
-		<testng.version>6.8.7</testng.version>
+		<testng.version>6.8.8</testng.version>
 	</properties>
 
 	<repositories>
@@ -41,6 +43,10 @@
 			<url>http://maven.springframework.org/milestone/</url>
 		</repository>
 	</repositories>
+
+	<prerequisites>
+		<maven>3.0.5</maven>
+	</prerequisites>
 
 	<build>
 		<pluginManagement>
@@ -55,19 +61,19 @@
 						<dependency>
 							<groupId>org.codehaus.groovy</groupId>
 							<artifactId>groovy-eclipse-compiler</artifactId>
-							<version>2.8.0-01</version>
+							<version>${groovy-eclipse-compiler.version}</version>
 						</dependency>
 						<dependency>
 							<groupId>org.codehaus.groovy</groupId>
 							<artifactId>groovy-eclipse-batch</artifactId>
-							<version>2.1.8-01</version>
+							<version>${groovy-eclipse-batch.version}</version>
 						</dependency>
 					</dependencies>
 				</plugin>
 
 				<plugin>
 					<artifactId>maven-surefire-plugin</artifactId>
-					<version>2.16</version>
+					<version>2.17</version>
 					<executions>
 						<execution>
 							<id>default-test</id>
@@ -144,12 +150,16 @@
 							<version>${logback.version}</version>
 						</dependency>
 					</dependencies>
-
 				</plugin>
 			</plugins>
 		</pluginManagement>
 
 		<plugins>
+			<plugin>
+				<groupId>org.zeroturnaround</groupId>
+				<artifactId>jrebel-maven-plugin</artifactId>
+			</plugin>
+
 			<plugin>
 				<groupId>org.apache.tomcat.maven</groupId>
 				<artifactId>tomcat7-maven-plugin</artifactId>
@@ -226,12 +236,6 @@
 		<dependency>
 			<groupId>org.springframework.integration</groupId>
 			<artifactId>spring-integration-core</artifactId>
-			<version>${spring-integration.version}</version>
-		</dependency>
-
-		<dependency>
-			<groupId>org.springframework.integration</groupId>
-			<artifactId>spring-integration-jms</artifactId>
 			<version>${spring-integration.version}</version>
 		</dependency>
 
@@ -320,31 +324,6 @@
 			<groupId>com.h2database</groupId>
 			<artifactId>h2</artifactId>
 			<version>${h2.version}</version>
-		</dependency>
-
-		<!-- ActiveMQ -->
-		<dependency>
-			<groupId>org.apache.activemq</groupId>
-			<artifactId>activemq-broker</artifactId>
-			<version>${activemq.version}</version>
-		</dependency>
-
-		<dependency>
-			<groupId>org.apache.activemq</groupId>
-			<artifactId>activemq-kahadb-store</artifactId>
-			<version>${activemq.version}</version>
-		</dependency>
-
-		<dependency>
-			<groupId>org.apache.activemq</groupId>
-			<artifactId>activemq-spring</artifactId>
-			<version>${activemq.version}</version>
-			<exclusions>
-				<exclusion>
-					<artifactId>commons-logging</artifactId>
-					<groupId>commons-logging</groupId>
-				</exclusion>
-			</exclusions>
 		</dependency>
 
 		<!-- Tests -->

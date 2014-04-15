@@ -1,11 +1,11 @@
 package example.ddd.domain;
 
-import example.ddd.EventPublisher;
+import example.ddd.AggregateRoot;
 
 public class DddAssertions {
 
-	public static EventPublisherAssert thenEvent(EventPublisher eventPublisher) {
-		return new EventPublisherAssert(eventPublisher);
+	public static AggregateRootAssert assertThat(AggregateRoot<?> actual) {
+		return new AggregateRootAssert(actual);
 	}
 
 }

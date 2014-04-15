@@ -2,16 +2,11 @@ package example.scrumboard.domain.product;
 
 import static com.googlecode.catchexception.CatchException.catchException;
 import static com.googlecode.catchexception.CatchException.caughtException;
-import static example.ddd.domain.DddAssertions.thenEvent;
 import static example.scrumboard.domain.ScrumBoardBuilders.givenBacklogItem;
 import static org.assertj.core.api.Assertions.assertThat;
 
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
 import org.testng.annotations.Test;
 
-import example.ddd.EventPublisher;
 import example.scrumboard.TestGroups;
 import example.scrumboard.domain.backlogitem.BacklogItem;
 import example.scrumboard.domain.backlogitem.BacklogItemId;
@@ -19,10 +14,6 @@ import example.scrumboard.domain.backlogitem.BacklogItemId;
 @Test(groups = TestGroups.UNIT)
 public class ProductTest {
 
-	@Mock
-	private EventPublisher eventPublisher;
-
-	@InjectMocks
 	private Product product;
 
 	private ProductBuilder productBuilder;
@@ -35,8 +26,11 @@ public class ProductTest {
 
 		whenProduct().planBacklogItem(backlogItem);
 
-		thenProduct().hasBacklogItem(backlogItemId, 0);
-		thenEvent(eventPublisher).published(new BacklogItemPlannedEvent(product.getId(), backlogItemId));
+		// @formatter:off
+		thenProduct()
+			.hasBacklogItem(backlogItemId, 0)
+			.backlogItemPlannedEventPublished(backlogItemId);
+		// @formatter:on		
 	}
 
 	public void shouldAssignSecondBacklogItem() {
@@ -47,8 +41,11 @@ public class ProductTest {
 
 		whenProduct().planBacklogItem(backlogItem);
 
-		thenProduct().hasBacklogItem(backlogItemId, 1);
-		thenEvent(eventPublisher).published(new BacklogItemPlannedEvent(product.getId(), backlogItemId));
+		// @formatter:off
+		thenProduct()
+			.hasBacklogItem(backlogItemId, 1)
+			.backlogItemPlannedEventPublished(backlogItemId);
+		// @formatter:on
 	}
 
 	public void shouldNotAssignExistingBacklogItem() {
@@ -60,7 +57,7 @@ public class ProductTest {
 		catchException(whenProduct()).planBacklogItem(backlogItem);
 
 		assertThat(caughtException()).isInstanceOf(IllegalArgumentException.class);
-		thenEvent(eventPublisher).notPublished();
+		thenProduct().eventNotPublished();
 	}
 
 	public void shouldReorder() {
@@ -81,10 +78,9 @@ public class ProductTest {
 		thenProduct()
 			.hasBacklogItem(backlogItemId0, 2)
 			.hasBacklogItem(backlogItemId1, 1)
-			.hasBacklogItem(backlogItemId2, 0);
+			.hasBacklogItem(backlogItemId2, 0)
+			.eventNotPublished();
 		// @formatter:on
-
-		thenEvent(eventPublisher).notPublished();
 	}
 
 	public void shouldNotReorderWhenNoChanges() {
@@ -105,10 +101,9 @@ public class ProductTest {
 		thenProduct()
 			.hasBacklogItem(backlogItemId0, 0)
 			.hasBacklogItem(backlogItemId1, 1)
-			.hasBacklogItem(backlogItemId2, 2);
+			.hasBacklogItem(backlogItemId2, 2)
+			.eventNotPublished();
 		// @formatter:on
-
-		thenEvent(eventPublisher).notPublished();
 	}
 
 	public void shouldNotReorderNonExistingBacklogItem() {
@@ -120,7 +115,7 @@ public class ProductTest {
 		catchException(whenProduct()).reorderBacklogItems(backlogItemId1);
 		assertThat(caughtException()).isInstanceOf(IllegalArgumentException.class);
 
-		thenEvent(eventPublisher).notPublished();
+		thenProduct().eventNotPublished();
 	}
 
 	private ProductBuilder givenProduct() {
@@ -130,9 +125,6 @@ public class ProductTest {
 
 	private Product whenProduct() {
 		this.product = productBuilder.build();
-
-		MockitoAnnotations.initMocks(this);
-
 		return product;
 	}
 

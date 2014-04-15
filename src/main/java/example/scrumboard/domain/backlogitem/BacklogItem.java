@@ -57,7 +57,7 @@ public class BacklogItem extends AggregateRoot<BacklogItemId> {
 		}
 
 		this.sprintId = sprint.getId();
-		publish(new BacklogItemCommited(getId(), sprint.getId()));
+		register(new BacklogItemCommited(getId(), sprint.getId()));
 	}
 
 	public void uncommitFromSprint(Sprint sprint) {
@@ -118,7 +118,7 @@ public class BacklogItem extends AggregateRoot<BacklogItemId> {
 	private void uncommitFromSprint() {
 		SprintId sprintId = this.sprintId;
 		this.sprintId = null;
-		publish(new BacklogItemUncommited(getId(), sprintId));
+		register(new BacklogItemUncommited(getId(), sprintId));
 	}
 
 }
