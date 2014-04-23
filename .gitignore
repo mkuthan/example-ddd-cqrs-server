@@ -1,6 +1,10 @@
 # Maven
 /target
 
+# Gradle
+.gradle
+/build
+
 # TestNG
 /test-output
 
@@ -10,3 +14,9 @@
 .project
 .settings
 .springBeans
+
+# IntelliJ
+.idea
+*.iml
+*.iws
+*.ipr
